@@ -51,7 +51,7 @@ function Map() {
       // add zoom controls to map
       map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-      // add map onload event (used to resize the map to its container and able to add functionality to load data later)
+      // add map onload event (used to resize the map to its container and able to add functionality to logitad data later)
       map.current.on('load', () => {
         map.current.resize();
       });
