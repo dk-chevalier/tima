@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '../../index.css';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useVenues } from '../venues/useVenues';
+import { HiMiniMapPin } from 'react-icons/hi2';
 
 // TODO: Make this a environment variable
 const MAP_TOKEN =
@@ -59,13 +60,53 @@ function Map() {
       map.current.on('load', () => {
         map.current.resize();
 
-        // FIXME: CURRENTLY MARKERS ARE SLIGHTLY LEFT OF ACTUAL POSITION, AND MOVE WITH ZOOM....
+        // // FIXME: CURRENTLY MARKERS ARE SLIGHTLY LEFT OF ACTUAL POSITION, AND MOVE WITH ZOOM....
+        // if (isLoadingVenues) return;
+        // venues.data.map((venue) =>
+        //   new mapboxgl.Marker({ anchor: 'top', color: '#faa8fb' })
+        //     .setLngLat(venue.location.coordinates)
+        //     .addTo(map.current),
+        // );
+
+        // TODO: Try using layers instead of markers...so need to addSource first
         if (isLoadingVenues) return;
-        venues.data.map((venue) =>
-          new mapboxgl.Marker({ anchor: 'bottom', color: '#faa8fb' })
-            .setLngLat(venue.location.coordinates)
-            .addTo(map.current),
-        );
+        // console.log(venues.data[0].location);
+
+        const geojsonMarkers = {
+          type: 'FeatureCollection',
+          features: venues.data.map((venue) => {
+            const data = {
+              type: 'Feature',
+              geometry: venue.location,
+              properties: {
+                title: 'Mapbox',
+              },
+            };
+            return data;
+          }),
+        };
+        console.log(geojsonMarkers);
+        // const mapIcon =
+
+        for (const feature of geojsonMarkers.features) {
+          new mapboxgl.Marker({ color: '#faa8fb' })
+            .setLngLat(feature.geometry.coordinates)
+            .addTo(map.current);
+        }
+
+        // map.current.addSource('venues', geojsonMarkers);
+
+        // map.current.addLayer({
+        //   id: 'venues-layer',
+        //   type: 'circle',
+        //   source: 'venues',
+        //   paint: {
+        //     'circle-radius': 4,
+        //     'circle-stroke-width': 2,
+        //     'circle-color': 'red',
+        //     'circle-stroke-color': 'white',
+        //   },
+        // });
       });
 
       // TODO: clean up on unmount (LEARN WHAT THIS IS ACTUALLY DOING)
