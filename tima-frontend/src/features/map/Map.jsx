@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import Map, { Source, Layer } from 'react-map-gl';
+import Map, { Source, Layer, Popup } from 'react-map-gl';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useVenues } from '../venues/useVenues';
 import { HiMiniMapPin } from 'react-icons/hi2';
@@ -12,6 +12,8 @@ const MAP_TOKEN =
 function MapContainer() {
   const { isLoading: isLoadingVenues, venues } = useVenues();
   const mapRef = useRef(null);
+  const popupRef = useRef(null);
+  const layerRef = useRef(null);
 
   const [mapLng, setMapLng] = useState(null);
   const [mapLat, setMapLat] = useState(null);
@@ -40,6 +42,7 @@ function MapContainer() {
   console.log(mapLat);
 
   if (isLoadingVenues) return;
+  console.log(venues);
   const geojsonMarkers = {
     type: 'FeatureCollection',
     features: venues.data.map((venue) => {
@@ -47,7 +50,10 @@ function MapContainer() {
         type: 'Feature',
         geometry: venue.location,
         properties: {
-          title: 'Mapbox',
+          title: venue.venueName,
+          id: venue.id,
+          address: venue.address,
+          bookingContact: venue.bookingContact,
         },
       };
       return data;
@@ -77,6 +83,26 @@ function MapContainer() {
     source: 'my-data',
   };
 
+  // FIXME: using merely mapboxgl Popup...should be better way to do this using react-map-gl popup....
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false,
+  });
+
+  const onMouseEnter = (e) => {
+    mapRef.current.getCanvas().style.cursor = 'pointer';
+
+    const coordinates = e.features[0].geometry.coordinates.slice();
+    const { title, id, address, bookingContact } = e.features[0].properties;
+
+    const { city } = JSON.parse(address);
+    const { bookerName, bookerEmail } = JSON.parse(bookingContact);
+
+    const popupHtml = `<strong>${title}</strong><br><strong></strong><p>${city}</p><br><strong>Booking Details:<br></strong>${bookerName}\n${bookerEmail}`;
+
+    popup.setLngLat(coordinates).setHTML(popupHtml).addTo(mapRef.current);
+  };
+
   return isLoadingPosition || !mapLng || !mapLat ? (
     <p>Loading Data...</p>
   ) : (
@@ -88,11 +114,15 @@ function MapContainer() {
       mapStyle="mapbox://styles/dk-chevalier/clqvxp6s5011c01qrakfpaklj"
       minPitch={0}
       maxPitch={0}
+      interactiveLayerIds={['point']}
+      onMouseEnter={onMouseEnter}
       reuseMaps
       // onLoad={onLoad}
     >
       <Source id="my-data" type="geojson" data={geojsonMarkers}>
-        <Layer {...layerStyle} />
+        <Layer {...layerStyle}>
+          {/* <Popup ref={popupRef}>POPUP</Popup> */}
+        </Layer>
       </Source>
     </Map>
   );
