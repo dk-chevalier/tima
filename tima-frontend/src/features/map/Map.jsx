@@ -18,6 +18,7 @@ function MapContainer() {
   const [mapLng, setMapLng] = useState(null);
   const [mapLat, setMapLat] = useState(null);
   const [zoom, setZoom] = useState(12);
+  const [popupInfo, setPopupInfo] = useState(null);
 
   const {
     isLoading: isLoadingPosition,
@@ -61,18 +62,6 @@ function MapContainer() {
   };
   console.log(geojsonMarkers);
 
-  // const onLoad = (e) => {
-  //   if (mapRef.current) {
-  //     const pinImage = new Image();
-  //     // pinImage.onload = () => {
-  //     if (!mapRef.current.hasImage('pin')) {
-  //       mapRef.current.addImage('pin', pinImage, { sdf: true });
-  //     }
-  //     // };
-  //     pinImage.src = '../../assets/mapPin.svg';
-  //   }
-  // };
-
   const layerStyle = {
     id: 'point',
     type: 'symbol',
@@ -83,12 +72,6 @@ function MapContainer() {
     source: 'my-data',
   };
 
-  // FIXME: using merely mapboxgl Popup...should be better way to do this using react-map-gl popup....
-  const popup = new mapboxgl.Popup({
-    closeButton: false,
-    closeOnClick: false,
-  });
-
   const onMouseEnter = (e) => {
     mapRef.current.getCanvas().style.cursor = 'pointer';
 
@@ -98,9 +81,11 @@ function MapContainer() {
     const { city } = JSON.parse(address);
     const { bookerName, bookerEmail } = JSON.parse(bookingContact);
 
-    const popupHtml = `<strong>${title}</strong><br><strong></strong><p>${city}</p><br><strong>Booking Details:<br></strong>${bookerName}\n${bookerEmail}`;
+    setPopupInfo({ title, id, city, bookerName, bookerEmail, coordinates });
+  };
 
-    popup.setLngLat(coordinates).setHTML(popupHtml).addTo(mapRef.current);
+  const onMouseLeave = (e) => {
+    setPopupInfo(null);
   };
 
   return isLoadingPosition || !mapLng || !mapLat ? (
@@ -116,13 +101,35 @@ function MapContainer() {
       maxPitch={0}
       interactiveLayerIds={['point']}
       onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       reuseMaps
       // onLoad={onLoad}
     >
       <Source id="my-data" type="geojson" data={geojsonMarkers}>
-        <Layer {...layerStyle}>
-          {/* <Popup ref={popupRef}>POPUP</Popup> */}
-        </Layer>
+        <Layer {...layerStyle}></Layer>
+        {popupInfo && (
+          <Popup
+            ref={popupRef}
+            latitude={popupInfo.coordinates[1]}
+            longitude={popupInfo.coordinates[0]}
+            anchor="bottom"
+          >
+            <div className=" bg-primary-100">
+              <strong>{popupInfo.title}</strong>
+              <br />
+              <strong></strong>
+              <p>{popupInfo.city}</p>
+              <br />
+              <strong>
+                Booking Details:
+                <br />
+              </strong>
+              {popupInfo.bookerName}
+              <br />
+              {popupInfo.bookerEmail}
+            </div>
+          </Popup>
+        )}
       </Source>
     </Map>
   );
