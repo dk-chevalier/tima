@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import Map, { Source, Layer, Popup } from 'react-map-gl';
 import { useGeolocation } from '../../hooks/useGeolocation';
@@ -10,10 +10,9 @@ const MAP_TOKEN =
   'pk.eyJ1IjoiZGstY2hldmFsaWVyIiwiYSI6ImNscXJ0bHF1dDJoc24yanJ5NnVnZ2xxZXAifQ.0rhupFXU4AuDPu-PMhg-cw';
 
 function MapContainer() {
+  console.log('MAP LOAD');
   const { isLoading: isLoadingVenues, venues } = useVenues();
   const mapRef = useRef(null);
-  const popupRef = useRef(null);
-  const layerRef = useRef(null);
 
   const [mapLng, setMapLng] = useState(null);
   const [mapLat, setMapLat] = useState(null);
@@ -34,16 +33,11 @@ function MapContainer() {
 
       setMapLng(lng);
       setMapLat(lat);
-      // console.log(lng, lat);
     },
     [geolocationPosition, getPosition],
   );
 
-  console.log(mapLng);
-  console.log(mapLat);
-
   if (isLoadingVenues) return;
-  console.log(venues);
   const geojsonMarkers = {
     type: 'FeatureCollection',
     features: venues.data.map((venue) => {
@@ -60,7 +54,6 @@ function MapContainer() {
       return data;
     }),
   };
-  console.log(geojsonMarkers);
 
   const layerStyle = {
     id: 'point',
@@ -68,6 +61,17 @@ function MapContainer() {
     layout: {
       'icon-image': 'mapPin',
       'icon-anchor': 'bottom',
+      // get and display the title property from the source as a label to the marker
+      'text-field': ['get', 'title'],
+      'text-justify': 'auto',
+      // means text disappears when collides with other icons but the symbol doesn't
+      'text-optional': true,
+      'text-variable-anchor': ['left', 'right', 'top'],
+      // TODO: play with these values to get text aligned how you want
+      'text-offset': [-1, -1],
+    },
+    paint: {
+      'text-color': '#03493d',
     },
     source: 'my-data',
   };
@@ -84,7 +88,7 @@ function MapContainer() {
     setPopupInfo({ title, id, city, bookerName, bookerEmail, coordinates });
   };
 
-  const onMouseLeave = (e) => {
+  const onMouseLeave = () => {
     setPopupInfo(null);
   };
 
@@ -109,7 +113,6 @@ function MapContainer() {
         <Layer {...layerStyle}></Layer>
         {popupInfo && (
           <Popup
-            ref={popupRef}
             latitude={popupInfo.coordinates[1]}
             longitude={popupInfo.coordinates[0]}
             anchor="bottom"
@@ -134,5 +137,4 @@ function MapContainer() {
     </Map>
   );
 }
-
 export default MapContainer;
