@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+import { useEffect, useRef, useState } from 'react';
 import Map, { Source, Layer, Popup } from 'react-map-gl';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useVenues } from '../venues/useVenues';
-import { HiMiniMapPin } from 'react-icons/hi2';
+import { useDispatch } from 'react-redux';
+import { closePopup, openPopup, updatePopup } from './mapSlice';
+import MapPopup from './MapPopup';
 
 // TODO: Make this a environment variable
 const MAP_TOKEN =
@@ -17,7 +18,8 @@ function MapContainer() {
   const [mapLng, setMapLng] = useState(null);
   const [mapLat, setMapLat] = useState(null);
   const [zoom, setZoom] = useState(12);
-  const [popupInfo, setPopupInfo] = useState(null);
+
+  const dispatch = useDispatch();
 
   const {
     isLoading: isLoadingPosition,
@@ -66,12 +68,13 @@ function MapContainer() {
       'text-justify': 'auto',
       // means text disappears when collides with other icons but the symbol doesn't
       'text-optional': true,
-      'text-variable-anchor': ['left', 'right', 'top'],
-      // TODO: play with these values to get text aligned how you want
-      'text-offset': [-1, -1],
+      'text-variable-anchor': ['left', 'right'],
+      // TODO: play with these values to get text aligned how you want...second value (meant to indicate offset down) doesn't seem to be working?
+      'text-offset': [0.7, -1],
+      'text-size': 12,
     },
     paint: {
-      'text-color': '#03493d',
+      'text-color': '#011814',
     },
     source: 'my-data',
   };
@@ -85,11 +88,18 @@ function MapContainer() {
     const { city } = JSON.parse(address);
     const { bookerName, bookerEmail } = JSON.parse(bookingContact);
 
-    setPopupInfo({ title, id, city, bookerName, bookerEmail, coordinates });
+    // setPopupInfo({ title, id, city, bookerName, bookerEmail, coordinates });
+    dispatch(
+      updatePopup({ title, id, city, bookerName, bookerEmail, coordinates }),
+    );
+    dispatch(openPopup());
   };
 
   const onMouseLeave = () => {
-    setPopupInfo(null);
+    // setPopupInfo(null);
+    mapRef.current.getCanvas().style.cursor = 'grab';
+
+    dispatch(closePopup());
   };
 
   return isLoadingPosition || !mapLng || !mapLat ? (
@@ -111,28 +121,7 @@ function MapContainer() {
     >
       <Source id="my-data" type="geojson" data={geojsonMarkers}>
         <Layer {...layerStyle}></Layer>
-        {popupInfo && (
-          <Popup
-            latitude={popupInfo.coordinates[1]}
-            longitude={popupInfo.coordinates[0]}
-            anchor="bottom"
-          >
-            <div className=" bg-primary-100">
-              <strong>{popupInfo.title}</strong>
-              <br />
-              <strong></strong>
-              <p>{popupInfo.city}</p>
-              <br />
-              <strong>
-                Booking Details:
-                <br />
-              </strong>
-              {popupInfo.bookerName}
-              <br />
-              {popupInfo.bookerEmail}
-            </div>
-          </Popup>
-        )}
+        <MapPopup />
       </Source>
     </Map>
   );
