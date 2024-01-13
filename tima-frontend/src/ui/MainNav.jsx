@@ -1,16 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
+import NavList from './NavList';
 
 function MainNav() {
   return (
     <nav>
-      <ul>
-        <li className="text-primary-900 hover:text-secondary-500 duration-200">
-          <NavLink to="/map">
-            <span>Map</span>
-          </NavLink>
-        </li>
-        {/* <li>
-          <NavLink to="/">
+      <NavList type="main">
+        <li>
+          <NavLink
+            to="/map"
+            className="text-primary-900 duration-200 hover:text-secondary-500"
+            activeClassName
+          >
             <span>Map</span>
           </NavLink>
         </li>
@@ -23,8 +23,8 @@ function MainNav() {
           <NavLink to="/">
             <span>Log Out</span>
           </NavLink>
-        </li> */}
-      </ul>
+        </li>
+      </NavList>
     </nav>
   );
 }

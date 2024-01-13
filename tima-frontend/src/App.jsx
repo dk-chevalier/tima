@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import AppLayout from './ui/AppLayout';
 import MapPage from './pages/MapPage';
+import VenuesList from './features/venues/VenuesList';
 
 const reactQuery = new QueryClient({
   defaultOptions: {
@@ -22,8 +23,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route index element={<Navigate replace to="map" />} />
-            <Route path="map" element={<MapPage />} />
+            <Route index element={<Navigate replace to="map/venues" />} />
+            <Route path="map" element={<MapPage />}>
+              <Route path="venues" element={<VenuesList />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
