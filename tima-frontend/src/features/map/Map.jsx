@@ -5,6 +5,8 @@ import { useVenues } from '../venues/useVenues';
 import { useDispatch } from 'react-redux';
 import { closePopup, openPopup, updatePopup } from './mapSlice';
 import MapPopup from './MapPopup';
+import MapSource from './MapSource';
+import MapMarkersLayer from './MapMarkersLayer';
 
 // TODO: Make this a environment variable
 const MAP_TOKEN =
@@ -12,12 +14,11 @@ const MAP_TOKEN =
 
 function MapContainer() {
   console.log('MAP LOAD');
-  const { isLoading: isLoadingVenues, venues } = useVenues();
   const mapRef = useRef(null);
 
   const [mapLng, setMapLng] = useState(null);
   const [mapLat, setMapLat] = useState(null);
-  const [zoom, setZoom] = useState(12);
+  const zoom = 12;
 
   const dispatch = useDispatch();
 
@@ -38,46 +39,6 @@ function MapContainer() {
     },
     [geolocationPosition, getPosition],
   );
-
-  if (isLoadingVenues) return;
-  const geojsonMarkers = {
-    type: 'FeatureCollection',
-    features: venues.data.map((venue) => {
-      const data = {
-        type: 'Feature',
-        geometry: venue.location,
-        properties: {
-          title: venue.venueName,
-          id: venue.id,
-          address: venue.address,
-          bookingContact: venue.bookingContact,
-        },
-      };
-      return data;
-    }),
-  };
-
-  const layerStyle = {
-    id: 'point',
-    type: 'symbol',
-    layout: {
-      'icon-image': 'mapPin',
-      'icon-anchor': 'bottom',
-      // get and display the title property from the source as a label to the marker
-      'text-field': ['get', 'title'],
-      'text-justify': 'auto',
-      // means text disappears when collides with other icons but the symbol doesn't
-      'text-optional': true,
-      'text-variable-anchor': ['left', 'right'],
-      // TODO: play with these values to get text aligned how you want...second value (meant to indicate offset down) doesn't seem to be working?
-      'text-offset': [0.7, -1],
-      'text-size': 12,
-    },
-    paint: {
-      'text-color': '#011814',
-    },
-    source: 'my-data',
-  };
 
   const onMouseEnter = (e) => {
     mapRef.current.getCanvas().style.cursor = 'pointer';
@@ -119,10 +80,10 @@ function MapContainer() {
       reuseMaps
       // onLoad={onLoad}
     >
-      <Source id="my-data" type="geojson" data={geojsonMarkers}>
-        <Layer {...layerStyle}></Layer>
+      <MapSource>
+        <MapMarkersLayer />
         <MapPopup />
-      </Source>
+      </MapSource>
     </Map>
   );
 }
