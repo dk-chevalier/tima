@@ -15,7 +15,7 @@ function RadioStationsSource({ children }) {
           title: station.stationName,
           id: station.id,
           address: station.address,
-          bookingContact: station.musicSubmissions.email,
+          email: station.musicSubmissions.email,
         },
       };
       return data;

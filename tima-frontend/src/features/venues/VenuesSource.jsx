@@ -15,7 +15,7 @@ function VenuesSource({ children }) {
           title: venue.venueName,
           id: venue.id,
           address: venue.address,
-          bookingContact: venue.bookingContact,
+          email: venue.bookingContact.bookerEmail,
         },
       };
       return data;

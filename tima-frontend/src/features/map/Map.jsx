@@ -48,14 +48,20 @@ function MapContainer() {
     mapRef.current.getCanvas().style.cursor = 'pointer';
 
     const coordinates = e.features[0].geometry.coordinates.slice();
-    const { title, id, address, bookingContact } = e.features[0].properties;
+    const { title, id, address, email } = e.features[0].properties;
 
     const { city } = JSON.parse(address);
-    const { bookerName, bookerEmail } = JSON.parse(bookingContact);
+    // const { bookerName, bookerEmail } = JSON.parse(bookingContact);
 
     // setPopupInfo({ title, id, city, bookerName, bookerEmail, coordinates });
     dispatch(
-      updatePopup({ title, id, city, bookerName, bookerEmail, coordinates }),
+      updatePopup({
+        title,
+        id,
+        city,
+        email,
+        coordinates,
+      }),
     );
     dispatch(openPopup());
   };

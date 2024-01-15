@@ -21,12 +21,10 @@ function MapPopup() {
           <p>{popupInfo.city}</p>
           <br />
           <strong>
-            Booking Details:
+            Contact Details:
             <br />
           </strong>
-          {popupInfo.bookerName}
-          <br />
-          {popupInfo.bookerEmail}
+          {popupInfo.email}
         </div>
       </Popup>
     )

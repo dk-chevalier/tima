@@ -2,6 +2,7 @@ const URL = import.meta.env.VITE_LOCAL_URL;
 
 export async function getRadioStations() {
   try {
+    console.log('FETCHING RADIO STATIONS************');
     const res = await fetch(`${URL}/api/v1/radioStations`);
     const { data } = await res.json();
     console.log(data);
