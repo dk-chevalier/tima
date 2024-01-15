@@ -1,6 +1,5 @@
 import Sidebar from '../ui/Sidebar';
 import MapContainer from '../features/map/Map';
-import { Outlet } from 'react-router-dom';
 
 function MapPage() {
   return (

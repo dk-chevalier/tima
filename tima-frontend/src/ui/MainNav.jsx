@@ -1,28 +1,25 @@
 import { NavLink } from 'react-router-dom';
 import NavList from './NavList';
+import StyledNavLink from './StyledNavLink';
 
 function MainNav() {
   return (
     <nav>
       <NavList type="main">
         <li>
-          <NavLink
-            to="/map"
-            className="text-primary-900 duration-200 hover:text-secondary-500"
-            activeClassName
-          >
+          <StyledNavLink to="/map" type="main">
             <span>Map</span>
-          </NavLink>
+          </StyledNavLink>
         </li>
         <li>
-          <NavLink to="/">
+          <StyledNavLink to="/account" type="main">
             <span>Account</span>
-          </NavLink>
+          </StyledNavLink>
         </li>
         <li>
-          <NavLink to="/">
+          <StyledNavLink to="/logout" type="main">
             <span>Log Out</span>
-          </NavLink>
+          </StyledNavLink>
         </li>
       </NavList>
     </nav>

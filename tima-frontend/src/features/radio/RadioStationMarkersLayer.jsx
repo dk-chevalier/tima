@@ -1,6 +1,6 @@
 import { Layer } from 'react-map-gl';
 
-function MapMarkersLayer() {
+function RadioStationMarkersLayer() {
   const layerStyle = {
     id: 'point',
     type: 'symbol',
@@ -20,9 +20,9 @@ function MapMarkersLayer() {
     paint: {
       'text-color': '#011814',
     },
-    source: 'my-data',
+    source: 'radio-station-markers',
   };
   return <Layer {...layerStyle} />;
 }
 
-export default MapMarkersLayer;
+export default RadioStationMarkersLayer;

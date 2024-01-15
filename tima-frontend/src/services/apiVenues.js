@@ -1,8 +1,8 @@
-// TEMPORARY
-const URL = 'http://127.0.0.1:8000';
+const URL = import.meta.env.VITE_LOCAL_URL;
 
 export async function getVenues() {
   try {
+    console.log('FETCHING VENUES!!!!!!!!!!!!');
     const res = await fetch(
       `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail`,
     );

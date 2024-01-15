@@ -1,7 +1,7 @@
 import { Source } from 'react-map-gl';
-import { useVenues } from '../venues/useVenues';
+import { useVenues } from './useVenues';
 
-function MapSource({ children }) {
+function VenuesSource({ children }) {
   const { isLoading: isLoadingVenues, venues } = useVenues();
 
   if (isLoadingVenues) return;
@@ -23,10 +23,10 @@ function MapSource({ children }) {
   };
 
   return (
-    <Source id="my-data" type="geojson" data={geojsonMarkers}>
+    <Source id="venue-markers" type="geojson" data={geojsonMarkers}>
       {children}
     </Source>
   );
 }
 
-export default MapSource;
+export default VenuesSource;

@@ -1,16 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import Map, { Source, Layer, Popup } from 'react-map-gl';
+import Map from 'react-map-gl';
 import { useGeolocation } from '../../hooks/useGeolocation';
-import { useVenues } from '../venues/useVenues';
 import { useDispatch } from 'react-redux';
 import { closePopup, openPopup, updatePopup } from './mapSlice';
 import MapPopup from './MapPopup';
-import MapSource from './MapSource';
-import MapMarkersLayer from './MapMarkersLayer';
+import { useLocation } from 'react-router-dom';
+import VenuesSource from '../venues/VenuesSource';
+import RadioStationsSource from '../radio/RadioStationsSource';
+import RadioStationMarkersLayer from '../radio/RadioStationMarkersLayer';
+import VenueMarkersLayer from '../venues/VenueMarkersLayer';
 
 // TODO: Make this a environment variable
-const MAP_TOKEN =
-  'pk.eyJ1IjoiZGstY2hldmFsaWVyIiwiYSI6ImNscXJ0bHF1dDJoc24yanJ5NnVnZ2xxZXAifQ.0rhupFXU4AuDPu-PMhg-cw';
+const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 function MapContainer() {
   console.log('MAP LOAD');
@@ -21,6 +22,8 @@ function MapContainer() {
   const zoom = 12;
 
   const dispatch = useDispatch();
+
+  const { pathname } = useLocation();
 
   const {
     isLoading: isLoadingPosition,
@@ -40,6 +43,7 @@ function MapContainer() {
     [geolocationPosition, getPosition],
   );
 
+  // FIXME: TO ALLOW FOR OTHER PAGES (i.e. map/radio, etc., not just map/venues)
   const onMouseEnter = (e) => {
     mapRef.current.getCanvas().style.cursor = 'pointer';
 
@@ -80,10 +84,18 @@ function MapContainer() {
       reuseMaps
       // onLoad={onLoad}
     >
-      <MapSource>
-        <MapMarkersLayer />
-        <MapPopup />
-      </MapSource>
+      {pathname === '/map/venues' && (
+        <VenuesSource>
+          <VenueMarkersLayer />
+          <MapPopup />
+        </VenuesSource>
+      )}
+      {pathname === '/map/radio' && (
+        <RadioStationsSource>
+          <RadioStationMarkersLayer />
+          <MapPopup />
+        </RadioStationsSource>
+      )}
     </Map>
   );
 }
