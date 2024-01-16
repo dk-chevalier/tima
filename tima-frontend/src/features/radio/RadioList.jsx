@@ -17,7 +17,9 @@ function RadioList() {
             name={station.stationName}
             contactEmail={station.musicSubmissions.email}
             city={station.address.city}
-            key={station.stationName}
+            key={station.id}
+            id={station.id}
+            website={station.website}
           />
         ))
       )}

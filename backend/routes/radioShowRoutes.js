@@ -4,7 +4,8 @@ const radioShowController = require('../controllers/radioShowController');
 
 const router = express.Router({ mergeParams: true }); // gives access to radioStationId
 
-router.use(authController.protect);
+// FIXME: TEMPORARY ALLOW ACCESS TO EVERYONE UNTIL CREATING LOGIN
+// router.use(authController.protect);
 
 router
   .route('/')

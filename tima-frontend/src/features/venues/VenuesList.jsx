@@ -17,7 +17,9 @@ function VenuesList() {
             contactName={venue.bookingContact.bookerName}
             contactEmail={venue.bookingContact.bookerEmail}
             city={venue.address.city}
-            key={venue.venueName}
+            key={venue.id}
+            id={venue.id}
+            website={venue.website}
           />
         ))
       )}

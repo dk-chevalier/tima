@@ -4,7 +4,7 @@ export async function getVenues() {
   try {
     console.log('FETCHING VENUES!!!!!!!!!!!!');
     const res = await fetch(
-      `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail`,
+      `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail,website`,
     );
     const { data } = await res.json();
 
