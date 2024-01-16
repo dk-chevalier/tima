@@ -34,7 +34,6 @@ function ListItem({
         <div className="text-end">
           <h2 className="text-base font-semibold">{name}</h2>
           <p className="text-sm text-primary-800">{city}</p>
-          <p className="text-sm text-primary-800">{website}</p>
         </div>
         <div className="flex items-end justify-between">
           <div>
@@ -45,16 +44,19 @@ function ListItem({
             {contactName && <p className="text-sm">{contactName}</p>}
             <p className="text-sm">{contactEmail}</p>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 pt-2">
+            <Button href={website} type="secondary">
+              Website
+            </Button>
             <div>
               <Button type="secondary">More info</Button>
             </div>
             {type === 'station' && (
-              <div>
+              <div className="flex items-center justify-center">
                 <Button type="secondary" onClick={toggleRadioShows}>
                   Shows{' '}
                   <span
-                    className={`origin-center pl-1 duration-300 ${
+                    className={`flex origin-center items-center justify-center pl-1 duration-300 ${
                       showsOpen && 'rotate-180'
                     }`}
                   >
