@@ -6,6 +6,9 @@ import AppLayout from './ui/AppLayout';
 import MapPage from './pages/MapPage';
 import VenuesList from './features/venues/VenuesList';
 import RadioList from './features/radio/RadioList';
+import VenueDetails from './pages/VenueDetails';
+import RadioStationDetails from './pages/RadioStationDetails';
+import RadioShowDetails from './pages/RadioShowDetails';
 
 const reactQuery = new QueryClient({
   defaultOptions: {
@@ -27,8 +30,16 @@ function App() {
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="map/venues" />} />
             <Route path="map" element={<MapPage />}>
-              <Route path="venues" element={<VenuesList />} />
-              <Route path="radio" element={<RadioList />} />
+              <Route path="venues" element={<VenuesList />}>
+                <Route path=":venueId" element={<VenueDetails />} />
+              </Route>
+              <Route path="radio" element={<RadioList />}>
+                <Route
+                  path="stations/:stationId"
+                  element={<RadioStationDetails />}
+                />
+                <Route path="shows/:showId" element={<RadioShowDetails />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

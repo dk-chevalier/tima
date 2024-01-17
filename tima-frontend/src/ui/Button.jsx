@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 
 function Button({ children, type, to, onClick, href }) {
   const base =
-    'px-3 py-1 text-primary-900 shadow-md transition-all duration-300 active:shadow-sm inline-block flex justify-center items-center';
+    'px-3 py-1 shadow-md transition-all duration-300 active:shadow-sm inline-block flex justify-center items-center';
 
   const styles = {
-    primary: base + ' bg-primary-300 rounded-sm',
-    secondary: base + ' bg-secondary-200 text-sm rounded-sm',
-    round: base + ' bg-primary-300 rounded-full size-10',
+    primary: base + ' bg-primary-300 rounded-sm text-primary-900',
+    secondary: base + ' bg-secondary-300 text-sm rounded-sm text-primary-900',
+    round:
+      base +
+      ' bg-primary-900 rounded-full size-10 border border-secondary-300 text-primary-100',
   };
 
   if (to)

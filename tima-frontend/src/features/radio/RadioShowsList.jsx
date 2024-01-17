@@ -4,7 +4,6 @@ import { useRadioShows } from './useRadioShows';
 
 function RadioShowsList({ stationId }) {
   const { radioShows, isLoading } = useRadioShows(stationId);
-  console.log(radioShows);
 
   // return <div>RADIO SHOWS</div>;
   return (

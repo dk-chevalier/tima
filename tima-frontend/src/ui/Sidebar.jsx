@@ -10,7 +10,7 @@ function Sidebar({ children }) {
   // TEMPORARY
 
   return (
-    <aside className="col-span-1 bg-secondary-100">
+    <aside className="col-span-1 flex h-full flex-col bg-primary-900">
       <div className="flex items-center justify-between p-3">
         <ul className="flex justify-between gap-2">
           <li>
@@ -28,7 +28,7 @@ function Sidebar({ children }) {
           <HiMagnifyingGlass />
         </Button>
       </div>
-      <ul className="flex flex-col gap-4 overflow-scroll px-2 py-3">
+      <ul className="no-scrollbar flex h-full w-full flex-col gap-4 overflow-y-scroll px-2 py-3">
         <Outlet />
       </ul>
     </aside>
