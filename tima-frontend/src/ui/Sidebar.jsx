@@ -29,7 +29,7 @@ function Sidebar({ children }) {
         </Button>
       </div>
       <ul className="no-scrollbar flex h-full w-full flex-col gap-4 overflow-y-scroll px-2 py-3">
-        <Outlet />
+        {children}
       </ul>
     </aside>
   );

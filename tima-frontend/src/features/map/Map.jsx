@@ -6,8 +6,8 @@ import { closePopup, openPopup, updatePopup } from './mapSlice';
 import MapPopup from './MapPopup';
 import { useLocation } from 'react-router-dom';
 import VenuesSource from '../venues/VenuesSource';
-import RadioStationsSource from '../radio/RadioStationsSource';
-import RadioStationMarkersLayer from '../radio/RadioStationMarkersLayer';
+import RadioStationsSource from '../radio/stations/RadioStationsSource';
+import RadioStationMarkersLayer from '../radio/stations/RadioStationMarkersLayer';
 import VenueMarkersLayer from '../venues/VenueMarkersLayer';
 
 // TODO: Make this a environment variable

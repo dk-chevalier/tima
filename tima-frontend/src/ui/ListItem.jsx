@@ -1,7 +1,7 @@
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi2';
 import Button from '../ui/Button';
-import { useRadioShows } from '../features/radio/useRadioShows';
-import RadioShowsList from '../features/radio/RadioShowsList';
+import { useRadioShows } from '../features/radio/shows/useRadioShows';
+import RadioShowsList from '../features/radio/shows/RadioShowsList';
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import StyledNavLink from './StyledNavLink';
@@ -18,6 +18,7 @@ function ListItem({
   const [showsOpen, setShowsOpen] = useState(false);
 
   const { pathname } = useLocation();
+  console.log(pathname);
 
   const baseStyle =
     'flex h-min flex-col rounded-md px-3 py-2 text-primary-900 shadow-lg transition-all duration-300 hover:shadow-md border-secondary-300 border';
@@ -54,7 +55,7 @@ function ListItem({
             </Button>
             <div>
               <StyledNavLink
-                to={pathname === '/map/radio' ? `${type}s/${id}` : id}
+                to={pathname.includes('radio') ? `${type}s/${id}` : id}
                 type="secondary"
               >
                 More info
@@ -82,7 +83,6 @@ function ListItem({
           <RadioShowsList stationId={id} />
         </ul>
       )}
-      <Outlet />
     </>
   );
 }

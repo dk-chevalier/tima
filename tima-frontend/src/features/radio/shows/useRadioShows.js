@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getRadioShows } from '../../services/apiRadio';
+import { getRadioShows } from '../../../services/apiRadio';
 
 export function useRadioShows(stationId) {
   const {

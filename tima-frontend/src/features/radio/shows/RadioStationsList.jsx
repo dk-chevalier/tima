@@ -1,8 +1,8 @@
-import ListItem from '../../ui/ListItem';
-import Spinner from '../../ui/Spinner';
-import { useRadioStations } from './useRadioStations';
+import ListItem from '../../../ui/ListItem';
+import Spinner from '../../../ui/Spinner';
+import { useRadioStations } from '../stations/useRadioStations';
 
-function RadioList() {
+function RadioStationsList() {
   const { radioStations, isLoading } = useRadioStations();
 
   // return <div>RADIO LIST</div>;
@@ -27,4 +27,4 @@ function RadioList() {
   );
 }
 
-export default RadioList;
+export default RadioStationsList;

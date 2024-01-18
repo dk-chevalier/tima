@@ -1,5 +1,5 @@
-import ListItem from '../../ui/ListItem';
-import Spinner from '../../ui/Spinner';
+import ListItem from '../../../ui/ListItem';
+import Spinner from '../../../ui/Spinner';
 import { useRadioShows } from './useRadioShows';
 
 function RadioShowsList({ stationId }) {
