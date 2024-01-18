@@ -18,7 +18,7 @@ export async function getVenue({ queryKey }) {
   try {
     const [_, venueId] = queryKey;
     const res = await fetch(`${URL}/api/v1/venues/${venueId}`);
-    const data = await res.json();
+    const { data } = await res.json();
 
     return data;
   } catch (err) {

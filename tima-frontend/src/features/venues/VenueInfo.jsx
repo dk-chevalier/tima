@@ -5,6 +5,8 @@ function VenueInfo() {
   const { venueId } = useParams();
   const venue = useVenue(venueId);
 
+  console.log(venue);
+
   return <div>VENUE</div>;
 }
 
