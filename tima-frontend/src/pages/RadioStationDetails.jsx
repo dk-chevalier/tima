@@ -1,11 +1,11 @@
-import Popup from '../ui/Popup';
+import RadioStationInfo from '../features/radio/stations/RadioStationInfo';
+import Details from '../ui/Details';
 
 function RadioStationDetails() {
   return (
-    <div>
-      RADIO STATION DETAILS
-      <Popup />
-    </div>
+    <Details>
+      <RadioStationInfo />
+    </Details>
   );
 }
 

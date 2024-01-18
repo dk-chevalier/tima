@@ -18,14 +18,14 @@ router
 
 router
   .route('/')
-  // TODO: CHANGE BACK TO ONLY LOGGED IN USERS!
+  // TODO: CHANGE BACK TO ONLY LOGGED IN USERS FOR ALL ROUTES!!!!!!!!!!!!
   // .get(authController.protect, venueController.getAllVenues)
   .get(venueController.getAllVenues)
   .post(authController.protect, venueController.createVenue);
 
 router
   .route('/:id')
-  .get(authController.protect, venueController.getVenue)
+  .get(venueController.getVenue)
   .patch(
     authController.protect,
     authController.restrictTo('admin'),

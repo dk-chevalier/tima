@@ -1,11 +1,11 @@
-import Popup from '../ui/Popup';
+import VenueInfo from '../features/venues/VenueInfo';
+import Details from '../ui/Details';
 
 function VenueDetails() {
   return (
-    <div>
-      VENUE DETAILS
-      <Popup />
-    </div>
+    <Details>
+      <VenueInfo />
+    </Details>
   );
 }
 

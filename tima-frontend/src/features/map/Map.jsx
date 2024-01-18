@@ -9,6 +9,7 @@ import VenuesSource from '../venues/VenuesSource';
 import RadioStationsSource from '../radio/stations/RadioStationsSource';
 import RadioStationMarkersLayer from '../radio/stations/RadioStationMarkersLayer';
 import VenueMarkersLayer from '../venues/VenueMarkersLayer';
+import MapLayers from './MapLayers';
 
 // TODO: Make this a environment variable
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -22,8 +23,6 @@ function MapContainer() {
   const zoom = 12;
 
   const dispatch = useDispatch();
-
-  const { pathname } = useLocation();
 
   const {
     isLoading: isLoadingPosition,
@@ -43,7 +42,6 @@ function MapContainer() {
     [geolocationPosition, getPosition],
   );
 
-  // FIXME: TO ALLOW FOR OTHER PAGES (i.e. map/radio, etc., not just map/venues)
   const onMouseEnter = (e) => {
     mapRef.current.getCanvas().style.cursor = 'pointer';
 
@@ -51,9 +49,7 @@ function MapContainer() {
     const { title, id, address, email } = e.features[0].properties;
 
     const { city } = JSON.parse(address);
-    // const { bookerName, bookerEmail } = JSON.parse(bookingContact);
 
-    // setPopupInfo({ title, id, city, bookerName, bookerEmail, coordinates });
     dispatch(
       updatePopup({
         title,
@@ -90,18 +86,7 @@ function MapContainer() {
       reuseMaps
       // onLoad={onLoad}
     >
-      {pathname === '/map/venues' && (
-        <VenuesSource>
-          <VenueMarkersLayer />
-          <MapPopup />
-        </VenuesSource>
-      )}
-      {pathname === '/map/radio' && (
-        <RadioStationsSource>
-          <RadioStationMarkersLayer />
-          <MapPopup />
-        </RadioStationsSource>
-      )}
+      <MapLayers />
     </Map>
   );
 }

@@ -5,13 +5,16 @@ function StyledNavLink({ children, to, type }) {
 
   const styles = {
     main: base + ' hover:text-secondary-300 text-primary-100 bg-primary-900',
-    secondary: 'py-2 px-3 rounded-md bg-secondary-300',
+    secondary: 'py-2 px-3 rounded-sm bg-secondary-300 text-sm',
     sidebar:
       base +
       ' text-primary-100 duration-200 shadow-md transition-all duration-300 active:shadow-sm',
     active: {
       main:
-        base + ' text-primary-900 border border-secondary-300 bg-secondary-300',
+        base +
+        ' text-primary-900 border border-secondary-300 bg-secondary-300 ',
+      secondary:
+        'py-2 px-3 rounded-sm bg-secondary-300 text-sm text-primary-100',
       sidebar: base + ' text-primary-900 duration-200 bg-secondary-300',
     },
   };

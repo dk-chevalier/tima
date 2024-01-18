@@ -1,11 +1,11 @@
-import Popup from '../ui/Popup';
+import RadioShowInfo from '../features/radio/shows/RadioShowInfo';
+import Details from '../ui/Details';
 
 function RadioShowDetails() {
   return (
-    <div className="col-span-1 col-start-2">
-      RADIO SHOW DETAILS
-      <Popup />
-    </div>
+    <Details>
+      <RadioShowInfo />
+    </Details>
   );
 }
 
