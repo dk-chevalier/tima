@@ -32,10 +32,10 @@ const radioStationSchema = new mongoose.Schema(
         required: [true, 'A radio station must have a postcode'],
         trim: true,
       },
-      stationPh: {
-        type: String,
-        trim: true,
-      },
+    },
+    stationPh: {
+      type: String,
+      trim: true,
     },
     website: {
       type: String,

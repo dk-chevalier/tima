@@ -32,16 +32,16 @@ const venueSchema = new mongoose.Schema(
         required: [true, 'A venue must have a postcode'],
         trim: true,
       },
-      venuePh: {
-        type: String,
-        trim: true,
-      },
-      venueEmail: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        validate: [validator.isEmail, 'Please provide a valid email'],
-      },
+    },
+    venuePh: {
+      type: String,
+      trim: true,
+    },
+    venueEmail: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      validate: [validator.isEmail, 'Please provide a valid email'],
     },
     website: {
       type: String,

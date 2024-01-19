@@ -3,13 +3,9 @@ import Map from 'react-map-gl';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useDispatch } from 'react-redux';
 import { closePopup, openPopup, updatePopup } from './mapSlice';
-import MapPopup from './MapPopup';
-import { useLocation } from 'react-router-dom';
-import VenuesSource from '../venues/VenuesSource';
-import RadioStationsSource from '../radio/stations/RadioStationsSource';
-import RadioStationMarkersLayer from '../radio/stations/RadioStationMarkersLayer';
-import VenueMarkersLayer from '../venues/VenueMarkersLayer';
+
 import MapLayers from './MapLayers';
+// import { useMapLayerClick } from '../../hooks/useMapLayerClick';
 
 // TODO: Make this a environment variable
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -23,6 +19,9 @@ function MapContainer() {
   const zoom = 12;
 
   const dispatch = useDispatch();
+
+  // FIXME: onClick function I made means that map re-renders every time pathname changes again...one way to fix is to not allow clicking on markers and instead highlight the associated sidebar tab???
+  // const onClick = useMapLayerClick();
 
   const {
     isLoading: isLoadingPosition,
@@ -83,6 +82,8 @@ function MapContainer() {
       interactiveLayerIds={['point']}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      // FIXME: onClick function I made means that map re-renders every time pathname changes again...one way to fix is to not allow clicking on markers and instead highlight the associated sidebar tab???
+      // onClick={(e) => onClick(e)}
       reuseMaps
       // onLoad={onLoad}
     >
