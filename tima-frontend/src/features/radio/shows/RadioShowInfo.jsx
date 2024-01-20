@@ -1,15 +1,23 @@
 import { useParams } from 'react-router-dom';
 import { useRadioShow } from './useRadioShow';
 import Spinner from '../../../ui/Spinner';
+import StyledNavLink from '../../../ui/StyledNavLink';
 
 function RadioShowInfo() {
   const { showId } = useParams();
   const { radioShow, isLoading, error } = useRadioShow(showId);
+  console.log(radioShow);
 
   if (isLoading) return <Spinner />;
 
-  const { showName, hosts, genresSupported, showEmail, showWebpage } =
-    radioShow.data;
+  const {
+    showName,
+    hosts,
+    genresSupported,
+    showEmail,
+    showWebpage,
+    radioStation,
+  } = radioShow.data;
 
   return (
     <>
@@ -21,6 +29,7 @@ function RadioShowInfo() {
           {showWebpage}
         </a>
       </div>
+
       <div className="relative right-[-0.5rem] top-[-0.5rem] col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col items-end text-right text-xs opacity-60">
         <h3>Genres supported:</h3>
         <ul className="ul-cols-2">
@@ -29,9 +38,20 @@ function RadioShowInfo() {
           })}
         </ul>
       </div>
+
       <div className="col-span-1 col-start-1 row-span-1 row-start-2">
         <h3 className="mb-1 text-sm text-primary-800">Show email:</h3>
         <p>{showEmail}</p>
+      </div>
+
+      <div className="col-span-1 col-start-2 row-span-1 row-start-2 text-end">
+        <h3 className="mb-1 text-sm text-primary-800">Radio station:</h3>
+        <StyledNavLink
+          to={`/map/radio/stations/${radioStation.id}`}
+          type="secondary"
+        >
+          {radioStation.stationName}
+        </StyledNavLink>
       </div>
 
       <div className="col-span-2 col-start-1 row-span-1 row-start-3 rounded-sm border border-secondary-300 bg-primary-300 p-6 shadow-md">

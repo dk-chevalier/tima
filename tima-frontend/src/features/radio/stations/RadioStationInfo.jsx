@@ -91,7 +91,7 @@ function RadioStationInfo() {
         </Button>
       </div>
       {showsOpen && (
-        <ul className="no-scrollbar col-span-2 col-start-1 mx-5 h-80 overflow-scroll border border-secondary-300 px-12 py-4">
+        <ul className="no-scrollbar col-span-2 col-start-1 mx-5 h-80 overflow-scroll rounded-md border border-secondary-300 px-12 py-4">
           <RadioShowsList stationId={stationId} />
         </ul>
       )}

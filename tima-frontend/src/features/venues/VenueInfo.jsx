@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useVenue } from './useVenue';
 import Spinner from '../../ui/Spinner';
 import Button from '../../ui/Button';
+import StyledNavLink from '../../ui/StyledNavLink';
 
 function VenueInfo() {
   const { venueId } = useParams();
@@ -23,9 +24,10 @@ function VenueInfo() {
     soundSystemProvided,
     capacity,
     gigType,
+    location,
   } = venue.data;
 
-  console.log(venue);
+  const [lng, lat] = location.coordinates;
 
   return (
     <>
@@ -74,7 +76,9 @@ function VenueInfo() {
         <p>{bookingContact.bookerPh}</p>
       </div>
       <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex h-min gap-3">
-        <Button type="secondary">Find radio stations near here</Button>
+        <StyledNavLink type="secondary" to={`/map/radio/${lat},${lng}/100/km`}>
+          Find radio stations near here
+        </StyledNavLink>
         <Button type="secondary">Find newspapers near here</Button>
         <Button type="secondary">Find magazines/blogs near here</Button>
       </div>

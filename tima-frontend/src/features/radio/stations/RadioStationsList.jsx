@@ -1,11 +1,17 @@
+import { useParams } from 'react-router-dom';
 import ListItem from '../../../ui/ListItem';
 import Spinner from '../../../ui/Spinner';
 import { useRadioStations } from './useRadioStations';
 
 function RadioStationsList() {
-  const { radioStations, isLoading } = useRadioStations();
+  console.log('stations load');
+  const { latlng, distance, unit } = useParams();
+  const { radioStations, isLoading, error } = useRadioStations({
+    latlng,
+    distance,
+    unit,
+  });
 
-  // return <div>RADIO LIST</div>;
   return (
     <>
       {isLoading ? (

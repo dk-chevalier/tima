@@ -39,6 +39,10 @@ function App() {
                   element={<RadioStationDetails />}
                 />
                 <Route path="shows/:showId" element={<RadioShowDetails />} />
+                <Route
+                  path=":latlng/:distance/:unit"
+                  element={<RadioResults />}
+                />
               </Route>
             </Route>
           </Route>
