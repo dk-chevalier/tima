@@ -33,16 +33,15 @@ function App() {
               <Route path="venues" element={<VenueResults />}>
                 <Route path=":venueId" element={<VenueDetails />} />
               </Route>
-              <Route path="radio" element={<RadioResults />}>
+              <Route
+                path="radio/:latlng?/:distance?/:unit?"
+                element={<RadioResults />}
+              >
                 <Route
                   path="stations/:stationId"
                   element={<RadioStationDetails />}
                 />
                 <Route path="shows/:showId" element={<RadioShowDetails />} />
-                <Route
-                  path=":latlng/:distance/:unit"
-                  element={<RadioResults />}
-                />
               </Route>
             </Route>
           </Route>
