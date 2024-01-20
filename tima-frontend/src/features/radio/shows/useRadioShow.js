@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getRadioShow } from '../../../services/apiRadio';
 
-export function useRadioShow({ showId }) {
+export function useRadioShow(showId) {
   const {
     isLoading,
     data: radioShow,

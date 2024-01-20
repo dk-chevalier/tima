@@ -1,6 +1,6 @@
 import ListItem from '../../../ui/ListItem';
 import Spinner from '../../../ui/Spinner';
-import { useRadioStations } from '../stations/useRadioStations';
+import { useRadioStations } from './useRadioStations';
 
 function RadioStationsList() {
   const { radioStations, isLoading } = useRadioStations();

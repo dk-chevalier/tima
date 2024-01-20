@@ -17,4 +17,8 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .ul-cols-2 {
+    columns: 2;
+  }
 }

@@ -73,7 +73,7 @@ function VenueInfo() {
         <p>{bookingContact.bookerEmail}</p>
         <p>{bookingContact.bookerPh}</p>
       </div>
-      <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex gap-3">
+      <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex h-min gap-3">
         <Button type="secondary">Find radio stations near here</Button>
         <Button type="secondary">Find newspapers near here</Button>
         <Button type="secondary">Find magazines/blogs near here</Button>
