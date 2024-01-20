@@ -4,12 +4,18 @@ import { HiChevronDown } from 'react-icons/hi2';
 import Spinner from '../../../ui/Spinner';
 import Button from '../../../ui/Button';
 import { useState } from 'react';
+import RadioShowsList from '../shows/RadioShowsList';
 
 function RadioStationInfo() {
+  console.log('RADIO STATION DETAILS LOAD');
   const { stationId } = useParams();
   const { radioStation, isLoading, error } = useRadioStation(stationId);
 
   const [showsOpen, setShowsOpen] = useState(false);
+
+  function toggleRadioShows() {
+    setShowsOpen(!showsOpen);
+  }
 
   if (isLoading) return <Spinner />;
 
@@ -73,7 +79,7 @@ function RadioStationInfo() {
         )}
       </div>
       <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex h-min gap-3">
-        <Button type="secondary">
+        <Button type="secondary" onClick={toggleRadioShows}>
           Shows
           <span
             className={`flex origin-center duration-300 ${
@@ -84,6 +90,11 @@ function RadioStationInfo() {
           </span>
         </Button>
       </div>
+      {showsOpen && (
+        <ul className="no-scrollbar col-span-2 col-start-1 mx-5 h-80 overflow-scroll border border-secondary-300 px-12 py-4">
+          <RadioShowsList stationId={stationId} />
+        </ul>
+      )}
     </>
   );
 }

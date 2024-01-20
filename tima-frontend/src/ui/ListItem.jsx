@@ -1,9 +1,8 @@
-import { HiChevronDown, HiChevronUp } from 'react-icons/hi2';
+import { HiChevronDown } from 'react-icons/hi2';
 import Button from '../ui/Button';
-import { useRadioShows } from '../features/radio/shows/useRadioShows';
 import RadioShowsList from '../features/radio/shows/RadioShowsList';
 import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import StyledNavLink from './StyledNavLink';
 
 function ListItem({
@@ -39,6 +38,7 @@ function ListItem({
           <h2 className="text-base font-semibold">{name}</h2>
           <p className="text-sm">{city}</p>
         </div>
+
         <div className="flex items-end justify-between">
           <div>
             <h3 className="text-sm font-medium">
@@ -48,13 +48,18 @@ function ListItem({
             {contactName && <p className="text-sm">{contactName}</p>}
             <p className="text-sm">{contactEmail}</p>
           </div>
+
           <div className="flex flex-col gap-2 pt-2">
             <Button href={website} type="secondary">
               Website
             </Button>
             <div>
               <StyledNavLink
-                to={pathname.includes('radio') ? `${type}s/${id}` : id}
+                to={
+                  pathname.includes('radio')
+                    ? `/map/radio/${type}s/${id}`
+                    : `/map/${type}s/${id}`
+                }
                 type="secondary"
               >
                 More info
