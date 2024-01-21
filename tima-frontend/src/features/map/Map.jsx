@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { closePopup, openPopup, updatePopup } from './mapSlice';
 
 import MapLayers from './MapLayers';
+import Spinner from '../../ui/Spinner';
 // import { useMapLayerClick } from '../../hooks/useMapLayerClick';
 
 // TODO: Make this a environment variable
@@ -19,9 +20,6 @@ function MapContainer() {
   const zoom = 12;
 
   const dispatch = useDispatch();
-
-  // FIXME: onClick function I made means that map re-renders every time pathname changes again...one way to fix is to not allow clicking on markers and instead highlight the associated sidebar tab???
-  // const onClick = useMapLayerClick();
 
   const {
     isLoading: isLoadingPosition,
@@ -69,7 +67,7 @@ function MapContainer() {
   };
 
   return isLoadingPosition || !mapLng || !mapLat ? (
-    <p>Loading Data...</p>
+    <Spinner />
   ) : (
     <Map
       ref={mapRef}

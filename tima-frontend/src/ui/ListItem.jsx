@@ -2,7 +2,7 @@ import { HiChevronDown } from 'react-icons/hi2';
 import Button from '../ui/Button';
 import RadioShowsList from '../features/radio/shows/RadioShowsList';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import StyledNavLink from './StyledNavLink';
 
 function ListItem({
@@ -17,6 +17,15 @@ function ListItem({
   const [showsOpen, setShowsOpen] = useState(false);
 
   const { pathname } = useLocation();
+  const { latlng, distance, unit } = useParams();
+
+  // allows filtered list to stay filtered when opening details
+  let newPath;
+
+  if (pathname.includes('radio') && latlng)
+    newPath = `/map/radio/${latlng}/${distance}/${unit}/${type}s/${id}`;
+  if (pathname.includes('radio') && !latlng)
+    newPath = `/map/radio/${type}s/${id}`;
 
   const baseStyle =
     'flex h-min flex-col rounded-md px-3 py-2 text-primary-900 shadow-lg transition-all duration-300 hover:shadow-md border-secondary-300 border';
@@ -24,7 +33,7 @@ function ListItem({
   const liStyle = {
     venue: baseStyle + ' bg-secondary-200',
     station: baseStyle + ' bg-secondary-200',
-    show: baseStyle + ' bg-secondary-200',
+    show: baseStyle + ' bg-primary-200',
   };
 
   function toggleRadioShows() {
@@ -56,9 +65,10 @@ function ListItem({
             <div>
               <StyledNavLink
                 to={
-                  pathname.includes('radio')
-                    ? `/map/radio/${type}s/${id}`
-                    : `/map/${type}s/${id}`
+                  // pathname.includes('radio')
+                  //   ? `/map/radio/${type}s/${id}`
+                  //   : `/map/${type}s/${id}`
+                  newPath || `/map/${type}s/${id}`
                 }
                 type="secondary"
               >
