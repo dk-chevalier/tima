@@ -4,7 +4,6 @@ import Spinner from '../../../ui/Spinner';
 import { useRadioStations } from './useRadioStations';
 
 function RadioStationsList() {
-  console.log('stations load');
   const { latlng, distance, unit } = useParams();
   const { radioStations, isLoading, error } = useRadioStations({
     latlng,

@@ -2,11 +2,11 @@ import { useParams } from 'react-router-dom';
 import { useRadioShow } from './useRadioShow';
 import Spinner from '../../../ui/Spinner';
 import StyledNavLink from '../../../ui/StyledNavLink';
+import Button from '../../../ui/Button';
 
 function RadioShowInfo() {
   const { showId } = useParams();
   const { radioShow, isLoading, error } = useRadioShow(showId);
-  console.log(radioShow);
 
   if (isLoading) return <Spinner />;
 
@@ -30,7 +30,7 @@ function RadioShowInfo() {
         </a>
       </div>
 
-      <div className="relative right-[-0.5rem] top-[-0.5rem] col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col items-end text-right text-xs opacity-60">
+      <div className="relative right-[-0.5rem] top-4 col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col items-end text-right text-xs opacity-60">
         <h3>Genres supported:</h3>
         <ul className="ul-cols-2">
           {genresSupported.map((genre) => {

@@ -3,7 +3,6 @@ const URL = import.meta.env.VITE_LOCAL_URL;
 // RADIO STATION QUERIES
 export async function getRadioStations({ queryKey }) {
   try {
-    console.log('fetching data!!!!!!!!!!!');
     const [_, options] = queryKey;
     let res;
     if (options.distance) {
@@ -16,8 +15,6 @@ export async function getRadioStations({ queryKey }) {
       );
     }
     const { data } = await res.json();
-
-    console.log(data);
 
     return data;
   } catch (err) {

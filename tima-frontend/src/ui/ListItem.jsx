@@ -33,7 +33,7 @@ function ListItem({
   const liStyle = {
     venue: baseStyle + ' bg-secondary-200',
     station: baseStyle + ' bg-secondary-200',
-    show: baseStyle + ' bg-primary-200',
+    show: baseStyle + ' bg-secondary-200',
   };
 
   function toggleRadioShows() {

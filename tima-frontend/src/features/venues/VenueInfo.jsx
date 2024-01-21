@@ -39,7 +39,7 @@ function VenueInfo() {
           {website}
         </a>
       </div>
-      <div className="relative right-[-0.5rem] top-[-0.5rem] col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col items-end text-right text-xs opacity-60">
+      <div className="relative right-[-0.5rem] top-4 col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col items-end text-right text-xs opacity-60">
         <div>
           <p>{ratingsAverage}/5 stars</p>
           <p>from {ratingsQuantity} ratings</p>
