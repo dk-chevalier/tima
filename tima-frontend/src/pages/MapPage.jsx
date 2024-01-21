@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 function MapPage() {
   return (
-    <div className="grid grid-cols-[23vw_1fr] grid-rows-[80vh]">
+    <div className="grid grid-cols-[1fr_3fr] grid-rows-[80vh]">
       <Sidebar>
         <Outlet />
       </Sidebar>
