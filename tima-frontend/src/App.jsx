@@ -1,4 +1,11 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+} from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -20,35 +27,87 @@ const reactQuery = new QueryClient({
   },
 });
 
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate replace to="map/venues" />,
+      },
+      {
+        path: 'map',
+        element: <MapPage />,
+        children: [
+          {
+            path: 'venues',
+            element: <VenueResults />,
+            children: [
+              {
+                path: ':venueId',
+                element: <VenueDetails />,
+              },
+            ],
+          },
+          {
+            path: 'radio/:latlng?/:distance?/:unit?',
+            element: <RadioResults />,
+            children: [
+              {
+                path: 'stations/:stationId',
+                element: <RadioStationDetails />,
+              },
+              {
+                path: 'shows/:showId',
+                element: <RadioShowDetails />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]);
+
 function App() {
   return (
     <QueryClientProvider client={reactQuery}>
       <ReactQueryDevtools initialIsOpen={false} />
 
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<Navigate replace to="map/venues" />} />
-            <Route path="map" element={<MapPage />}>
-              <Route path="venues" element={<VenueResults />}>
-                <Route path=":venueId" element={<VenueDetails />} />
-              </Route>
-              <Route
-                path="radio/:latlng?/:distance?/:unit?"
-                element={<RadioResults />}
-              >
-                <Route
-                  path="stations/:stationId"
-                  element={<RadioStationDetails />}
-                />
-                <Route path="shows/:showId" element={<RadioShowDetails />} />
-              </Route>
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
     </QueryClientProvider>
   );
 }
+
+// function App() {
+//   return (
+//     <QueryClientProvider client={reactQuery}>
+//       <ReactQueryDevtools initialIsOpen={false} />
+
+//       <BrowserRouter>
+//         <Routes>
+//           <Route element={<AppLayout />}>
+//             <Route index element={<Navigate replace to="map/venues" />} />
+//             <Route path="map" element={<MapPage />}>
+//               <Route path="venues" element={<VenueResults />}>
+//                 <Route path=":venueId" element={<VenueDetails />} />
+//               </Route>
+//               <Route
+//                 path="radio/:latlng?/:distance?/:unit?"
+//                 element={<RadioResults />}
+//               >
+//                 <Route
+//                   path="stations/:stationId"
+//                   element={<RadioStationDetails />}
+//                 />
+//                 <Route path="shows/:showId" element={<RadioShowDetails />} />
+//               </Route>
+//             </Route>
+//           </Route>
+//         </Routes>
+//       </BrowserRouter>
+//     </QueryClientProvider>
+//   );
+// }
 
 export default App;
