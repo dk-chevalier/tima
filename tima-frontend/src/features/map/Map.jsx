@@ -6,6 +6,7 @@ import { closePopup, openPopup, updatePopup } from './mapSlice';
 
 import MapLayers from './MapLayers';
 import Spinner from '../../ui/Spinner';
+import { useRouteLoaderData } from 'react-router-dom';
 // import { useMapLayerClick } from '../../hooks/useMapLayerClick';
 
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -13,6 +14,9 @@ const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 function MapContainer() {
   console.log('MAP LOAD');
   const mapRef = useRef(null);
+  // TODO: find best way to move map viewport when there are coordinate params...below might be best, but this means rerendering map (perhaps could move without that happening?)
+  // const latlng = useRouteLoaderData('map');
+  // console.log(latlng);
 
   const [mapLng, setMapLng] = useState(null);
   const [mapLat, setMapLat] = useState(null);

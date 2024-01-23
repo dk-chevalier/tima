@@ -20,10 +20,10 @@ const venuesListQuery = {
 
 export const loader =
   (queryClient) =>
-  ({ params }) => {
+  async ({ params }) => {
     if (queryClient.getQueryData(venuesListQuery.queryKey))
       return queryClient.getQueryData(venuesListQuery.queryKey);
-    console.log('REQUESTING VENUES');
-    const venues = queryClient.fetchQuery(venuesListQuery);
+
+    const venues = await queryClient.fetchQuery(venuesListQuery);
     return venues;
   };

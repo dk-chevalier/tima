@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useRadioStation } from './useRadioStation';
 import { HiChevronDown } from 'react-icons/hi2';
 import Spinner from '../../../ui/Spinner';
@@ -7,9 +7,10 @@ import { useState } from 'react';
 import RadioShowsList from '../shows/RadioShowsList';
 
 function RadioStationInfo() {
-  console.log('RADIO STATION DETAILS LOAD');
-  const { stationId } = useParams();
-  const { radioStation, isLoading, error } = useRadioStation(stationId);
+  // const { stationId } = useParams();
+  // const { radioStation, isLoading, error } = useRadioStation(stationId);
+
+  const { data: radioStation } = useRouteLoaderData('radioStation');
 
   const [showsOpen, setShowsOpen] = useState(false);
 
@@ -17,7 +18,7 @@ function RadioStationInfo() {
     setShowsOpen(!showsOpen);
   }
 
-  if (isLoading) return <Spinner />;
+  // if (isLoading) return <Spinner />;
 
   const {
     stationName,
@@ -26,7 +27,8 @@ function RadioStationInfo() {
     website,
     musicSubmissions,
     interviewRequests,
-  } = radioStation.data;
+    id: stationId,
+  } = radioStation;
 
   return (
     <>

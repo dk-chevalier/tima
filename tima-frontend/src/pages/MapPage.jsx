@@ -16,3 +16,11 @@ function MapPage() {
 }
 
 export default MapPage;
+
+// export const loader =
+//   (queryClient) =>
+//   ({ params }) => {
+//     const { latlng } = params;
+//     if (!latlng) return null;
+//     return latlng;
+//   };

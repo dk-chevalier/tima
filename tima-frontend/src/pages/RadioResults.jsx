@@ -20,13 +20,13 @@ export default RadioResults;
 
 export const loader =
   (queryClient) =>
-  ({ params }) => {
+  async ({ params }) => {
     const { latlng, distance, unit } = params;
     const options = { latlng, distance, unit };
     if (queryClient.getQueryData(['radiostations', options]))
       return queryClient.getQueryData(['radiostations', options]);
 
-    const radioStations = queryClient.fetchQuery({
+    const radioStations = await queryClient.fetchQuery({
       queryKey: ['radiostations', options],
       queryFn: getRadioStations,
     });

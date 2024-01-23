@@ -3,7 +3,6 @@ import { selectOpenPopup } from './mapSlice';
 import { useSelector } from 'react-redux';
 
 function MapPopup() {
-  console.log('POPUP LOAD');
   const popupInfo = useSelector(selectOpenPopup);
 
   return (

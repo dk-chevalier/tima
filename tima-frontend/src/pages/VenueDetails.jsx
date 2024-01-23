@@ -1,4 +1,5 @@
 import VenueInfo from '../features/venues/VenueInfo';
+import { getVenue } from '../services/apiVenues';
 import Details from '../ui/Details';
 
 function VenueDetails() {
@@ -11,6 +12,16 @@ function VenueDetails() {
 
 export default VenueDetails;
 
-export const loader = ({ params }) => {
-  console.log(params);
-};
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    const { venueId } = params;
+    if (queryClient.getQueryData(['venue', venueId]))
+      return queryClient.getQueryData(['venue', venueId]);
+
+    const venue = await queryClient.fetchQuery({
+      queryKey: ['venue', venueId],
+      queryFn: getVenue,
+    });
+    return venue;
+  };

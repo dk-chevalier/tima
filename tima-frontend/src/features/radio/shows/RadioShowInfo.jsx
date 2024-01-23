@@ -1,14 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useRadioShow } from './useRadioShow';
 import Spinner from '../../../ui/Spinner';
 import StyledNavLink from '../../../ui/StyledNavLink';
 import Button from '../../../ui/Button';
 
 function RadioShowInfo() {
-  const { showId } = useParams();
-  const { radioShow, isLoading, error } = useRadioShow(showId);
+  // const { showId } = useParams();
+  // const { radioShow, isLoading, error } = useRadioShow(showId);
 
-  if (isLoading) return <Spinner />;
+  // if (isLoading) return <Spinner />;
+
+  const { data: radioShow } = useRouteLoaderData('radioShow');
 
   const {
     showName,
@@ -17,7 +19,7 @@ function RadioShowInfo() {
     showEmail,
     showWebpage,
     radioStation,
-  } = radioShow.data;
+  } = radioShow;
 
   return (
     <>

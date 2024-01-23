@@ -1,14 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useVenue } from './useVenue';
 import Spinner from '../../ui/Spinner';
 import Button from '../../ui/Button';
 import StyledNavLink from '../../ui/StyledNavLink';
 
 function VenueInfo() {
-  const { venueId } = useParams();
-  const { venue, isLoading, error } = useVenue(venueId);
+  // const { venueId } = useParams();
+  // const { venue, isLoading, error } = useVenue(venueId);
 
-  if (isLoading) return <Spinner />;
+  const { data: venue } = useRouteLoaderData('venue');
+
+  // if (isLoading) return <Spinner />;
 
   const {
     address,
@@ -25,7 +27,7 @@ function VenueInfo() {
     capacity,
     gigType,
     location,
-  } = venue.data;
+  } = venue;
 
   const [lng, lat] = location.coordinates;
 
