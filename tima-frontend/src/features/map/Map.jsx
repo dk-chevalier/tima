@@ -8,7 +8,6 @@ import MapLayers from './MapLayers';
 import Spinner from '../../ui/Spinner';
 // import { useMapLayerClick } from '../../hooks/useMapLayerClick';
 
-// TODO: Make this a environment variable
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 function MapContainer() {

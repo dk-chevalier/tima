@@ -10,3 +10,7 @@ function VenueDetails() {
 }
 
 export default VenueDetails;
+
+export const loader = ({ params }) => {
+  console.log(params);
+};

@@ -14,10 +14,14 @@ import MapPage from './pages/MapPage';
 import VenueDetails from './pages/VenueDetails';
 import RadioStationDetails from './pages/RadioStationDetails';
 import RadioShowDetails from './pages/RadioShowDetails';
-import VenueResults from './pages/VenueResults';
-import RadioResults from './pages/RadioResults';
+import VenueResults, {
+  loader as venueResultsLoader,
+} from './pages/VenueResults';
+import RadioResults, {
+  loader as radioResultsLoader,
+} from './pages/RadioResults';
 
-const reactQuery = new QueryClient({
+const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       // stale time = time before cached data becomes stale (i.e. gets refreshed again on next load)
@@ -38,10 +42,13 @@ const router = createBrowserRouter([
       {
         path: 'map',
         element: <MapPage />,
+        id: 'map',
         children: [
           {
             path: 'venues',
             element: <VenueResults />,
+            id: 'venues',
+            loader: venueResultsLoader(queryClient),
             children: [
               {
                 path: ':venueId',
@@ -52,6 +59,8 @@ const router = createBrowserRouter([
           {
             path: 'radio/:latlng?/:distance?/:unit?',
             element: <RadioResults />,
+            id: 'radioStations',
+            loader: radioResultsLoader(queryClient),
             children: [
               {
                 path: 'stations/:stationId',
@@ -71,7 +80,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <QueryClientProvider client={reactQuery}>
+    <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
 
       <RouterProvider router={router} />

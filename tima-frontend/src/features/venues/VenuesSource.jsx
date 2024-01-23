@@ -1,13 +1,15 @@
 import { Source } from 'react-map-gl';
 import { useVenues } from './useVenues';
+import { useRouteLoaderData } from 'react-router-dom';
 
 function VenuesSource({ children }) {
-  const { isLoading: isLoadingVenues, venues } = useVenues();
+  // const { isLoading: isLoadingVenues, venues } = useVenues();
+  const { data: venues } = useRouteLoaderData(['venues']);
 
-  if (isLoadingVenues) return;
+  // if (isLoadingVenues) return;
   const geojsonMarkers = {
     type: 'FeatureCollection',
-    features: venues.data.map((venue) => {
+    features: venues.map((venue) => {
       const data = {
         type: 'Feature',
         geometry: venue.location,

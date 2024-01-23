@@ -1,20 +1,22 @@
 import { Source } from 'react-map-gl';
 import { useRadioStations } from './useRadioStations';
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useMemo } from 'react';
 
 function RadioStationsSource({ children }) {
-  const { latlng, distance, unit } = useParams();
-  const { isLoading: isLoadingStations, radioStations } = useRadioStations({
-    latlng,
-    distance,
-    unit,
-  });
+  // const { latlng, distance, unit } = useParams();
+  // const { isLoading: isLoadingStations, radioStations } = useRadioStations({
+  //   latlng,
+  //   distance,
+  //   unit,
+  // });
 
-  if (isLoadingStations) return;
+  const { data: radioStations } = useRouteLoaderData('radioStations');
+
+  // if (isLoadingStations) return;
   const geojsonMarkers = {
     type: 'FeatureCollection',
-    features: radioStations.data.map((station) => {
+    features: radioStations.map((station) => {
       const data = {
         type: 'Feature',
         geometry: station.location,
