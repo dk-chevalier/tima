@@ -11,6 +11,7 @@ function Button({ children, type, to, onClick, href }) {
     round:
       base +
       ' bg-primary-900 rounded-full size-10 border border-secondary-300 text-primary-100',
+    submit: base + ' bg-secondary-300 text-md rounded-sm text-primary-900',
   };
 
   // Note -1 is a string, not number!
@@ -44,6 +45,13 @@ function Button({ children, type, to, onClick, href }) {
       >
         {children}
       </a>
+    );
+
+  if (type === 'submit')
+    return (
+      <button className={styles[type]} type={type}>
+        {children}
+      </button>
     );
 
   return (

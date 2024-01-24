@@ -4,7 +4,7 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 function VenuesSource({ children }) {
   // const { isLoading: isLoadingVenues, venues } = useVenues();
-  const { data: venues } = useRouteLoaderData(['venues']);
+  const { data: venues } = useRouteLoaderData('venues');
 
   // if (isLoadingVenues) return;
   const geojsonMarkers = {

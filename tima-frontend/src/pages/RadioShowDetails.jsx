@@ -1,6 +1,5 @@
 import RadioShowInfo from '../features/radio/shows/RadioShowInfo';
 import { getRadioShow } from '../services/apiRadio';
-import Button from '../ui/Button';
 import Details from '../ui/Details';
 
 function RadioShowDetails() {

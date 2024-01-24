@@ -20,7 +20,15 @@ const venuesListQuery = {
 
 export const loader =
   (queryClient) =>
-  async ({ params }) => {
+  async ({ request }) => {
+    let url = new URL(request.url);
+    const searchFor = url.searchParams.get('searchingFor');
+    const searchingBy = url.searchParams.get('searchingBy');
+    const searchLocation = url.searchParams.get('searchLocation');
+    const searchName = url.searchParams.get('searchName');
+    const genres = url.searchParams.get('genres');
+    const gigType = url.searchParams.get('gig-type');
+
     if (queryClient.getQueryData(venuesListQuery.queryKey))
       return queryClient.getQueryData(venuesListQuery.queryKey);
 

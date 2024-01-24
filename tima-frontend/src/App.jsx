@@ -23,6 +23,7 @@ import VenueResults, {
 import RadioResults, {
   loader as radioResultsLoader,
 } from './pages/RadioResults';
+import { action as searchAction } from './ui/SearchForm';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
         element: <MapPage />,
         id: 'map',
         // loader: mapLoader(queryClient),
+        action: searchAction,
         children: [
           {
             path: 'venues',
