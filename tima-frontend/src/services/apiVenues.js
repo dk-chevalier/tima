@@ -1,9 +1,19 @@
 const URL = import.meta.env.VITE_LOCAL_URL;
 
-export async function getVenues() {
+export async function getVenues({ queryKey }) {
   try {
+    const [_, options] = queryKey;
+    console.log(options);
+    // const genresQry = `&`;
+    const gigTypeQry = `&gigType[eq]=${options.gigType}`;
+    const genresQry = `&genresSupported[in]=${options.genres}`;
+    const byNameQry = `&venueName[eq]=${options.searchName}`;
     const res = await fetch(
-      `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail,website`,
+      `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail,website${
+        options.gigType ? gigTypeQry : ''
+      }${options.genres ? genresQry : ''}${
+        options.searchName ? byNameQry : ''
+      }`,
     );
     const { data } = await res.json();
 

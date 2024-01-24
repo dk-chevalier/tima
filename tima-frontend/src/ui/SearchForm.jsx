@@ -2,6 +2,9 @@ import { HiXMark } from 'react-icons/hi2';
 import Button from './Button';
 import { Form, useActionData } from 'react-router-dom';
 import { useState } from 'react';
+import { AddressAutofill } from '@mapbox/search-js-react';
+
+const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 function SearchForm({ onClick }) {
   const [searchFor, setSearchFor] = useState('venues');
@@ -52,11 +55,18 @@ function SearchForm({ onClick }) {
             {searchBy === 'location' && (
               <>
                 <label>Search by location</label>
+                {/* <AddressAutofill
+                  accessToken={MAP_TOKEN}
+                  onSuggest={() => console.log('suggestions')}
+                  onRetrieve={() => console.log('retrieve')}
+                > */}
                 <input
                   type="text"
                   placeholder="Search by location"
                   name="searchLocation"
-                ></input>
+                  autoComplete="street-address country-name address-level1 address-level2 address-level3 address-level4"
+                />
+                {/* </AddressAutofill> */}
               </>
             )}
             {searchBy === 'name' && (

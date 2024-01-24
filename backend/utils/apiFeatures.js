@@ -10,7 +10,7 @@ class APIFeatures {
     excludedFields.forEach((el) => delete queryObj[el]);
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(
-      /\b(gte|gt|lte|lt|in)\b/g,
+      /\b(gte|gt|lte|lt|in|eq)\b/g,
       (match) => `$${match}`,
     );
     // DON'T NEED gte/lte etc. QUERIES YET....PERHAPS WILL WHEN I HAVE RATINGS ETC..........
