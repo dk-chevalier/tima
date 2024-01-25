@@ -6,7 +6,7 @@ class APIFeatures {
 
   filter() {
     const queryObj = { ...this.queryString };
-    const excludedFields = ['page', 'sort', 'fields', 'limit']; // this means they don't get caught up in this filter, and thus can be used for the below methods, like sort() etc.
+    const excludedFields = ['page', 'sort', 'fields', 'limit', 'near']; // this means they don't get caught up in this filter, and thus can be used for the below methods, like sort() etc.
     excludedFields.forEach((el) => delete queryObj[el]);
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(
@@ -21,9 +21,21 @@ class APIFeatures {
 
   sort() {
     if (this.queryString.sort) {
+      // sorts according to property passed in
+      // query string should e.g. = &sort=ratingsAverage or could be &sort=-ratingsAverage
       const sortBy = this.queryString.sort.split(',').join(' ');
-      console.log(sortBy);
+
       this.query = this.query.sort(sortBy);
+    } else if (this.queryString.near) {
+      // sorts according to nearest to specified location
+      // query string = &near=140.0000,70.000 (i.e. &near=${longitued},${latitude})
+      const coords = this.queryString.near.split(',');
+
+      this.query = this.query.find({
+        location: {
+          $near: { $geometry: { type: 'Point', coordinates: coords } },
+        },
+      });
     } else {
       this.query = this.query.sort('-createdAt');
     }
@@ -49,5 +61,7 @@ class APIFeatures {
 
     return this;
   }
+
+  // near() {}
 }
 module.exports = APIFeatures;

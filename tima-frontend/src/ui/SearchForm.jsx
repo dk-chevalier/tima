@@ -19,7 +19,7 @@ function SearchForm({ onClick }) {
           <HiXMark />
         </Button>
       </div>
-      <Form method="GET" action={`/map/${searchFor}`}>
+      <Form method="get" action={`/map/${searchFor}`}>
         <div className="flex flex-col gap-10 font-light">
           <div className="flex flex-col gap-1">
             <label>What are you searching for?</label>

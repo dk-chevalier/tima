@@ -8,12 +8,13 @@ export async function getVenues({ queryKey }) {
     const gigTypeQry = `&gigType[eq]=${options.gigType}`;
     const genresQry = `&genresSupported[in]=${options.genres}`;
     const byNameQry = `&venueName[eq]=${options.searchName}`;
+    const byLocationQry = `&near=${options.lng},${options.lat}`;
     const res = await fetch(
       `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail,website${
         options.gigType ? gigTypeQry : ''
       }${options.genres ? genresQry : ''}${
         options.searchName ? byNameQry : ''
-      }`,
+      }${options.lng && options.lat ? byLocationQry : ''}`,
     );
     const { data } = await res.json();
 
