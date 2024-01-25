@@ -1,14 +1,18 @@
 import { HiXMark } from 'react-icons/hi2';
-import Button from './Button';
+import Button from '../../ui/Button';
 import { Form, useActionData } from 'react-router-dom';
 import { useState } from 'react';
 import { AddressAutofill } from '@mapbox/search-js-react';
+import { useDispatch } from 'react-redux';
+import { closeSearchForm } from './searchFormSlice';
 
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 function SearchForm({ onClick }) {
   const [searchFor, setSearchFor] = useState('venues');
   const [searchBy, setSearchBy] = useState('location');
+
+  const dispatch = useDispatch();
 
   console.log(searchBy);
 
@@ -19,7 +23,11 @@ function SearchForm({ onClick }) {
           <HiXMark />
         </Button>
       </div>
-      <Form method="get" action={`/map/${searchFor}`}>
+      <Form
+        method="get"
+        action={`/map/${searchFor}`}
+        onSubmit={() => dispatch(closeSearchForm())}
+      >
         <div className="flex flex-col gap-10 font-light">
           <div className="flex flex-col gap-1">
             <label>What are you searching for?</label>

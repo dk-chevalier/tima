@@ -6,12 +6,20 @@ import Button from './Button';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 import StyledNavLink from './StyledNavLink';
 import { useState } from 'react';
-import SearchForm from './SearchForm';
+import SearchForm from '../features/search/SearchForm';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  closeSearchForm,
+  openSearchForm,
+  selectSearchOpenStatus,
+} from '../features/search/searchFormSlice';
 
 function Sidebar({ children }) {
-  const [searchIsOpen, setSearchIsOpen] = useState(false);
+  const searchIsOpen = useSelector(selectSearchOpenStatus);
 
-  const closeSearch = () => setSearchIsOpen(false);
+  const dispatch = useDispatch();
+
+  const closeSearch = () => dispatch(closeSearchForm());
 
   return (
     <aside className="relative col-span-1 flex h-full w-full flex-col bg-primary-900">
@@ -29,7 +37,7 @@ function Sidebar({ children }) {
             </StyledNavLink>
           </li>
         </ul>
-        <Button type="round" onClick={() => setSearchIsOpen(true)}>
+        <Button type="round" onClick={() => dispatch(openSearchForm())}>
           <HiMagnifyingGlass />
         </Button>
       </div>

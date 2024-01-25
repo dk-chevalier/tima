@@ -23,7 +23,7 @@ import VenueResults, {
 import RadioResults, {
   loader as radioResultsLoader,
 } from './pages/RadioResults';
-import { action as searchAction } from './ui/SearchForm';
+import { action as searchAction } from './features/search/SearchForm';
 
 const queryClient = new QueryClient({
   defaultOptions: {
