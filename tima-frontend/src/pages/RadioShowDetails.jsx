@@ -15,7 +15,7 @@ export default RadioShowDetails;
 export const loader =
   (queryClient) =>
   async ({ params }) => {
-    const { showId } = params;
+    const { id: showId } = params;
     if (queryClient.getQueryData(['radioshow', showId]))
       return queryClient.getQueryData(['radioshow', showId]);
 

@@ -57,7 +57,7 @@ const router = createBrowserRouter([
             loader: venueResultsLoader(queryClient),
             children: [
               {
-                path: ':venueId',
+                path: ':id',
                 element: <VenueDetails />,
                 id: 'venue',
                 loader: venueDetailsLoader(queryClient),
@@ -71,13 +71,13 @@ const router = createBrowserRouter([
             loader: radioResultsLoader(queryClient),
             children: [
               {
-                path: 'stations/:stationId',
+                path: 'stations/:id',
                 element: <RadioStationDetails />,
                 id: 'radioStation',
                 loader: radioStationDetailsLoader(queryClient),
               },
               {
-                path: 'shows/:showId',
+                path: 'shows/:id',
                 element: <RadioShowDetails />,
                 id: 'radioShow',
                 loader: radioShowDetailsLoader(queryClient),

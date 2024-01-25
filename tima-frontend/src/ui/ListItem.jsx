@@ -17,7 +17,8 @@ function ListItem({
   const [showsOpen, setShowsOpen] = useState(false);
 
   const { pathname } = useLocation();
-  const { latlng, distance, unit } = useParams();
+  const { latlng, distance, unit, id: openId } = useParams();
+  console.log(openId);
 
   // allows filtered list to stay filtered when opening details
   let newPath;
@@ -69,6 +70,7 @@ function ListItem({
                   //   ? `/map/radio/${type}s/${id}`
                   //   : `/map/${type}s/${id}`
                   newPath || `/map/${type}s/${id}`
+                  // `${openId ? '../' : ''}${id}`
                 }
                 type="secondary"
               >

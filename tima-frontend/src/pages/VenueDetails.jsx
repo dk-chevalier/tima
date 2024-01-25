@@ -15,7 +15,7 @@ export default VenueDetails;
 export const loader =
   (queryClient) =>
   async ({ params }) => {
-    const { venueId } = params;
+    const { id: venueId } = params;
     if (queryClient.getQueryData(['venue', venueId]))
       return queryClient.getQueryData(['venue', venueId]);
 

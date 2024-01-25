@@ -15,7 +15,7 @@ export default RadioStationDetails;
 export const loader =
   (queryClient) =>
   async ({ params }) => {
-    const { stationId } = params;
+    const { id: stationId } = params;
     if (queryClient.getQueryData(['radiostation', stationId]))
       return queryClient.getQueryData(['radiostation', stationId]);
 
