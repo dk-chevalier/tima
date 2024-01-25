@@ -24,11 +24,13 @@ function SearchForm({ onClick }) {
           <HiXMark />
         </Button>
       </div>
+
       <Form
         method="get"
         action={`/map/${searchFor}`}
         onSubmit={() => dispatch(closeSearchForm())}
       >
+        {/* SEARCHING FOR VENUES/RADIO/NEWSPAPERS/MAGAZINES ? */}
         <div className="flex flex-col gap-10 font-light">
           <div className="flex flex-col gap-1">
             <label>What are you searching for?</label>
@@ -46,6 +48,7 @@ function SearchForm({ onClick }) {
             </select>
           </div>
 
+          {/* SEARCHING FOR NAME/LOCATION ? */}
           <div className="flex flex-col gap-1">
             <label
               className={`flex justify-between duration-300 ease-in-out ${
@@ -95,53 +98,57 @@ function SearchForm({ onClick }) {
             )}
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label
-              className={`flex justify-between duration-300 ease-in-out ${
-                searchByGenres ? '' : 'text-gray-400'
-              }`}
-            >
-              Search by genres supported
-              <input
-                type="checkbox"
-                value=""
-                className="peer appearance-none"
-                onChange={() => setSearchByGenres(!searchByGenres)}
-              />
-              <span className="bg-gray-300 after:bg-gray-100 ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
-            </label>
-            {searchByGenres && (
-              <select
-                className="rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
-                defaultValue="saved-genres"
-                name="genres"
+          {/* SEARCHING BY GENRES ? */}
+          {searchFor === 'venues' && (
+            <div className="flex flex-col gap-1">
+              <label
+                className={`flex justify-between duration-300 ease-in-out ${
+                  searchByGenres ? '' : 'text-gray-400'
+                }`}
               >
-                <option value="saved-genres">My saved genres</option>
-                <option value="all">All</option>
-                <option value="acoustic">Acoustic</option>
-                <option value="blues">Blues</option>
-                <option value="classical">Classical</option>
-                <option value="country">Country</option>
-                <option value="disco">Disco</option>
-                <option value="electronic">Electronic</option>
-                <option value="folk">Folk</option>
-                <option value="funk">Funk</option>
-                <option value="hip-hop">Hip-hop</option>
-                <option value="indie">Indie</option>
-                <option value="jazz">Jazz</option>
-                <option value="latin">Latin</option>
-                <option value="metal">Metal</option>
-                <option value="pop">Pop</option>
-                <option value="punk">Punk</option>
-                <option value="r&b">R&B</option>
-                <option value="reggae">Reggae</option>
-                <option value="rock">Rock</option>
-                <option value="singer-songwriter">Singer-songrwriter</option>
-                <option value="soul">Soul</option>
-              </select>
-            )}
-          </div>
+                Search by genres supported
+                <input
+                  type="checkbox"
+                  value=""
+                  className="peer appearance-none"
+                  onChange={() => setSearchByGenres(!searchByGenres)}
+                />
+                <span className="bg-gray-300 after:bg-gray-100 ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
+              </label>
+              {searchByGenres && (
+                <select
+                  className="rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                  defaultValue="saved-genres"
+                  name="genres"
+                >
+                  <option value="saved-genres">My saved genres</option>
+                  <option value="all">All</option>
+                  <option value="acoustic">Acoustic</option>
+                  <option value="blues">Blues</option>
+                  <option value="classical">Classical</option>
+                  <option value="country">Country</option>
+                  <option value="disco">Disco</option>
+                  <option value="electronic">Electronic</option>
+                  <option value="folk">Folk</option>
+                  <option value="funk">Funk</option>
+                  <option value="hip-hop">Hip-hop</option>
+                  <option value="indie">Indie</option>
+                  <option value="jazz">Jazz</option>
+                  <option value="latin">Latin</option>
+                  <option value="metal">Metal</option>
+                  <option value="pop">Pop</option>
+                  <option value="punk">Punk</option>
+                  <option value="r&b">R&B</option>
+                  <option value="reggae">Reggae</option>
+                  <option value="rock">Rock</option>
+                  <option value="singer-songwriter">Singer-songrwriter</option>
+                  <option value="soul">Soul</option>
+                </select>
+              )}
+            </div>
+          )}
 
+          {/* SEARCHING BY GIG TYPE ? */}
           {searchFor === 'venues' && (
             <div className="flex flex-col gap-1">
               <label

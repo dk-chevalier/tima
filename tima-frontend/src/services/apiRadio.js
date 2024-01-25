@@ -3,15 +3,30 @@ const URL = import.meta.env.VITE_LOCAL_URL;
 // RADIO STATION QUERIES
 export async function getRadioStations({ queryKey }) {
   try {
+    // lat,
+    //   lng,
+    //   distance,
+    //   unit,
+    //   searchBy,
+    //   searchLocation,
+    //   searchName,
     const [_, options] = queryKey;
+
+    // TODO: HAVEN'T YET IMPLEMENTED GENRES SUPPORT BECAUSE THIS ONLY QUERIES RADIO STATIONS SO FAR, NOT SHOWS
+    // const genresQry = `&genresSupported[in]=${options.genres}`;
+    const byNameQry = `&stationName[eq]=${options.searchName}`;
+    const byLocationQry = `&near=${options.lng},${options.lat}`;
+
     let res;
     if (options.distance) {
       res = await fetch(
-        `${URL}/api/v1/radioStations/radioStations-within/${options.distance}/centre/${options.latlng}/unit/${options.unit}`,
+        `${URL}/api/v1/radioStations/radioStations-within/${options.distance}/centre/${options.lat},${options.lng}/unit/${options.unit}`,
       );
     } else {
       res = await fetch(
-        `${URL}/api/v1/radioStations?fields=stationName,location,address.city,musicSubmissions,website`,
+        `${URL}/api/v1/radioStations?fields=stationName,location,address.city,musicSubmissions,website${
+          options.searchName ? byNameQry : ''
+        }${options.lat && options.lng ? byLocationQry : ''}`,
       );
     }
     const { data } = await res.json();
