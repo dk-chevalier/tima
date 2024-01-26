@@ -7,7 +7,8 @@ function RadioShowInfo() {
 
   // if (isLoading) return <Spinner />;
 
-  const { data: radioShow } = useRouteLoaderData('radioShow');
+  const { radioShow } = useRouteLoaderData('radioShow');
+  console.log(radioShow);
 
   const {
     showName,
@@ -16,7 +17,7 @@ function RadioShowInfo() {
     showEmail,
     showWebpage,
     radioStation,
-  } = radioShow;
+  } = radioShow.data;
 
   return (
     <>

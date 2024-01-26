@@ -47,11 +47,11 @@ export const loader =
     const options = { lng, lat, searchName, genres, gigType };
 
     if (queryClient.getQueryData(['venues', options]))
-      return queryClient.getQueryData(['venues', options]);
+      return { venues: queryClient.getQueryData(['venues', options]), url };
 
     const venues = await queryClient.fetchQuery({
       queryKey: ['venues', options],
       queryFn: getVenues,
     });
-    return venues;
+    return { venues, url };
   };

@@ -4,12 +4,13 @@ import { useRouteLoaderData } from 'react-router-dom';
 
 function VenuesSource({ children }) {
   // const { isLoading: isLoadingVenues, venues } = useVenues();
-  const { data: venues } = useRouteLoaderData('venues');
+  const { venues, url } = useRouteLoaderData('venues');
 
   // if (isLoadingVenues) return;
+
   const geojsonMarkers = {
     type: 'FeatureCollection',
-    features: venues.map((venue) => {
+    features: venues.data.map((venue) => {
       const data = {
         type: 'Feature',
         geometry: venue.location,

@@ -8,7 +8,7 @@ function RadioStationInfo() {
   // const { stationId } = useParams();
   // const { radioStation, isLoading, error } = useRadioStation(stationId);
 
-  const { data: radioStation } = useRouteLoaderData('radioStation');
+  const { radioStation } = useRouteLoaderData('radioStation');
 
   const [showsOpen, setShowsOpen] = useState(false);
 
@@ -26,7 +26,7 @@ function RadioStationInfo() {
     musicSubmissions,
     interviewRequests,
     id: stationId,
-  } = radioStation;
+  } = radioStation.data;
 
   return (
     <>

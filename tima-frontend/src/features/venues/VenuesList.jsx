@@ -5,12 +5,12 @@ import { useVenues } from './useVenues';
 
 function VenuesList() {
   // const { venues, isLoading } = useVenues();
-  const { data: venues } = useRouteLoaderData('venues');
+  const { venues, url } = useRouteLoaderData('venues');
 
   // return <div>VENUES</div>;
   return (
     <>
-      {venues.map((venue) => (
+      {venues.data.map((venue) => (
         <ListItem
           type="venue"
           name={venue.venueName}
@@ -20,6 +20,7 @@ function VenuesList() {
           key={venue.id}
           id={venue.id}
           website={venue.website}
+          query={url.search}
         />
       ))}
     </>

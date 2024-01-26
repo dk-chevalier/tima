@@ -11,14 +11,14 @@ function RadioStationsList() {
   //   distance,
   //   unit,
   // });
-  const { data: radioStations } = useRouteLoaderData('radioStations');
+  const { radioStations, url } = useRouteLoaderData('radioStations');
 
   // console.log(radioStations);
 
   // return <div>RADIO</div>;
   return (
     <>
-      {radioStations.map((station) => (
+      {radioStations.data.map((station) => (
         <ListItem
           type="station"
           name={station.stationName}
@@ -27,6 +27,7 @@ function RadioStationsList() {
           key={station.id}
           id={station.id}
           website={station.website}
+          query={url.search}
         />
       ))}
     </>

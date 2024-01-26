@@ -11,12 +11,12 @@ function RadioStationsSource({ children }) {
   //   unit,
   // });
 
-  const { data: radioStations } = useRouteLoaderData('radioStations');
+  const { radioStations, url } = useRouteLoaderData('radioStations');
 
   // if (isLoadingStations) return;
   const geojsonMarkers = {
     type: 'FeatureCollection',
-    features: radioStations.map((station) => {
+    features: radioStations.data.map((station) => {
       const data = {
         type: 'Feature',
         geometry: station.location,

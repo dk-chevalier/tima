@@ -24,6 +24,7 @@ export const loader =
   (queryClient) =>
   async ({ params, request }) => {
     const { latlng, distance, unit } = params;
+    console.log(request);
 
     let url = new URL(request.url);
     const searchFor = url.searchParams.get('searchingFor');
@@ -63,11 +64,14 @@ export const loader =
       searchName,
     };
     if (queryClient.getQueryData(['radiostations', options]))
-      return queryClient.getQueryData(['radiostations', options]);
+      return {
+        radioStations: queryClient.getQueryData(['radiostations', options]),
+        url,
+      };
 
     const radioStations = await queryClient.fetchQuery({
       queryKey: ['radiostations', options],
       queryFn: getRadioStations,
     });
-    return radioStations;
+    return { radioStations, url };
   };

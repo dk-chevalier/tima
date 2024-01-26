@@ -8,7 +8,7 @@ function VenueInfo() {
   // const { venueId } = useParams();
   // const { venue, isLoading, error } = useVenue(venueId);
 
-  const { data: venue } = useRouteLoaderData('venue');
+  const { venue } = useRouteLoaderData('venue');
 
   // if (isLoading) return <Spinner />;
 
@@ -27,7 +27,7 @@ function VenueInfo() {
     capacity,
     gigType,
     location,
-  } = venue;
+  } = venue.data;
 
   const [lng, lat] = location.coordinates;
 
