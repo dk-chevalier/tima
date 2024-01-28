@@ -6,6 +6,7 @@ import { useVenues } from './useVenues';
 function VenuesList() {
   // const { venues, isLoading } = useVenues();
   const { venues, url } = useRouteLoaderData('venues');
+  // console.log(venues);
 
   // return <div>VENUES</div>;
   return (

@@ -6,6 +6,7 @@ const mongoSanitise = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -20,12 +21,20 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 
 // CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  }),
+);
 
 app.options('*', cors());
 
 // Set Security HTTP headers
 app.use(helmet());
+
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
 // Development Logging
 if (process.env.NODE_ENV === 'development') {
@@ -43,6 +52,9 @@ app.use('/api', limiter);
 
 // Body Parser
 app.use(express.json({ limit: '10kb' }));
+
+// Cookie Parser allowing us to parse data from cookies
+app.use(cookieParser());
 
 // Data Sanitisation against NoSQL query injection
 app.use(mongoSanitise());

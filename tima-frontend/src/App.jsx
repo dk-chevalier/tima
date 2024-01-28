@@ -24,6 +24,7 @@ import RadioResults, {
   loader as radioResultsLoader,
 } from './pages/RadioResults';
 import { action as searchAction } from './features/search/SearchForm';
+import Login, { action } from './pages/Login';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +37,11 @@ const queryClient = new QueryClient({
 });
 
 const router = createBrowserRouter([
+  {
+    element: <Login />,
+    path: 'login',
+    action: action,
+  },
   {
     element: <AppLayout />,
     children: [

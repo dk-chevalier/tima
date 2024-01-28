@@ -8,7 +8,7 @@ const router = express.Router({ mergeParams: true });
 router.use('/:radioStationId/radioShows', radioShowRouter);
 
 // FIXME: NEED TO ADD AUTHCONTROLLER AGAIN SO ONLY LOGGED IN USERS CAN USE THE APP....
-// router.use(authController.protect);
+router.use(authController.protect);
 
 router
   .route('/radioStations-within/:distance/centre/:latlng/unit/:unit')

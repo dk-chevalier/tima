@@ -4,11 +4,14 @@ import { Outlet } from 'react-router-dom';
 
 function MapPage() {
   return (
-    <div className="grid grid-cols-[1fr_3fr] grid-rows-[80vh]">
+    <div className="grid grid-cols-[1fr_3fr] grid-rows-[93vh]">
       <Sidebar>
         <Outlet />
       </Sidebar>
-      <div className="col-span-1 col-start-2 h-full w-full" id="mapbox">
+      <div
+        className="col-span-1 col-start-2 row-span-1 row-start-1 h-full w-full"
+        id="mapbox"
+      >
         <MapContainer></MapContainer>
       </div>
     </div>
