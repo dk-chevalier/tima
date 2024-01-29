@@ -46,7 +46,7 @@ function RadioShowInfo() {
       <div className="col-span-1 col-start-2 row-span-1 row-start-2 text-end">
         <h3 className="mb-1 text-sm text-primary-800">Radio station:</h3>
         <StyledNavLink
-          to={`/map/radio/stations/${radioStation.id}`}
+          to={`/app/map/radio/stations/${radioStation.id}`}
           type="secondary"
         >
           {radioStation.stationName}

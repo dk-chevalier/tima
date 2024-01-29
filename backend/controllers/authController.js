@@ -140,7 +140,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     ); // ADD ERROR HANDLING
   }
 
-  // Grant Access to Protected Route
+  // Grant Access to Protected Route, plus adding user info to any function calls that happen after this
   req.user = currentUser;
   next();
 });

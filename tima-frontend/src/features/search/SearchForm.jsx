@@ -27,7 +27,7 @@ function SearchForm({ onClick }) {
 
       <Form
         method="get"
-        action={`/map/${searchFor}`}
+        action={`/app/map/${searchFor}`}
         onSubmit={() => dispatch(closeSearchForm())}
       >
         {/* SEARCHING FOR VENUES/RADIO/NEWSPAPERS/MAGAZINES ? */}
@@ -62,7 +62,7 @@ function SearchForm({ onClick }) {
                 className="peer appearance-none"
                 onChange={() => setSearchByOpen(!searchByOpen)}
               />
-              <span className="bg-gray-300 after:bg-gray-100 ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
+              <span className="ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:bg-gray-100 after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
             </label>
             {searchByOpen && (
               <>
@@ -113,7 +113,7 @@ function SearchForm({ onClick }) {
                   className="peer appearance-none"
                   onChange={() => setSearchByGenres(!searchByGenres)}
                 />
-                <span className="bg-gray-300 after:bg-gray-100 ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
+                <span className="ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:bg-gray-100 after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
               </label>
               {searchByGenres && (
                 <select
@@ -163,7 +163,7 @@ function SearchForm({ onClick }) {
                   className="peer appearance-none"
                   onChange={() => setSearchByGigType(!searchByGigType)}
                 />
-                <span className="bg-gray-300 after:bg-gray-100 ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
+                <span className="ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:bg-gray-100 after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
               </label>
               {searchByGigType && (
                 <select

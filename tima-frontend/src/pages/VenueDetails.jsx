@@ -5,7 +5,6 @@ import Details from '../ui/Details';
 
 function VenueDetails() {
   const { url } = useRouteLoaderData('venue');
-  console.log(url);
 
   return (
     <Details query={url.search}>

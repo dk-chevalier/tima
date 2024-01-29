@@ -7,12 +7,12 @@ function MainNav() {
     <nav>
       <NavList type="main">
         <li>
-          <StyledNavLink to="/map" type="main">
+          <StyledNavLink to="map" type="main">
             <span>Map</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/account" type="main">
+          <StyledNavLink to="account" type="main">
             <span>Account</span>
           </StyledNavLink>
         </li>

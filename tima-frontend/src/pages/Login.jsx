@@ -62,11 +62,10 @@ export const action = async ({ request, params }) => {
           { email, password },
           { withCredentials: true },
         );
-        console.log(res.cookie);
 
         if (res.data.status === 'success') {
           alert('Logged In Successfully');
-          return redirect('/map/venues');
+          return redirect('/app/map/venues');
         }
         if (!res.data.status === 'success') {
           alert('Could not log you in, please try again');

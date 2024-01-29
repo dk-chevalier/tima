@@ -31,9 +31,9 @@ function ListItem({
   // const { pathname } = url;
   // writing query ? query : '' because for some reason it was adding undefined to the string if I didn't...
   if (pathname.includes('radio') && latlng)
-    newPath = `/map/radio/${latlng}/${distance}/${unit}/${type}s/${id}`;
+    newPath = `/app/map/radio/${latlng}/${distance}/${unit}/${type}s/${id}`;
   if (pathname.includes('radio') && !latlng)
-    newPath = `/map/radio/${type}s/${id}${query ? query : ''}`;
+    newPath = `/app/map/radio/${type}s/${id}${query ? query : ''}`;
 
   const baseStyle =
     'flex h-min flex-col rounded-md px-3 py-2 text-primary-900 shadow-lg transition-all duration-300 hover:shadow-md border-secondary-300 border';
@@ -76,7 +76,7 @@ function ListItem({
                   // pathname.includes('radio')
                   //   ? `/map/radio/${type}s/${id}`
                   //   : `/map/${type}s/${id}`
-                  newPath || `/map/${type}s/${id}${query ? query : ''}`
+                  newPath || `/app/map/${type}s/${id}${query ? query : ''}`
                   // `${openId ? '../' : ''}${id}`
                 }
                 type="secondary"

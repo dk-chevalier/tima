@@ -25,6 +25,7 @@ import RadioResults, {
 } from './pages/RadioResults';
 import { action as searchAction } from './features/search/SearchForm';
 import Login, { action } from './pages/Login';
+import Account, { loader as accountLoader } from './pages/Account';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,11 +44,17 @@ const router = createBrowserRouter([
     action: action,
   },
   {
+    path: 'app',
     element: <AppLayout />,
     children: [
       {
+        path: 'account',
+        element: <Account />,
+        loader: accountLoader(queryClient),
+      },
+      {
         index: true,
-        element: <Navigate replace to="map/venues" />,
+        element: <Navigate replace to="/app/map/venues" />,
       },
       {
         path: 'map',
@@ -56,6 +63,10 @@ const router = createBrowserRouter([
         // loader: mapLoader(queryClient),
         action: searchAction,
         children: [
+          {
+            index: true,
+            element: <Navigate replace to="/app/map/venues" />,
+          },
           {
             path: 'venues',
             element: <VenueResults />,

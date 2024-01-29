@@ -78,7 +78,10 @@ function VenueInfo() {
         <p>{bookingContact.bookerPh}</p>
       </div>
       <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex h-min gap-3">
-        <StyledNavLink type="secondary" to={`/map/radio/${lat},${lng}/100/km`}>
+        <StyledNavLink
+          type="secondary"
+          to={`/app/map/radio/${lat},${lng}/100/km`}
+        >
           Find radio stations near here
         </StyledNavLink>
         <Button type="secondary">Find newspapers near here</Button>
