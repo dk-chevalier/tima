@@ -102,6 +102,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 1) Check if token and getting it if there is
   let token;
 
+  console.log(req.cookies.jwt);
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -110,6 +112,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt; // makes so we can get it from the cookie
   }
+
+  console.log(token);
 
   if (!token) {
     return next(

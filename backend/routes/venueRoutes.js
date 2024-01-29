@@ -6,6 +6,8 @@ const venueReviewRouter = require('./venueReviewRoutes');
 
 const router = express.Router();
 
+router.use(authController.protect);
+
 // GET RADIO SHOWS NEAR VENUE AND MATCHING USER GENRE
 // GET /api/v1/venues/{venueCoords}/radioShows/radioShows-within/{distance}/unit/{unit}
 router.use('/:venueId/:venueLatLng/radioStations', radioStationRouter);

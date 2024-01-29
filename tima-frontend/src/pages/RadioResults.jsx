@@ -24,7 +24,6 @@ export const loader =
   (queryClient) =>
   async ({ params, request }) => {
     const { latlng, distance, unit } = params;
-    console.log(request);
 
     let url = new URL(request.url);
     const searchFor = url.searchParams.get('searchingFor');

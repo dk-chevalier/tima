@@ -8,7 +8,6 @@ function RadioShowInfo() {
   // if (isLoading) return <Spinner />;
 
   const { radioShow } = useRouteLoaderData('radioShow');
-  console.log(radioShow);
 
   const {
     showName,

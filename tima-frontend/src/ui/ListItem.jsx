@@ -17,8 +17,7 @@ function ListItem({
 }) {
   const [showsOpen, setShowsOpen] = useState(false);
 
-  const { latlng, distance, unit, id: openId } = useParams();
-  console.log(openId);
+  const { latlng, distance, unit } = useParams();
 
   const { pathname } = useLocation();
 
