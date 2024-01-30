@@ -1,6 +1,7 @@
 import Sidebar from '../ui/Sidebar';
 import MapContainer from '../features/map/Map';
-import { Outlet } from 'react-router-dom';
+import { Outlet, redirect } from 'react-router-dom';
+import { getIsLoggedIn } from '../services/apiUsers';
 
 function MapPage() {
   return (
@@ -20,10 +21,12 @@ function MapPage() {
 
 export default MapPage;
 
-// export const loader =
-//   (queryClient) =>
-//   ({ params }) => {
-//     const { latlng } = params;
-//     if (!latlng) return null;
-//     return latlng;
-//   };
+export const loader = (queryClient) => async () => {
+  const { isLoggedIn } = await queryClient.fetchQuery({
+    queryKey: ['isLoggedIn'],
+    queryFn: getIsLoggedIn,
+  });
+
+  if (!isLoggedIn) return redirect('/login');
+  return null;
+};

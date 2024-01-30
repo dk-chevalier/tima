@@ -20,7 +20,6 @@ router
 
 router
   .route('/')
-  // TODO: CHANGE BACK TO ONLY LOGGED IN USERS FOR ALL ROUTES!!!!!!!!!!!!
   .get(authController.protect, venueController.getAllVenues)
   // .get(venueController.getAllVenues)
   .post(authController.protect, venueController.createVenue);

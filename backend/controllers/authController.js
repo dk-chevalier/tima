@@ -87,6 +87,49 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
+// CHECK USER IS LOGGED IN, FOR PROTECTED ROUTES
+// FIXME: THIS DOES ESSENTIALLY SAME AS authController.protect.....COULD MAKE THAT SEND isLoggedIn status????
+exports.isLoggedIn = async (req, res, next) => {
+  console.log(req.cookies.jwt);
+  if (req.cookies.jwt) {
+    try {
+      // 1) verify token
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET,
+      );
+
+      // 2) check user still exists
+      const currentUser = await User.findById(decoded.id);
+
+      if (!currentUser)
+        return res
+          .status(200)
+          .json({ status: 'success', data: { isLoggedIn: false } });
+
+      // 3) check if user changed password after jwt was issued
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return new AppError(
+          'User recently changed password! Please log in again',
+          401,
+        );
+      }
+
+      // There is a logged in user
+      return res
+        .status(200)
+        .json({ status: 'success', data: { isLoggedIn: true } });
+    } catch (err) {
+      return res
+        .status(200)
+        .json({ status: 'success', data: { isLoggedIn: false } });
+    }
+  }
+  return res
+    .status(200)
+    .json({ status: 'success', data: { isLoggedIn: false } });
+};
+
 exports.restrictTo =
   (...roles) =>
   (req, res, next) => {
@@ -142,6 +185,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // Grant Access to Protected Route, plus adding user info to any function calls that happen after this
   req.user = currentUser;
+
   next();
 });
 

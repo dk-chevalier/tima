@@ -9,6 +9,8 @@ router.post('/login', authController.login);
 router.post('/forgotPassword', authController.forgotPassword); // HAVE TO CHANGE THE EMAIL HOST ETC. USING NATOURS PROJECT ONE AT THE MOMENT!!!!!!!!!!!!!!!!!!!!!
 router.patch('/resetPassword/:token', authController.resetPassword);
 
+router.get('/isLoggedIn', authController.isLoggedIn);
+
 router.use(authController.protect);
 
 router.patch('/updateMyPassword', authController.updatePassword);

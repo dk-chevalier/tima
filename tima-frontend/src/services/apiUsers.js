@@ -9,3 +9,13 @@ export async function getCurrentUser() {
 
   return data.data;
 }
+
+export async function getIsLoggedIn() {
+  const { data } = await axios.get(`${URL}/api/v1/users/isLoggedIn`, {
+    withCredentials: true,
+  });
+
+  console.log(data.data);
+
+  return data.data;
+}

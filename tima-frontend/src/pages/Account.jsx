@@ -1,5 +1,5 @@
-import { useLoaderData } from 'react-router-dom';
-import { getCurrentUser } from '../services/apiUsers';
+import { redirect, useLoaderData } from 'react-router-dom';
+import { getCurrentUser, getIsLoggedIn } from '../services/apiUsers';
 
 function Account() {
   const { data: currentUser } = useLoaderData();
@@ -45,6 +45,13 @@ function Account() {
 export default Account;
 
 export const loader = (queryClient) => async () => {
+  const { isLoggedIn } = await queryClient.fetchQuery({
+    queryKey: ['isLoggedIn'],
+    queryFn: getIsLoggedIn,
+  });
+
+  if (!isLoggedIn) throw redirect('/login');
+
   if (queryClient.getQueryData(['me'])) return queryClient.getQueryData(['me']);
 
   const currentUser = await queryClient.fetchQuery({

@@ -6,26 +6,28 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import AppLayout from './ui/AppLayout';
-import MapPage from './pages/MapPage';
+import AppLayout, { loader as protectedAppLayoutLoader } from './ui/AppLayout';
+import MapPage, { loader as protectedMapLoader } from './pages/MapPage';
 import VenueDetails, {
-  loader as venueDetailsLoader,
+  loader as protectedVenueDetailsLoader,
 } from './pages/VenueDetails';
 import RadioStationDetails, {
-  loader as radioStationDetailsLoader,
+  loader as protectedRadioStationDetailsLoader,
 } from './pages/RadioStationDetails';
 import RadioShowDetails, {
-  loader as radioShowDetailsLoader,
+  loader as protectedRadioShowDetailsLoader,
 } from './pages/RadioShowDetails';
 import VenueResults, {
-  loader as venueResultsLoader,
+  loader as protectedVenueResultsLoader,
 } from './pages/VenueResults';
 import RadioResults, {
-  loader as radioResultsLoader,
+  loader as protectedRadioResultsLoader,
 } from './pages/RadioResults';
 import { action as searchAction } from './features/search/SearchForm';
 import Login, { action } from './pages/Login';
-import Account, { loader as accountLoader } from './pages/Account';
+import Account, { loader as protectedAccountLoader } from './pages/Account';
+
+// FIXME: FIX PROTECTED ROUTES....SO FAR ALL PROTECTED ROUTES HAVE A SEPARATE API CALL IN LOADER (BEFORE ANY OTHER CALLS) TO SIMPLY CHECK IF USER IS LOGGED IN....CAN PERHAPS REFACTOR SO authController.protect DOES THIS JOB FOR US ON SERVER SIDE (AS ALL THOSE ROUTES ARE PROTECTED ANYWAY?)....EVENTUALLY WILL APPARENTLY BE MIDDLEWARE ON REACT ROUTER TO MAKE THIS EASIER TOO....
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,11 +48,12 @@ const router = createBrowserRouter([
   {
     path: 'app',
     element: <AppLayout />,
+    loader: protectedAppLayoutLoader(queryClient),
     children: [
       {
         path: 'account',
         element: <Account />,
-        loader: accountLoader(queryClient),
+        loader: protectedAccountLoader(queryClient),
       },
       {
         index: true,
@@ -60,7 +63,7 @@ const router = createBrowserRouter([
         path: 'map',
         element: <MapPage />,
         id: 'map',
-        // loader: mapLoader(queryClient),
+        loader: protectedMapLoader(queryClient),
         action: searchAction,
         children: [
           {
@@ -71,13 +74,13 @@ const router = createBrowserRouter([
             path: 'venues',
             element: <VenueResults />,
             id: 'venues',
-            loader: venueResultsLoader(queryClient),
+            loader: protectedVenueResultsLoader(queryClient),
             children: [
               {
                 path: ':id',
                 element: <VenueDetails />,
                 id: 'venue',
-                loader: venueDetailsLoader(queryClient),
+                loader: protectedVenueDetailsLoader(queryClient),
               },
             ],
           },
@@ -85,19 +88,19 @@ const router = createBrowserRouter([
             path: 'radio/:latlng?/:distance?/:unit?',
             element: <RadioResults />,
             id: 'radioStations',
-            loader: radioResultsLoader(queryClient),
+            loader: protectedRadioResultsLoader(queryClient),
             children: [
               {
                 path: 'stations/:id',
                 element: <RadioStationDetails />,
                 id: 'radioStation',
-                loader: radioStationDetailsLoader(queryClient),
+                loader: protectedRadioStationDetailsLoader(queryClient),
               },
               {
                 path: 'shows/:id',
                 element: <RadioShowDetails />,
                 id: 'radioShow',
-                loader: radioShowDetailsLoader(queryClient),
+                loader: protectedRadioShowDetailsLoader(queryClient),
               },
             ],
           },

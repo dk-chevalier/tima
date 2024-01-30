@@ -1,6 +1,7 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, redirect } from 'react-router-dom';
 import RadioStationsList from '../features/radio/stations/RadioStationsList';
 import { getRadioStations } from '../services/apiRadio';
+import { getIsLoggedIn } from '../services/apiUsers';
 
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
@@ -23,6 +24,13 @@ export default RadioResults;
 export const loader =
   (queryClient) =>
   async ({ params, request }) => {
+    const { isLoggedIn } = await queryClient.fetchQuery({
+      queryKey: ['isLoggedIn'],
+      queryFn: getIsLoggedIn,
+    });
+
+    if (!isLoggedIn) return redirect('/login');
+
     const { latlng, distance, unit } = params;
 
     let url = new URL(request.url);

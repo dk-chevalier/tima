@@ -1,7 +1,8 @@
-import { useLoaderData, useRouteLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData, useRouteLoaderData } from 'react-router-dom';
 import RadioStationInfo from '../features/radio/stations/RadioStationInfo';
 import { getRadioStation } from '../services/apiRadio';
 import Details from '../ui/Details';
+import { getIsLoggedIn } from '../services/apiUsers';
 
 function RadioStationDetails() {
   const { url } = useRouteLoaderData('radioStation');
@@ -17,6 +18,13 @@ export default RadioStationDetails;
 export const loader =
   (queryClient) =>
   async ({ params, request }) => {
+    const { isLoggedIn } = await queryClient.fetchQuery({
+      queryKey: ['isLoggedIn'],
+      queryFn: getIsLoggedIn,
+    });
+
+    if (!isLoggedIn) return redirect('/login');
+
     const url = new URL(request.url);
     const { id: stationId } = params;
     if (queryClient.getQueryData(['radiostation', stationId]))

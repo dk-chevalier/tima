@@ -1,6 +1,7 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, redirect } from 'react-router-dom';
 import VenuesList from '../features/venues/VenuesList';
 import { getVenues } from '../services/apiVenues';
+import { getIsLoggedIn } from '../services/apiUsers';
 
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
@@ -23,6 +24,13 @@ const venuesListQuery = {
 export const loader =
   (queryClient) =>
   async ({ request }) => {
+    const { isLoggedIn } = await queryClient.fetchQuery({
+      queryKey: ['isLoggedIn'],
+      queryFn: getIsLoggedIn,
+    });
+
+    if (!isLoggedIn) throw redirect('/login');
+
     let url = new URL(request.url);
     const searchFor = url.searchParams.get('searchingFor');
     const searchBy = url.searchParams.get('searchBy');
