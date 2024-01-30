@@ -26,6 +26,7 @@ import RadioResults, {
 import { action as searchAction } from './features/search/SearchForm';
 import Login, { action } from './pages/Login';
 import Account, { loader as protectedAccountLoader } from './pages/Account';
+import Logout, { loader as logoutLoader } from './pages/Logout';
 
 // FIXME: FIX PROTECTED ROUTES....SO FAR ALL PROTECTED ROUTES HAVE A SEPARATE API CALL IN LOADER (BEFORE ANY OTHER CALLS) TO SIMPLY CHECK IF USER IS LOGGED IN....CAN PERHAPS REFACTOR SO authController.protect DOES THIS JOB FOR US ON SERVER SIDE (AS ALL THOSE ROUTES ARE PROTECTED ANYWAY?)....EVENTUALLY WILL APPARENTLY BE MIDDLEWARE ON REACT ROUTER TO MAKE THIS EASIER TOO....
 
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
     element: <Login />,
     path: 'login',
     action: action,
+  },
+  {
+    element: <Logout />,
+    path: 'logout',
+    loader: logoutLoader(queryClient),
   },
   {
     path: 'app',

@@ -19,3 +19,11 @@ export async function getIsLoggedIn() {
 
   return data.data;
 }
+
+export async function logout() {
+  const { data } = await axios.get(`${URL}/api/v1/users/logout`, {
+    withCredentials: true,
+  });
+
+  return data.status;
+}

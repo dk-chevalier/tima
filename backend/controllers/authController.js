@@ -87,6 +87,21 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res);
 });
 
+exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    withCredentials: true,
+    httpOnly: true, // makes so cookie can't be access/modified in anyway by the browser
+    // secure: req.secure || req.headers['x-forwarded-proto'] === 'https', // cookie only sent on an encrypted connection (i.e. when using https)....this won't work during development because we are only using http, not https
+
+    // Had to add sameSite 'none' and secure true to have browser receive cookie....learn more about this!
+    sameSite: 'none',
+    secure: true,
+  });
+
+  res.status(200).json({ status: 'success' });
+};
+
 // CHECK USER IS LOGGED IN, FOR PROTECTED ROUTES
 // FIXME: THIS DOES ESSENTIALLY SAME AS authController.protect.....COULD MAKE THAT SEND isLoggedIn status????
 exports.isLoggedIn = async (req, res, next) => {

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import NavList from './NavList';
 import StyledNavLink from './StyledNavLink';
+import Button from './Button';
 
 function MainNav() {
   return (
