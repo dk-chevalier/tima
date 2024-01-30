@@ -105,7 +105,6 @@ exports.logout = (req, res) => {
 // CHECK USER IS LOGGED IN, FOR PROTECTED ROUTES
 // FIXME: THIS DOES ESSENTIALLY SAME AS authController.protect.....COULD MAKE THAT SEND isLoggedIn status????
 exports.isLoggedIn = async (req, res, next) => {
-  console.log(req.cookies.jwt);
   if (req.cookies.jwt) {
     try {
       // 1) verify token
