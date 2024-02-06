@@ -14,8 +14,7 @@ export const loader = (queryClient) => async () => {
   });
 
   if (status === 'success') {
-    queryClient.removeQueries({ queryKey: ['isLoggedIn'] });
-    queryClient.removeQueries({ queryKey: ['me'] });
+    queryClient.clear();
     return redirect('/login');
   }
   return redirect('/app/account');
