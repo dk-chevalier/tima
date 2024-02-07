@@ -15,6 +15,7 @@ const userRouter = require('./routes/userRoutes');
 const radioStationRouter = require('./routes/radioStationRoutes');
 const radioShowRouter = require('./routes/radioShowRoutes');
 const venueReviewRouter = require('./routes/venueReviewRoutes');
+const subscriptionsRouter = require('./routes/subscriptionsRoutes');
 
 const app = express();
 
@@ -76,6 +77,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/radioStations', radioStationRouter);
 app.use('/api/v1/radioShows', radioShowRouter);
 app.use('/api/v1/reviews', venueReviewRouter);
+app.use('/api/v1/subscriptions', subscriptionsRouter);
 
 // ERROR HANDLING
 

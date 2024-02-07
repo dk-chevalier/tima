@@ -27,6 +27,8 @@ import { action as searchAction } from './features/search/SearchForm';
 import Login, { action } from './pages/Login';
 import Account, { loader as protectedAccountLoader } from './pages/Account';
 import Logout, { loader as logoutLoader } from './pages/Logout';
+import Signup from './pages/Signup';
+import Home, { loader as homeLoader } from './pages/Home';
 
 // FIXME: FIX PROTECTED ROUTES....SO FAR ALL PROTECTED ROUTES HAVE A SEPARATE API CALL IN LOADER (BEFORE ANY OTHER CALLS) TO SIMPLY CHECK IF USER IS LOGGED IN....CAN PERHAPS REFACTOR SO authController.protect DOES THIS JOB FOR US ON SERVER SIDE (AS ALL THOSE ROUTES ARE PROTECTED ANYWAY?)....EVENTUALLY WILL APPARENTLY BE MIDDLEWARE ON REACT ROUTER TO MAKE THIS EASIER TOO....
 
@@ -42,9 +44,18 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
+    element: <Home />,
+    path: '/',
+    loader: homeLoader(queryClient),
+  },
+  {
     element: <Login />,
     path: 'login',
     action: action,
+  },
+  {
+    element: <Signup />,
+    path: 'signup',
   },
   {
     element: <Logout />,
