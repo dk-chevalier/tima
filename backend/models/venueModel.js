@@ -135,6 +135,7 @@ const venueSchema = new mongoose.Schema(
           'all',
           'unknown',
         ],
+        // must erase unkown once genres are updated...user automatically has 'unknown' and 'all' genres so they will match with search involving these values
         default: 'unknown',
       },
     ],

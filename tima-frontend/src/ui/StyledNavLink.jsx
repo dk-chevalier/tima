@@ -6,6 +6,8 @@ function StyledNavLink({ children, to, type }) {
   const styles = {
     main: base + ' hover:text-secondary-300 text-primary-100 bg-primary-900',
     secondary: 'py-2 px-3 rounded-sm bg-secondary-300 text-sm',
+    round:
+      'duration-200 h-8 w-8 rounded-full border border-secondary-300 text-secondary-300 flex justify-center items-center',
     sidebar:
       base +
       ' text-primary-100 duration-200 shadow-md transition-all duration-300 active:shadow-sm',
@@ -16,6 +18,8 @@ function StyledNavLink({ children, to, type }) {
       secondary:
         'py-2 px-3 rounded-sm bg-secondary-300 text-sm text-primary-100',
       sidebar: base + ' text-primary-900 duration-200 bg-secondary-300',
+      round:
+        'h-8 w-8 rounded-full border border-secondary-300 text-primary-900 bg-secondary-300 flex justify-center items-center',
     },
   };
 

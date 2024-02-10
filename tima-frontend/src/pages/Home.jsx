@@ -4,13 +4,18 @@ import Toggle from '../ui/Toggle';
 import { useState } from 'react';
 import { HiCheck } from 'react-icons/hi2';
 import Button from '../ui/Button';
+import { useDispatch } from 'react-redux';
+import { updateStripePriceId } from '../features/signup/newUserSlice';
 
 function Home() {
   const { products, prices } = useLoaderData();
-  console.log(products);
-  console.log(prices);
 
-  const [yearlyPriceSelected, setYearlyPriceSelected] = useState(true);
+  const dispatch = useDispatch();
+
+  // console.log(products);
+  // console.log(prices);
+
+  const [yearlyPriceSelected, setYearlyPriceSelected] = useState(false);
 
   return (
     <div className="flex h-dvh w-dvw items-center justify-center bg-primary-900">
@@ -26,9 +31,13 @@ function Home() {
             price.product === product.id && price.recurring.interval === 'year',
         )[0];
 
+        const selectedPriceId = yearlyPriceSelected
+          ? yearlyPrice.id
+          : monthlyPrice.id;
+
         return (
           <main
-            className="relative h-[33rem] w-[33rem] rounded-md border border-secondary-300 bg-primary-100 p-8 font-light"
+            className="no-scrollbar relative h-[85vh] max-h-[35rem] min-h-[25rem] w-[25rem] overflow-scroll rounded-md border border-secondary-300 bg-primary-100 p-8 font-light"
             key={product.id}
           >
             <h1 className="text-center text-3xl font-thin">
@@ -37,7 +46,7 @@ function Home() {
 
             <Toggle
               type="toggleOptions"
-              onClick={() => setYearlyPriceSelected(!yearlyPriceSelected)}
+              onChange={() => setYearlyPriceSelected(!yearlyPriceSelected)}
               optionOne={
                 <div
                   key={monthlyPrice.nickname}
@@ -81,7 +90,13 @@ function Home() {
             </ul>
 
             <div className="mx-auto my-6 h-min w-min">
-              <Button type="secondary">Signup</Button>
+              <Button
+                type="secondary"
+                to="/signup"
+                onClick={dispatch(updateStripePriceId(selectedPriceId))}
+              >
+                Signup
+              </Button>
             </div>
 
             <div className="w-full border-t border-gray-200 py-6">

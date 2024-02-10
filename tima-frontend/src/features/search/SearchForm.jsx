@@ -64,7 +64,7 @@ function SearchForm({ onClick }) {
               />
               <span className="ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:bg-gray-100 after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
             </label>
-            {/* <label
+            <label
               className={`flex justify-between duration-300 ease-in-out ${
                 searchByOpen ? '' : 'text-gray-400'
               }`}
@@ -77,7 +77,7 @@ function SearchForm({ onClick }) {
                 onChange={() => setSearchByOpen(!searchByOpen)}
               />
               <span className="ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:bg-gray-100 after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3"></span>
-            </label> */}
+            </label>
             {searchByOpen && (
               <>
                 <select

@@ -38,6 +38,7 @@ const userSchema = new mongoose.Schema({
         'all',
         'unknown',
       ],
+      // User must always have 'all' and 'unkown' genres, therefore pr and venue contacts show up to which we don't know their genres, or they simply support all genres
       default: ['all', 'unknown'],
     },
   ],

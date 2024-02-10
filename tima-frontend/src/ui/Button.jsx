@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-function Button({ children, type, to, onClick, href }) {
+function Button({ children, type, to, onClick, href, state }) {
   const navigate = useNavigate();
   const base =
     'px-3 py-1 shadow-md transition-all duration-300 active:shadow-sm inline-block flex justify-center items-center';
@@ -11,6 +11,9 @@ function Button({ children, type, to, onClick, href }) {
     round:
       base +
       ' bg-primary-900 rounded-full size-10 border border-secondary-300 text-primary-100',
+    roundActive:
+      base +
+      ' bg-secondary-300 rounded-full size-10 border border-secondary-300 text-primary-900',
     submit: base + ' bg-secondary-300 text-md rounded-sm text-primary-900',
   };
 
@@ -28,12 +31,13 @@ function Button({ children, type, to, onClick, href }) {
         {children}
       </button>
     );
-  if (to)
+  if (to) {
     return (
-      <Link to={to} className={styles[type]}>
+      <Link to={to} className={styles[type]} state={state}>
         {children}
       </Link>
     );
+  }
 
   if (href)
     return (
