@@ -47,6 +47,7 @@ function Home() {
             <Toggle
               type="toggleOptions"
               onChange={() => setYearlyPriceSelected(!yearlyPriceSelected)}
+              checked={yearlyPriceSelected}
               optionOne={
                 <div
                   key={monthlyPrice.nickname}
@@ -116,15 +117,8 @@ function Home() {
 
 export default Home;
 
-export const loader = (queryClient) => async () => {
+export const loader = async () => {
   const { data } = await getSubscriptionProducts();
 
-  // console.log(data);
-  const { products, prices } = data;
-
-  // console.log(products);
-  // console.log(prices);
-
   return data;
-  // return null;
 };

@@ -65,7 +65,7 @@ export const action = async ({ request, params }) => {
 
         if (res.data.status === 'success') {
           alert('Logged In Successfully');
-          return redirect('/app/map/venues');
+          return redirect('/app/account');
         }
         if (!(res.data.status === 'success')) {
           alert('Could not log you in, please try again');

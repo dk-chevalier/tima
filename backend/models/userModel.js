@@ -79,6 +79,12 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  stripeCustomerId: {
+    type: String,
+  },
+  stripeSubscriptionId: {
+    type: String,
+  },
 });
 
 // MIDDLEWARES

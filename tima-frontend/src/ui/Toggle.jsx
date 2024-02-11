@@ -1,4 +1,12 @@
-function Toggle({ children, onChange, type, state, optionOne, optionTwo }) {
+function Toggle({
+  children,
+  onChange,
+  type,
+  state,
+  optionOne,
+  optionTwo,
+  checked,
+}) {
   const styles = {
     round:
       'ml-4 flex h-5 w-9 flex-shrink-0 items-center rounded-full bg-gray-300 p-1 duration-300 ease-in-out after:h-4 after:w-4 after:rounded-full after:bg-gray-100 after:shadow-md after:duration-300 peer-checked:bg-secondary-300 peer-checked:after:translate-x-3',
@@ -13,6 +21,7 @@ function Toggle({ children, onChange, type, state, optionOne, optionTwo }) {
         {children}
         <input
           type="checkbox"
+          checked={checked}
           value=""
           className="peer appearance-none"
           onChange={onChange}

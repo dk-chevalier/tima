@@ -6,6 +6,8 @@ const { promisify } = require('util');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
 
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 // Create JWT
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -41,16 +43,40 @@ const createSendToken = (user, statusCode, req, res) => {
   // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   user.password = undefined;
 
+  console.log(req.clientSecret);
+
   res.status(statusCode).json({
     status: 'success',
     token,
     data: {
       user,
+      clientSecret: req.clientSecret,
     },
   });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const stripeCustomer = await stripe.customers.create({
+    email: req.body.email,
+    name: req.body.name,
+  });
+
+  // console.log(stripeCustomer);
+
+  const subscription = await stripe.subscriptions.create({
+    customer: stripeCustomer.id,
+    items: [
+      {
+        price: req.body.stripePriceId,
+      },
+    ],
+    payment_behavior: 'default_incomplete',
+    payment_settings: { save_default_payment_method: 'on_subscription' },
+    expand: ['latest_invoice.payment_intent'],
+  });
+
+  // console.log(subscription.id);
+
   // Create New User
   const newUser = await User.create({
     name: req.body.name,
@@ -60,9 +86,12 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role, // FIXME: FIX THIS!!!!!!!! PROBABLY SHOULDN'T SEND THEM THEIR ROLE.....can perhaps do this be taking it oout of the response sent in createSendToken ????
     genres: req.body.genres,
+    stripeCustomerId: stripeCustomer.id,
+    stripeSubscriptionId: subscription.id,
   });
 
   newUser.genres.push('all', 'unknown');
+  req.clientSecret = subscription.latest_invoice.payment_intent.client_secret;
 
   // Sign New User In with JWT and Send back Response
   createSendToken(newUser, 201, req, res);
@@ -118,8 +147,8 @@ exports.isLoggedIn = async (req, res, next) => {
 
       if (!currentUser)
         return res
-          .status(200)
-          .json({ status: 'success', data: { isLoggedIn: false } });
+          .status(400)
+          .json({ status: 'error', data: { isLoggedIn: false } });
 
       // 3) check if user changed password after jwt was issued
       if (currentUser.changedPasswordAfter(decoded.iat)) {
@@ -135,8 +164,8 @@ exports.isLoggedIn = async (req, res, next) => {
         .json({ status: 'success', data: { isLoggedIn: true } });
     } catch (err) {
       return res
-        .status(200)
-        .json({ status: 'success', data: { isLoggedIn: false } });
+        .status(400)
+        .json({ status: 'error', data: { isLoggedIn: false } });
     }
   }
   return res
