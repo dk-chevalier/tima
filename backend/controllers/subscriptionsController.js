@@ -14,3 +14,28 @@ exports.getSubscriptionProducts = catchAsync(async (req, res) => {
     .status(200)
     .json({ status: 'success', data: { products, prices } });
 });
+
+exports.createSubscription = catchAsync(async (req, res) => {
+  console.log(req.user.stripeCustomerId);
+  console.log(req.body.stripePriceId);
+
+  const subscription = await stripe.subscriptions.create({
+    customer: req.user.stripeCustomerId,
+    items: [
+      {
+        price: req.body.stripePriceId,
+      },
+    ],
+    payment_behavior: 'default_incomplete',
+    payment_settings: { save_default_payment_method: 'on_subscription' },
+    expand: ['latest_invoice.payment_intent'],
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      subscriptionId: subscription.id,
+      clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+    },
+  });
+});

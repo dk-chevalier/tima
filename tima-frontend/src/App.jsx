@@ -27,13 +27,12 @@ import { action as searchAction } from './features/search/SearchForm';
 import Login, { action } from './pages/Login';
 import Account, { loader as protectedAccountLoader } from './pages/Account';
 import Logout, { loader as logoutLoader } from './pages/Logout';
-import Signup from './pages/Signup';
+import Signup, { loader as signupLoader } from './pages/Signup';
 import CreateAccount, {
-  loader as createAccountLoader,
   action as createAccountAction,
 } from './pages/CreateAccount';
 import Home, { loader as homeLoader } from './pages/Home';
-import PaymentInfo, { loader as paymentInfoLoader } from './pages/PaymentInfo';
+import PaymentInfo from './pages/PaymentInfo';
 
 // FIXME: FIX PROTECTED ROUTES....SO FAR ALL PROTECTED ROUTES HAVE A SEPARATE API CALL IN LOADER (BEFORE ANY OTHER CALLS) TO SIMPLY CHECK IF USER IS LOGGED IN....CAN PERHAPS REFACTOR SO authController.protect DOES THIS JOB FOR US ON SERVER SIDE (AS ALL THOSE ROUTES ARE PROTECTED ANYWAY?)....EVENTUALLY WILL APPARENTLY BE MIDDLEWARE ON REACT ROUTER TO MAKE THIS EASIER TOO....
 
@@ -51,6 +50,7 @@ const router = createBrowserRouter([
   {
     element: <Home />,
     path: '/',
+    id: 'home',
     loader: homeLoader,
   },
   {
@@ -61,6 +61,8 @@ const router = createBrowserRouter([
   {
     element: <Signup />,
     path: 'signup',
+    id: 'signup',
+    loader: signupLoader,
     children: [
       {
         index: true,
@@ -68,14 +70,14 @@ const router = createBrowserRouter([
       },
       {
         path: 'create-account',
+        id: 'createAccount',
         element: <CreateAccount />,
-        loader: createAccountLoader,
+
         action: createAccountAction,
       },
       {
         path: 'payment-info',
         element: <PaymentInfo />,
-        loader: paymentInfoLoader,
       },
     ],
   },

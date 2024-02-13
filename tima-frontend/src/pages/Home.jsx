@@ -1,4 +1,4 @@
-import { useLoaderData } from 'react-router-dom';
+import { useRouteLoaderData } from 'react-router-dom';
 import { getSubscriptionProducts } from '../services/apiSubscriptions';
 import Toggle from '../ui/Toggle';
 import { useState } from 'react';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { updateStripePriceId } from '../features/signup/newUserSlice';
 
 function Home() {
-  const { products, prices } = useLoaderData();
+  const { products, prices } = useRouteLoaderData('home');
 
   const dispatch = useDispatch();
 

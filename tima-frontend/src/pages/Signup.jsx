@@ -5,6 +5,7 @@ import CreateAccount from './CreateAccount';
 import PaymentInfo from './PaymentInfo';
 import { Outlet } from 'react-router-dom';
 import StyledNavLink from '../ui/StyledNavLink';
+import { getSubscriptionProducts } from '../services/apiSubscriptions';
 
 function Signup() {
   return (
@@ -17,7 +18,7 @@ function Signup() {
           2
         </StyledNavLink>
       </NavList>
-      <main className="relative h-96 w-96 rounded-md border border-secondary-300 bg-primary-100 p-8">
+      <main className="relative h-[30rem] w-[30rem] rounded-md border border-secondary-300 bg-primary-100 p-8">
         <Outlet />
         {/* {signupStage === 1 && <CreateAccount />}
 
@@ -28,3 +29,9 @@ function Signup() {
 }
 
 export default Signup;
+
+export const loader = async () => {
+  const { data } = await getSubscriptionProducts();
+
+  return data;
+};

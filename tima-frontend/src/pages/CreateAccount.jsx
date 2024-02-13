@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, useRouteLoaderData } from 'react-router-dom';
 import Button from '../ui/Button';
 import axios from 'axios';
 import { getSubscriptionProducts } from '../services/apiSubscriptions';
@@ -9,7 +9,7 @@ import { redirect } from 'react-router-dom';
 const URL = import.meta.env.VITE_LOCAL_URL;
 
 function CreateAccount() {
-  const { products, prices } = useLoaderData();
+  const { products, prices } = useRouteLoaderData('signup');
 
   const selectedPrice = useSelector(selectStripePrice);
 
@@ -71,14 +71,7 @@ function CreateAccount() {
 
 export default CreateAccount;
 
-export const loader = async () => {
-  const { data } = await getSubscriptionProducts();
-
-  return data;
-};
-
 export async function action({ request }) {
-  console.log(request);
   const formData = await request.formData();
 
   const name = formData.get('name');
@@ -88,23 +81,20 @@ export async function action({ request }) {
   const stripePriceId = formData.get('stripePriceId');
 
   try {
-    const { data } = await axios.post(`${URL}/api/v1/users/signup`, {
-      name,
-      email,
-      password,
-      passwordConfirm,
-      genres: [],
-      stripePriceId,
-    });
+    const { data } = await axios.post(
+      `${URL}/api/v1/users/signup`,
+      {
+        name,
+        email,
+        password,
+        passwordConfirm,
+        genres: [],
+        stripePriceId,
+      },
+      { withCredentials: true },
+    );
 
-    console.log(data);
-
-    // redirect('/signup/payment-info');
-    return new Response(JSON.stringify(data.data), {
-      status: 302,
-      headers: { Location: '/signup/payment-info' },
-      body: JSON.stringify(data.data),
-    });
+    return redirect('/signup/payment-info');
   } catch (err) {
     console.error(err);
     return null;

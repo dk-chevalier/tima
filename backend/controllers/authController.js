@@ -43,14 +43,11 @@ const createSendToken = (user, statusCode, req, res) => {
   // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   user.password = undefined;
 
-  console.log(req.clientSecret);
-
   res.status(statusCode).json({
     status: 'success',
     token,
     data: {
       user,
-      clientSecret: req.clientSecret,
     },
   });
 };
@@ -63,20 +60,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // console.log(stripeCustomer);
 
-  const subscription = await stripe.subscriptions.create({
-    customer: stripeCustomer.id,
-    items: [
-      {
-        price: req.body.stripePriceId,
-      },
-    ],
-    payment_behavior: 'default_incomplete',
-    payment_settings: { save_default_payment_method: 'on_subscription' },
-    expand: ['latest_invoice.payment_intent'],
-  });
-
-  // console.log(subscription.id);
-
   // Create New User
   const newUser = await User.create({
     name: req.body.name,
@@ -87,11 +70,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     role: req.body.role, // FIXME: FIX THIS!!!!!!!! PROBABLY SHOULDN'T SEND THEM THEIR ROLE.....can perhaps do this be taking it oout of the response sent in createSendToken ????
     genres: req.body.genres,
     stripeCustomerId: stripeCustomer.id,
-    stripeSubscriptionId: subscription.id,
   });
 
   newUser.genres.push('all', 'unknown');
-  req.clientSecret = subscription.latest_invoice.payment_intent.client_secret;
 
   // Sign New User In with JWT and Send back Response
   createSendToken(newUser, 201, req, res);

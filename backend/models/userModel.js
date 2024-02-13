@@ -82,9 +82,6 @@ const userSchema = new mongoose.Schema({
   stripeCustomerId: {
     type: String,
   },
-  stripeSubscriptionId: {
-    type: String,
-  },
 });
 
 // MIDDLEWARES
