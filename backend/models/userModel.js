@@ -82,9 +82,16 @@ const userSchema = new mongoose.Schema({
   stripeCustomerId: {
     type: String,
   },
+  accountPaid: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 });
 
 // MIDDLEWARES
+
+userSchema.index({ stripeCustomerId: 1 });
 
 // Encrypt Password
 userSchema.pre('save', async function (next) {

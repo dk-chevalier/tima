@@ -4,7 +4,7 @@ import {
   useStripe,
 } from '@stripe/react-stripe-js';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, useRouteLoaderData } from 'react-router-dom';
+import { useRouteLoaderData } from 'react-router-dom';
 import { selectStripePrice, updateStripePriceId } from './newUserSlice';
 import Button from '../../ui/Button';
 import axios from 'axios';

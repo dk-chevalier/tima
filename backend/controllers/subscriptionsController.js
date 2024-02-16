@@ -1,3 +1,4 @@
+const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -37,5 +38,28 @@ exports.createSubscription = catchAsync(async (req, res) => {
       subscriptionId: subscription.id,
       clientSecret: subscription.latest_invoice.payment_intent.client_secret,
     },
+  });
+});
+
+exports.handleSubscriptionWebhooks = catchAsync(async (req, res) => {
+  const event = req.body;
+
+  console.log(event.data.object.customer);
+
+  const user = await User.findOne({
+    stripeCustomerId: event.data.object.customer,
+  });
+
+  console.log(user);
+
+  if (event.type === 'invoice.paid') {
+    await User.updateOne(
+      { stripeCustomerId: event.data.object.customer },
+      { $set: { accountPaid: true } },
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
   });
 });

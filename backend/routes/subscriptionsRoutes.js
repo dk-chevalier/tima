@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/products', subscriptionsController.getSubscriptionProducts);
 
+router.post('/webhooks', subscriptionsController.handleSubscriptionWebhooks);
+
 router.post(
   '/create-subscription',
   authController.protect,
