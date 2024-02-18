@@ -8,9 +8,18 @@ function Account() {
   return (
     <div className="h-screen w-screen bg-primary-900 p-12">
       <div className="h-full w-full rounded-lg bg-primary-100 p-5">
-        <h2 className="text-end text-3xl font-thin">
-          Welcome back {currentUser.name.split(' ')[0]}
-        </h2>
+        <div className="ml-auto mr-0 w-fit text-end">
+          <h2 className="py-1 text-end text-3xl font-thin">
+            Welcome back {currentUser.name.split(' ')[0]}
+          </h2>
+          {currentUser.accountPaid ? (
+            ''
+          ) : (
+            <p className="inline-block rounded-md bg-red-500 px-2 py-1 text-sm font-bold text-primary-100 shadow-sm">
+              Subscription unpaid
+            </p>
+          )}
+        </div>
 
         <div>
           <h3>Your account settings</h3>
@@ -33,7 +42,7 @@ function Account() {
                 account below
               </p>
             )}
-            {currentUser.genres.length &&
+            {currentUser.genres.length > 0 &&
               currentUser.genres.map((genre) => <li key={genre}>{genre}</li>)}
           </ul>
         </div>
