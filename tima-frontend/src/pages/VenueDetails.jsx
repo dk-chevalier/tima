@@ -3,6 +3,7 @@ import VenueInfo from '../features/venues/VenueInfo';
 import { getVenue } from '../services/apiVenues';
 import Details from '../ui/Details';
 import { getIsLoggedIn } from '../services/apiUsers';
+import toast from 'react-hot-toast';
 
 function VenueDetails() {
   const { url } = useRouteLoaderData('venue');
@@ -42,6 +43,7 @@ export const loader =
     if (venue.status === 'fail' || venue.status === 'error') {
       // Reset the queries if there is an error, otherwise if they try moving to venues page again after being redirected once, it will draw on the cached venues request, which is a failure, even if they have since updated their payments (also wasn't redirecting the second time, because it wasn't fetching the venues, as was getting caught at first if statement)
       queryClient.resetQueries({ queryKey: ['venue', venueId] });
+      toast.error(venue.message);
       return redirect('/app/account');
     }
 

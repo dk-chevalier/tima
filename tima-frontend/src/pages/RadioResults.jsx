@@ -2,6 +2,7 @@ import { Outlet, redirect } from 'react-router-dom';
 import RadioStationsList from '../features/radio/stations/RadioStationsList';
 import { getRadioStations } from '../services/apiRadio';
 import { getIsLoggedIn } from '../services/apiUsers';
+import toast from 'react-hot-toast';
 
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
@@ -87,6 +88,7 @@ export const loader =
     if (radioStations.status === 'fail' || radioStations.status === 'error') {
       // Reset the queries if there is an error, otherwise if they try moving to venues page again after being redirected once, it will draw on the cached venues request, which is a failure, even if they have since updated their payments (also wasn't redirecting the second time, because it wasn't fetching the venues, as was getting caught at first if statement)
       queryClient.resetQueries({ queryKey: ['radiostations', options] });
+      toast.error(radioStations.message);
       return redirect('/app/account');
     }
 
