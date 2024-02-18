@@ -1,6 +1,7 @@
 const express = require('express');
 const authController = require('../controllers/authController');
 const radioStationController = require('../controllers/radioStationController');
+const subscriptionsController = require('../controllers/subscriptionsController');
 const radioShowRouter = require('./radioShowRoutes');
 
 const router = express.Router({ mergeParams: true });
@@ -8,7 +9,7 @@ const router = express.Router({ mergeParams: true });
 router.use('/:radioStationId/radioShows', radioShowRouter);
 
 // FIXME: NEED TO ADD AUTHCONTROLLER AGAIN SO ONLY LOGGED IN USERS CAN USE THE APP....
-router.use(authController.protect);
+router.use(authController.protect, subscriptionsController.subscriptionIsPaid);
 
 router
   .route('/radioStations-within/:distance/centre/:latlng/unit/:unit')

@@ -30,7 +30,8 @@ export async function getRadioStations({ queryKey }) {
     return res.data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Radio stations could not be loaded');
+    // throw new Error('Radio stations could not be loaded');
+    return err.response.data;
   }
 }
 
@@ -46,7 +47,8 @@ export async function getRadioStation({ queryKey }) {
     return data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Radio station could not be loaded');
+    // throw new Error('Radio station could not be loaded');
+    return err.response.data;
   }
 }
 
@@ -67,7 +69,8 @@ export async function getRadioStationsWithin({ queryKey }) {
     return data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Radio stations could not be loaded');
+    // throw new Error('Radio stations could not be loaded');
+    return err.response.data;
   }
 }
 
@@ -84,7 +87,8 @@ export async function getRadioShows({ queryKey }) {
     return data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Radio shows could not be loaded');
+    // throw new Error('Radio shows could not be loaded');
+    return err.response.data;
   }
 }
 
@@ -99,6 +103,7 @@ export async function getRadioShow({ queryKey }) {
     return data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Radio show could not be loaded');
+    // throw new Error('Radio show could not be loaded');
+    return err.response.data;
   }
 }

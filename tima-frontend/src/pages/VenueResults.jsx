@@ -16,10 +16,10 @@ function VenueResults() {
 
 export default VenueResults;
 
-const venuesListQuery = {
-  queryKey: ['venues'],
-  queryFn: getVenues,
-};
+// const venuesListQuery = {
+//   queryKey: ['venues'],
+//   queryFn: getVenues,
+// };
 
 export const loader =
   (queryClient) =>
@@ -54,6 +54,7 @@ export const loader =
 
     const options = { lng, lat, searchName, genres, gigType };
 
+    // Check if the query results already exist in the cache
     if (queryClient.getQueryData(['venues', options]))
       return { venues: queryClient.getQueryData(['venues', options]), url };
 
@@ -61,5 +62,13 @@ export const loader =
       queryKey: ['venues', options],
       queryFn: getVenues,
     });
+
+    console.log(venues);
+    if (venues.status === 'fail' || venues.status === 'error') {
+      // Reset the queries if there is an error, otherwise if they try moving to venues page again after being redirected once, it will draw on the cached venues request, which is a failure, even if they have since updated their payments (also wasn't redirecting the second time, because it wasn't fetching the venues, as was getting caught at first if statement)
+      queryClient.resetQueries({ queryKey: ['venues', options] });
+      return redirect('/app/account');
+    }
+
     return { venues, url };
   };

@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
@@ -41,21 +42,45 @@ exports.createSubscription = catchAsync(async (req, res) => {
   });
 });
 
+exports.subscriptionIsPaid = (req, res, next) => {
+  if (!req.user.accountPaid) {
+    return next(
+      new AppError(
+        'Subscription has not been paid. Please check your account details and try again.',
+        401,
+      ),
+    );
+  }
+
+  next();
+};
+
 exports.handleSubscriptionWebhooks = catchAsync(async (req, res) => {
   const event = req.body;
 
-  console.log(event.data.object.customer);
+  // const user = await User.findOne({
+  //   stripeCustomerId: event.data.object.customer,
+  // });
 
-  const user = await User.findOne({
-    stripeCustomerId: event.data.object.customer,
-  });
+  // console.log(user);
 
-  console.log(user);
-
-  if (event.type === 'invoice.paid') {
+  // Payment success
+  if (event.type === 'invoice.paid' && event.data.object.paid === true) {
     await User.updateOne(
       { stripeCustomerId: event.data.object.customer },
+      // change accountPaid to allow access to app
       { $set: { accountPaid: true } },
+    );
+  }
+
+  // Payment failure
+  if (
+    event.type === 'invoice.payment_failed' &&
+    event.data.object.paid === true
+  ) {
+    await User.updateOne(
+      { stripeCustomerId: event.data.object.customer },
+      { $set: { accountPaid: false } },
     );
   }
 

@@ -70,15 +70,25 @@ export const loader =
       searchBy,
       searchName,
     };
+
+    // Check for cached data for same query
     if (queryClient.getQueryData(['radiostations', options]))
       return {
         radioStations: queryClient.getQueryData(['radiostations', options]),
         url,
       };
 
+    // No cache = fetch radio stations
     const radioStations = await queryClient.fetchQuery({
       queryKey: ['radiostations', options],
       queryFn: getRadioStations,
     });
+
+    if (radioStations.status === 'fail' || radioStations.status === 'error') {
+      // Reset the queries if there is an error, otherwise if they try moving to venues page again after being redirected once, it will draw on the cached venues request, which is a failure, even if they have since updated their payments (also wasn't redirecting the second time, because it wasn't fetching the venues, as was getting caught at first if statement)
+      queryClient.resetQueries({ queryKey: ['radiostations', options] });
+      return redirect('/app/account');
+    }
+
     return { radioStations, url };
   };

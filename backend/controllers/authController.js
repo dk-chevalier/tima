@@ -126,13 +126,16 @@ exports.isLoggedIn = async (req, res, next) => {
       // 2) check user still exists
       const currentUser = await User.findById(decoded.id);
 
-      if (!currentUser)
+      if (!currentUser) {
+        console.log('NO CURRENT USER');
         return res
           .status(400)
           .json({ status: 'error', data: { isLoggedIn: false } });
+      }
 
       // 3) check if user changed password after jwt was issued
       if (currentUser.changedPasswordAfter(decoded.iat)) {
+        console.log('CHANGED PASSWORD AFTER');
         return new AppError(
           'User recently changed password! Please log in again',
           401,
@@ -140,15 +143,18 @@ exports.isLoggedIn = async (req, res, next) => {
       }
 
       // There is a logged in user
+      console.log('IS A LOGGED IN USER');
       return res
         .status(200)
         .json({ status: 'success', data: { isLoggedIn: true } });
     } catch (err) {
+      console.log('OTHER ERROR');
       return res
         .status(400)
         .json({ status: 'error', data: { isLoggedIn: false } });
     }
   }
+  console.log('NO JWT COOKIE');
   return res
     .status(200)
     .json({ status: 'success', data: { isLoggedIn: false } });

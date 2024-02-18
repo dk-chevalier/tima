@@ -24,7 +24,8 @@ export async function getVenues({ queryKey }) {
     return data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Venues could not be loaded');
+    // throw new Error('Venues could not be loaded');
+    return err.response.data;
   }
 }
 
@@ -42,6 +43,7 @@ export async function getVenue({ queryKey }) {
     return data.data;
   } catch (err) {
     console.error(err);
-    throw new Error('Venue could not be loaded');
+    // throw new Error('Venue could not be loaded');
+    return err.response.data;
   }
 }

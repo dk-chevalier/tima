@@ -1,12 +1,13 @@
 const express = require('express');
 const venueController = require('../controllers/venueController');
 const authController = require('../controllers/authController');
+const subscriptionsController = require('../controllers/subscriptionsController');
 const radioStationRouter = require('./radioStationRoutes');
 const venueReviewRouter = require('./venueReviewRoutes');
 
 const router = express.Router();
 
-router.use(authController.protect);
+router.use(authController.protect, subscriptionsController.subscriptionIsPaid);
 
 // GET RADIO SHOWS NEAR VENUE AND MATCHING USER GENRE
 // GET /api/v1/venues/{venueCoords}/radioShows/radioShows-within/{distance}/unit/{unit}
@@ -20,7 +21,7 @@ router
 
 router
   .route('/')
-  .get(authController.protect, venueController.getAllVenues)
+  .get(venueController.getAllVenues)
   // .get(venueController.getAllVenues)
   .post(authController.protect, venueController.createVenue);
 
