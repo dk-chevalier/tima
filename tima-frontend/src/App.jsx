@@ -159,21 +159,7 @@ function App() {
       <Toaster
         position="top-center"
         toastOptions={{
-          success: {
-            duration: 3000,
-            theme: {
-              primary: 'green',
-              secondary: 'black',
-            },
-          },
-          error: {
-            duration: 5000,
-
-            style: {
-              background: 'red',
-              color: 'white',
-            },
-          },
+          duration: 5000,
         }}
       />
     </QueryClientProvider>

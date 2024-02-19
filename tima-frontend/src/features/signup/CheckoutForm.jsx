@@ -8,6 +8,8 @@ import { useRouteLoaderData } from 'react-router-dom';
 import { selectStripePrice, updateStripePriceId } from './newUserSlice';
 import Button from '../../ui/Button';
 import axios from 'axios';
+import CustomToast from '../../ui/CustomToast';
+import toast from 'react-hot-toast';
 
 const URL = import.meta.env.VITE_LOCAL_URL;
 const tempURL = 'http://localhost:5173';
@@ -37,11 +39,26 @@ function CheckoutForm() {
       return;
     }
 
-    const { data } = await axios.post(
-      `${URL}/api/v1/subscriptions/create-subscription`,
-      { stripePriceId: selectedPrice },
-      { withCredentials: true },
-    );
+    const { data } = await axios
+      .post(
+        `${URL}/api/v1/subscriptions/create-subscription`,
+        { stripePriceId: selectedPrice },
+        { withCredentials: true },
+      )
+      .catch((err) => {
+        console.error(err);
+        toast.custom((t) => {
+          t.duration = 10000;
+          return (
+            <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+              There was an error creating your subscription. Please check that
+              your billing details are right, and try selecting a different plan
+              and then re-selecting your plan from the drop down menu.
+            </CustomToast>
+          );
+        });
+      });
+
     console.log(data);
 
     const confirmIntent = stripe.confirmPayment;
@@ -56,6 +73,16 @@ function CheckoutForm() {
 
     if (error) {
       console.error(error);
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            There was an error creating your subscription. Please check that
+            your billing details are right, and try re-selecting your plan from
+            the drop down menu.
+          </CustomToast>
+        );
+      });
     }
   };
 

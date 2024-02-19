@@ -5,6 +5,8 @@ import Details from '../ui/Details';
 import { getIsLoggedIn } from '../services/apiUsers';
 import toast from 'react-hot-toast';
 
+import CustomToast from '../ui/CustomToast';
+
 function RadioStationDetails() {
   const { url } = useRouteLoaderData('radioStation');
   return (
@@ -46,7 +48,14 @@ export const loader =
     if (radioStation.status === 'fail' || radioStation.status === 'error') {
       // Reset the queries if there is an error, otherwise if they try moving to venues page again after being redirected once, it will draw on the cached venues request, which is a failure, even if they have since updated their payments (also wasn't redirecting the second time, because it wasn't fetching the venues, as was getting caught at first if statement)
       queryClient.resetQueries({ queryKey: ['radiostation', stationId] });
-      toast.error(radioStation.message);
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            {radioStation.message}
+          </CustomToast>
+        );
+      });
       return redirect('/app/account');
     }
 

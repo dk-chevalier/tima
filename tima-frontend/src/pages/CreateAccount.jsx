@@ -5,6 +5,8 @@ import { getSubscriptionProducts } from '../services/apiSubscriptions';
 import { useSelector } from 'react-redux';
 import { selectStripePrice } from '../features/signup/newUserSlice';
 import { redirect } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import CustomToast from '../ui/CustomToast';
 
 const URL = import.meta.env.VITE_LOCAL_URL;
 
@@ -94,9 +96,27 @@ export async function action({ request }) {
       { withCredentials: true },
     );
 
+    toast.custom((t) => {
+      t.duration = 3000;
+      return (
+        <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+          Account created. Welcome {data.data.user.name.split(' ')[0]}
+        </CustomToast>
+      );
+    });
+
     return redirect('/signup/payment-info');
   } catch (err) {
     console.error(err);
+
+    toast.custom((t) => {
+      t.duration = 5000;
+      return (
+        <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+          {err.response.data.message}
+        </CustomToast>
+      );
+    });
     return null;
   }
 }

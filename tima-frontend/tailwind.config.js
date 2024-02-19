@@ -29,6 +29,27 @@ export default {
           900: '#180418',
         },
       },
+      keyframes: {
+        slideInTop: {
+          '0%': { transform: 'translateY(-50%)', opacity: '0' },
+          '90%': { transform: 'translateY(5%)', opacity: '100' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+        slideOutTop: {
+          '0%': { transform: 'translateY(0%)' },
+          '10%': { transform: 'translateY(5%)' },
+          '100%': {
+            transform: 'translateY(-50%)',
+            opacity: '0',
+            display: 'hidden',
+            visibility: 'hidden',
+          },
+        },
+      },
+      animation: {
+        slideInTop: 'slideInTop 300ms cubic-bezier(0.3, 0.2, 0.2, 1.4)',
+        slideOutTop: 'slideOutTop 500ms cubic-bezier(0.3, 0.2, 0.2, 1.4)',
+      },
     },
   },
   plugins: [],

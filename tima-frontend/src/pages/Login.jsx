@@ -1,6 +1,8 @@
 import { Form, redirect } from 'react-router-dom';
 import Button from '../ui/Button';
 import axios from 'axios';
+import CustomToast from '../ui/CustomToast';
+import toast from 'react-hot-toast';
 
 const URL = import.meta.env.VITE_LOCAL_URL;
 
@@ -63,15 +65,35 @@ export const action = async ({ request, params }) => {
           { withCredentials: true },
         );
 
+
         if (res.data.status === 'success') {
-          alert('Logged In Successfully');
+          toast.custom((t) => {
+            t.duration = 3000;
+            return (
+              <CustomToast
+                onClick={() => toast.remove(t.id)}
+                type="success"
+                t={t}
+              >
+                Login successful! Welcome back{' '}
+                {res.data.data.user.name.split(' ')[0]}
+              </CustomToast>
+            );
+          });
           return redirect('/app/account');
         }
-        if (!(res.data.status === 'success')) {
-          alert('Could not log you in, please try again');
-        }
+        // if (!(res.data.status === 'success')) {
+        // }
       } catch (err) {
         console.error(err);
+        toast.custom((t) => {
+          t.duration = 5000;
+          return (
+            <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+              {err.response.data.message}
+            </CustomToast>
+          );
+        });
       }
     }
   }

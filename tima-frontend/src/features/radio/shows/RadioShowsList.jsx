@@ -3,7 +3,7 @@ import Spinner from '../../../ui/Spinner';
 import { useRadioShows } from './useRadioShows';
 
 function RadioShowsList({ stationId }) {
-  const { radioShows, isLoading, error } = useRadioShows(stationId);
+  const { radioShows, isLoading } = useRadioShows(stationId);
 
   // return <div>RADIO SHOWS</div>;
   return (

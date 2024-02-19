@@ -4,6 +4,8 @@ import { getVenues } from '../services/apiVenues';
 import { getIsLoggedIn } from '../services/apiUsers';
 import toast from 'react-hot-toast';
 
+import CustomToast from '../ui/CustomToast';
+
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
 
 function VenueResults() {
@@ -68,7 +70,14 @@ export const loader =
     if (venues.status === 'fail' || venues.status === 'error') {
       // Reset the queries if there is an error, otherwise if they try moving to venues page again after being redirected once, it will draw on the cached venues request, which is a failure, even if they have since updated their payments (also wasn't redirecting the second time, because it wasn't fetching the venues, as was getting caught at first if statement)
       queryClient.resetQueries({ queryKey: ['venues', options] });
-      toast.error(venues.message);
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            {venues.message}
+          </CustomToast>
+        );
+      });
       return redirect('/app/account');
     }
 
