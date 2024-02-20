@@ -1,9 +1,38 @@
 import { redirect, useLoaderData } from 'react-router-dom';
 import { getCurrentUser, getIsLoggedIn } from '../services/apiUsers';
+import Button from '../ui/Button';
+import { cancelSubscription } from '../services/apiSubscriptions';
+import toast from 'react-hot-toast';
+import CustomToast from '../ui/CustomToast';
 
 function Account() {
   const { data: currentUser } = useLoaderData();
   console.log(currentUser);
+
+  const handleClick = async (e) => {
+    const { data } = await cancelSubscription();
+
+    if (data.status === 'success') {
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+            {data.message}
+          </CustomToast>
+        );
+      });
+    } else {
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            Something went wrong canceling your subscription. Please try again,
+            or contact us directly.
+          </CustomToast>
+        );
+      });
+    }
+  };
 
   return (
     <div className="h-screen w-screen bg-primary-900 p-12">
@@ -46,6 +75,10 @@ function Account() {
               currentUser.genres.map((genre) => <li key={genre}>{genre}</li>)}
           </ul>
         </div>
+
+        <Button type="secondary" onClick={handleClick}>
+          Cancel subscription
+        </Button>
       </div>
     </div>
   );

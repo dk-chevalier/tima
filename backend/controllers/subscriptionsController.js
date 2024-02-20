@@ -33,6 +33,13 @@ exports.createSubscription = catchAsync(async (req, res) => {
     expand: ['latest_invoice.payment_intent'],
   });
 
+  // storing subscription ID so it is easier to find and update/cancel subscriptions
+  const user = await User.findByIdAndUpdate(req.user.id, {
+    stripeSubscriptionId: subscription.id,
+  });
+
+  console.log(user);
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -55,8 +62,39 @@ exports.subscriptionIsPaid = (req, res, next) => {
   next();
 };
 
+exports.cancelSubscriptionAtPeriodEnd = catchAsync(async (req, res, next) => {
+  console.log(req.user.stripeSubscriptionId);
+
+  const subscription = await stripe.subscriptions.update(
+    req.user.stripeSubscriptionId,
+    {
+      cancel_at_period_end: true,
+    },
+  );
+
+  if (!subscription)
+    new AppError(
+      'There was a problem canceling your subscription, please try again or contact us for help',
+      401,
+    );
+
+  console.log(subscription);
+
+  const endDate = new Date(subscription.cancel_at * 1000);
+
+  const endDateStr = endDate.toDateString();
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      message: `Subscription canceled successfully. Your subscription will end on ${endDateStr}.`,
+    },
+  });
+});
+
 exports.handleSubscriptionWebhooks = catchAsync(async (req, res) => {
   const event = req.body;
+  console.log(event);
 
   // const user = await User.findOne({
   //   stripeCustomerId: event.data.object.customer,
@@ -78,6 +116,14 @@ exports.handleSubscriptionWebhooks = catchAsync(async (req, res) => {
     event.type === 'invoice.payment_failed' &&
     event.data.object.paid === true
   ) {
+    await User.updateOne(
+      { stripeCustomerId: event.data.object.customer },
+      { $set: { accountPaid: false } },
+    );
+  }
+
+  // Subscription Ended
+  if (event.type === 'customer.subscription.deleted') {
     await User.updateOne(
       { stripeCustomerId: event.data.object.customer },
       { $set: { accountPaid: false } },

@@ -15,4 +15,10 @@ router.post(
   subscriptionsController.createSubscription,
 );
 
+router.patch(
+  '/cancel-subscription',
+  authController.protect,
+  subscriptionsController.cancelSubscriptionAtPeriodEnd,
+);
+
 module.exports = router;

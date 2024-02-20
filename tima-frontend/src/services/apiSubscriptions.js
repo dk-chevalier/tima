@@ -11,3 +11,18 @@ export async function getSubscriptionProducts() {
     console.error(err);
   }
 }
+
+export async function cancelSubscription() {
+  try {
+    const { data } = await axios.patch(
+      `${URL}/api/v1/subscriptions/cancel-subscription`,
+      '',
+      { withCredentials: true },
+    );
+
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
