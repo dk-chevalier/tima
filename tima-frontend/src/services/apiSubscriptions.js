@@ -26,3 +26,17 @@ export async function cancelSubscription() {
     console.error(err);
   }
 }
+
+export async function updateSubscriptionPaymentDetails(url) {
+  try {
+    const { data } = await axios.patch(
+      `${URL}/api/v1/subscriptions/update-payment-details`,
+      { url },
+      { withCredentials: true },
+    );
+
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}

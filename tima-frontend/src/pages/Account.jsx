@@ -1,15 +1,24 @@
 import { redirect, useLoaderData } from 'react-router-dom';
 import { getCurrentUser, getIsLoggedIn } from '../services/apiUsers';
 import Button from '../ui/Button';
-import { cancelSubscription } from '../services/apiSubscriptions';
+import {
+  cancelSubscription,
+  updateSubscriptionPaymentDetails,
+} from '../services/apiSubscriptions';
 import toast from 'react-hot-toast';
 import CustomToast from '../ui/CustomToast';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 function Account() {
-  const { data: currentUser } = useLoaderData();
-  console.log(currentUser);
+  const data = useLoaderData();
+  // const { currentUser, url } = data;
 
-  const handleClick = async (e) => {
+  const currentUser = data.currentUser.data;
+  const url = data.url.href;
+
+  const handleCancelSubscription = async (e) => {
     const { data } = await cancelSubscription();
 
     if (data.status === 'success') {
@@ -28,6 +37,28 @@ function Account() {
           <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
             Something went wrong canceling your subscription. Please try again,
             or contact us directly.
+          </CustomToast>
+        );
+      });
+    }
+  };
+
+  const handleUpdatePaymentDetails = async (e) => {
+    const { data } = await updateSubscriptionPaymentDetails(url);
+    const { sessionId } = data;
+
+    const stripe = await stripePromise;
+
+    const { error } = await stripe.redirectToCheckout({
+      sessionId,
+    });
+
+    if (error) {
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            {error.message}
           </CustomToast>
         );
       });
@@ -76,7 +107,11 @@ function Account() {
           </ul>
         </div>
 
-        <Button type="secondary" onClick={handleClick}>
+        <Button type="secondary" onClick={handleUpdatePaymentDetails}>
+          Update payment details
+        </Button>
+
+        <Button type="secondary" onClick={handleCancelSubscription}>
           Cancel subscription
         </Button>
       </div>
@@ -86,20 +121,26 @@ function Account() {
 
 export default Account;
 
-export const loader = (queryClient) => async () => {
-  const { isLoggedIn } = await queryClient.fetchQuery({
-    queryKey: ['isLoggedIn'],
-    queryFn: getIsLoggedIn,
-  });
+export const loader =
+  (queryClient) =>
+  async ({ request }) => {
+    let url = new URL(request.url);
+    console.log(request);
 
-  if (!isLoggedIn) throw redirect('/login');
+    const { isLoggedIn } = await queryClient.fetchQuery({
+      queryKey: ['isLoggedIn'],
+      queryFn: getIsLoggedIn,
+    });
 
-  if (queryClient.getQueryData(['me'])) return queryClient.getQueryData(['me']);
+    if (!isLoggedIn) throw redirect('/login');
 
-  const currentUser = await queryClient.fetchQuery({
-    queryKey: ['me'],
-    queryFn: getCurrentUser,
-  });
+    if (queryClient.getQueryData(['me']))
+      return queryClient.getQueryData(['me']);
 
-  return currentUser;
-};
+    const currentUser = await queryClient.fetchQuery({
+      queryKey: ['me'],
+      queryFn: getCurrentUser,
+    });
+
+    return { currentUser, url };
+  };

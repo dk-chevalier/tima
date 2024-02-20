@@ -21,4 +21,10 @@ router.patch(
   subscriptionsController.cancelSubscriptionAtPeriodEnd,
 );
 
+router.patch(
+  '/update-payment-details',
+  authController.protect,
+  subscriptionsController.updateSubscriptionPaymentDetails,
+);
+
 module.exports = router;
