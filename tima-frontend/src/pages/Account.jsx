@@ -14,6 +14,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 function Account() {
   const data = useLoaderData();
   // const { currentUser, url } = data;
+  console.log(data);
 
   const currentUser = data.currentUser.data;
   const url = data.url.href;
@@ -134,8 +135,10 @@ export const loader =
 
     if (!isLoggedIn) throw redirect('/login');
 
-    if (queryClient.getQueryData(['me']))
-      return queryClient.getQueryData(['me']);
+    if (queryClient.getQueryData(['me'])) {
+      const currentUser = queryClient.getQueryData(['me']);
+      return { currentUser, url };
+    }
 
     const currentUser = await queryClient.fetchQuery({
       queryKey: ['me'],
