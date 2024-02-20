@@ -36,6 +36,16 @@ function CheckoutForm() {
     const { error: submitError } = await elements.submit();
     if (submitError) {
       // FIXME: have to actually handle this error
+      toast.custom((t) => {
+        t.duration = 10000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            There was an error creating your subscription. Please check that
+            your billing details are right, and try selecting a different plan
+            and then re-selecting your plan from the drop down menu.
+          </CustomToast>
+        );
+      });
       return;
     }
 
@@ -70,6 +80,17 @@ function CheckoutForm() {
         return_url: `${tempURL}/app/account`,
       },
     });
+
+    // NEED TO SOMEHOW GET BELOW IN THE CONFIRM INTENT FUNCTION ABOVE
+    // toast.custom((t) => {
+    //   t.duration = 8000;
+    //   return (
+    //     <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+    //       Subscription successfull. If account page still says account unpaid,
+    //       try refreshing. If there is still a problem, please contact us.
+    //     </CustomToast>
+    //   );
+    // });
 
     if (error) {
       console.error(error);
