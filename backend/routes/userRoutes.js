@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.get('/logout', authController.logout);
+router.post('/logout', authController.logout);
 router.post('/forgotPassword', authController.forgotPassword); // HAVE TO CHANGE THE EMAIL HOST ETC. USING NATOURS PROJECT ONE AT THE MOMENT!!!!!!!!!!!!!!!!!!!!!
 router.patch('/resetPassword/:token', authController.resetPassword);
 

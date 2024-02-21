@@ -66,6 +66,8 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please confirm your password'],
     validate: {
       validator: function (el) {
+        // this checks if the passwordConfirm matches the password....
+        // THIS ONLY WORKS ON SAVE and CREATE!!...so whenever we want to update a user we will have to use .save() (and .create()), rather than find a user and .update()
         return el === this.password;
       },
       message: 'Passwords are not the same',

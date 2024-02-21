@@ -35,6 +35,26 @@ function Toggle({
       </label>
     );
 
+  if (type === 'toggleOptionsSmall')
+    return (
+      <label className="mx-auto my-2 flex h-min w-max cursor-pointer justify-between rounded-full border border-secondary-300 bg-gray-200 p-1 shadow-lg duration-300 ease-in-out">
+        {children}
+        <input
+          type="checkbox"
+          checked={checked}
+          value=""
+          className="peer appearance-none"
+          onChange={onChange}
+        />
+        <span className="flex h-min w-max flex-shrink-0 items-center justify-center rounded-l-full bg-secondary-300 p-2  shadow-md duration-300 ease-in-out peer-checked:bg-gray-200">
+          {optionOne}
+        </span>
+        <span className="flex h-min w-max flex-shrink-0 items-center justify-center rounded-r-full bg-gray-200 p-2 shadow-md duration-300 ease-in-out peer-checked:bg-secondary-300">
+          {optionTwo}
+        </span>
+      </label>
+    );
+
   return (
     <label
       className={`flex cursor-pointer justify-between duration-300 ease-in-out ${

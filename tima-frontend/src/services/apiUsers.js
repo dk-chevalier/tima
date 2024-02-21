@@ -21,7 +21,7 @@ export async function getIsLoggedIn() {
 }
 
 export async function logout() {
-  const { data } = await axios.get(`${URL}/api/v1/users/logout`, {
+  const { data } = await axios.post(`${URL}/api/v1/users/logout`, {
     withCredentials: true,
   });
 

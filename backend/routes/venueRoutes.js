@@ -30,7 +30,7 @@ router
   .get(venueController.getVenue)
   .patch(
     authController.protect,
-    authController.restrictTo('admin'),
+    // authController.restrictTo('admin'),
     venueController.updateVenue,
   )
   .delete(
@@ -38,5 +38,11 @@ router
     authController.restrictTo('admin'),
     venueController.deleteVenue,
   );
+
+router.patch(
+  '/:id/suggest-venue-updates',
+  authController.protect,
+  venueController.suggestedVenueUpdates,
+);
 
 module.exports = router;
