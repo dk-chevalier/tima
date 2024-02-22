@@ -18,7 +18,7 @@ function SearchForm({ onClick }) {
   const dispatch = useDispatch();
 
   return (
-    <div className="w-m absolute left-[2.5%] top-[2.5%] z-50 h-[95%] w-[95%] overflow-y-scroll rounded-md border border-secondary-300 bg-primary-100 px-3 pb-3 pt-10 text-primary-900 shadow-lg">
+    <div className="w-m absolute left-[2.5%] top-[2.5%] z-30 h-[95%] w-[95%] overflow-y-scroll rounded-md border border-secondary-300 bg-primary-100 px-3 pb-3 pt-10 text-primary-900 shadow-lg">
       <div className="absolute right-4 top-4">
         <Button type="close" onClick={onClick}>
           <HiXMark />

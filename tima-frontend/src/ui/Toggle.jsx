@@ -37,7 +37,7 @@ function Toggle({
 
   if (type === 'toggleOptionsSmall')
     return (
-      <label className="mx-auto my-2 flex h-min w-max cursor-pointer justify-between rounded-full border border-secondary-300 bg-gray-200 p-1 shadow-lg duration-300 ease-in-out">
+      <label className="mx-auto my-2 flex w-max cursor-pointer justify-between rounded-full border border-secondary-300 bg-gray-200 p-1 shadow-lg duration-300 ease-in-out">
         {children}
         <input
           type="checkbox"

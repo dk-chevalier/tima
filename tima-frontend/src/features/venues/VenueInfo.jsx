@@ -44,10 +44,18 @@ function VenueInfo() {
         <div className="mb-8">
           <Toggle
             type="toggleOptionsSmall"
-            checked={showProposedUpdates}
             onChange={() => setShowProposedUpdates(!showProposedUpdates)}
-            optionOne={<p className="text-xs">Confirmed details</p>}
-            optionTwo={<p className="text-xs">Proposed updates</p>}
+            checked={showProposedUpdates}
+            optionOne={
+              <div className="text-center">
+                <p className="text-xs">Confirmed details</p>
+              </div>
+            }
+            optionTwo={
+              <div className="text-center">
+                <p className="text-xs">Suggested details</p>
+              </div>
+            }
           />
         </div>
 
