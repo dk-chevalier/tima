@@ -30,7 +30,7 @@ function ModalWindow({ children, name }) {
     <div className="fixed left-0 top-0 z-40 h-screen w-full backdrop-blur-sm">
       <main
         ref={ref}
-        className="fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] overflow-y-scroll rounded-md border border-secondary-300 bg-primary-100 px-5 py-8 shadow-lg"
+        className="fixed left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] rounded-md border border-secondary-300 bg-primary-100 px-5 py-8 shadow-lg"
       >
         <div className="absolute right-2 top-3">
           <Button onClick={() => dispatch(closeDialog())}>
