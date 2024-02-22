@@ -1,18 +1,26 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isOpen: false,
+  // isOpen: false,
+  openName: '',
+  isModal: false,
 };
 
 const dialogSlice = createSlice({
   name: 'dialog',
   initialState,
   reducers: {
+    // openDialog(state, action) {
+    //   state.isOpen = true;
+    // },
+    // closeDialog(state, action) {
+    //   state.isOpen = false;
+    // },
     openDialog(state, action) {
-      state.isOpen = true;
+      state.openName = action.payload;
     },
     closeDialog(state, action) {
-      state.isOpen = false;
+      state.openName = '';
     },
   },
 });
@@ -23,7 +31,7 @@ export default dialogSlice.reducer;
 
 const selectDialogState = (state) => state.dialog;
 
-export const selectDialogStatus = createSelector(
+export const selectOpenDialog = createSelector(
   selectDialogState,
-  (dialog) => dialog.isOpen,
+  (dialog) => dialog.openName,
 );

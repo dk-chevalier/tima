@@ -5,6 +5,8 @@ import Button from '../../ui/Button';
 import StyledNavLink from '../../ui/StyledNavLink';
 import { useState } from 'react';
 import Toggle from '../../ui/Toggle';
+import Dialog from '../dialog/Dialog';
+import SuggestVenueUpdates from './SuggestVenueUpdates';
 
 function VenueInfo() {
   // const { venueId } = useParams();
@@ -266,6 +268,15 @@ function VenueInfo() {
         <Button type="secondary">Find newspapers near here</Button>
         <Button type="secondary">Find magazines/blogs near here</Button>
       </div>
+
+      <Dialog>
+        <Dialog.Open opens="suggest-venue-updates">
+          <Button type="secondary">Suggest updates</Button>
+        </Dialog.Open>
+        <Dialog.ModalWindow name="suggest-venue-updates">
+          <SuggestVenueUpdates />
+        </Dialog.ModalWindow>
+      </Dialog>
     </>
   );
 }
