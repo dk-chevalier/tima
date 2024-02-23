@@ -258,9 +258,9 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
           </div>
           {updateExtraDetails && (
             <div className="mb-6 mt-[-1rem]">
-              <div className="flex flex-col gap-2 px-3">
+              <div className="flex flex-col gap-12 px-3">
                 {/* Days */}
-                <div className="mb-8">
+                <div>
                   <h3 className="mb-3">
                     Select days that the venue has live music:
                   </h3>
@@ -269,9 +269,9 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                 </div>
 
                 {/* Supports Originals */}
-                <div className="mb-8">
-                  <label className="flex items-center gap-4">
-                    <div>
+                <div>
+                  <label className="flex items-center justify-between gap-4">
+                    <div className="w-max">
                       <h3 className="w-max">
                         Does the venue support original music?
                       </h3>
@@ -283,15 +283,15 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                       name="originals"
                       type="text"
                       placeholder="Y/N"
-                      className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
+                      className="w-[15vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Venue Provides PA */}
-                <div className="mb-8">
-                  <label className="flex items-center gap-4">
-                    <div>
+                <div>
+                  <label className="flex items-center justify-between gap-4">
+                    <div className="w-max">
                       <h3 className="w-max">
                         Does the venue provide a PA system?
                       </h3>
@@ -303,25 +303,26 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                       name="soundSystemProvided"
                       type="text"
                       placeholder="Y/N"
-                      className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
+                      className="w-[15vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Capacity */}
-                <div className="mb-8">
-                  <label className="flex items-center gap-4">
+                <div>
+                  <label className="flex items-center justify-between gap-4">
                     <h3 className="w-max">What is the venue capacity?</h3>
                     <input
                       name="capacity"
                       type="number"
-                      className="rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
+                      placeholder="Number"
+                      className="w-[15vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Supported Genres */}
-                <div className="mb-8">
+                <div>
                   <h3 className="mb-3">
                     Select genres that the venue supports:
                   </h3>
