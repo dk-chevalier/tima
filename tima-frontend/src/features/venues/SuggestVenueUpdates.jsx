@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Form } from 'react-router-dom';
 import Toggle from '../../ui/Toggle';
 import Button from '../../ui/Button';
+import GenresSelection from '../../ui/GenresSelection';
+import GigTypeSelection from '../../ui/GigTypeSelection';
+import DaysSelection from '../../pages/DaysSelection';
 
 function SuggestVenueUpdates({ venueId, onCloseModal }) {
   const [updateVenueContactDetails, setUpdateVenueContactDetails] =
@@ -35,55 +38,55 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
           </div>
           {updateVenueContactDetails && (
             <div className="mb-6 mt-[-1rem]">
-              <div className="flex flex-col gap-2 px-3">
+              <div className="flex flex-col gap-5 px-3">
                 {/* Venue Name */}
                 <div>
-                  <label>
-                    <p>Venue name:</p>
+                  <label className="flex items-center justify-between gap-4">
+                    <h3 className="w-max">Venue name:</h3>
                     <input
                       name="venueName"
                       type="text"
                       placeholder="Type venue's new name"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Venue Website */}
                 <div>
-                  <label>
-                    <p>Venue website:</p>
+                  <label className="flex items-center justify-between gap-4">
+                    <h3 className="w-max">Venue website:</h3>
                     <input
                       name="website"
                       type="text"
                       placeholder="Type venue's new website"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Venue Phone */}
                 <div>
-                  <label>
-                    <p>Venue phone number:</p>
+                  <label className="gap4 flex items-center justify-between">
+                    <h3 className="w-max">Venue phone number:</h3>
                     <input
                       name="venuePh"
                       type="text"
                       placeholder="Type venue's new phone number"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Venue Email */}
                 <div>
-                  <label>
-                    <p>Venue email address:</p>
+                  <label className="flex items-center justify-between gap-4">
+                    <h3 className="w-max">Venue email address:</h3>
                     <input
                       name="venueEmail"
                       type="text"
                       placeholder="Type venue's new email address"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
@@ -115,8 +118,8 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                     <input
                       name="street"
                       type="text"
-                      placeholder="Type venue's new street address"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      placeholder="Type venues new street address"
+                      className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
@@ -130,7 +133,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                         name="city"
                         type="text"
                         placeholder="Type venues new city"
-                        className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                       />
                     </label>
                   </div>
@@ -143,7 +146,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                         name="state"
                         type="text"
                         placeholder="Type venues new state"
-                        className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                       />
                     </label>
                   </div>
@@ -158,7 +161,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                         name="country"
                         type="text"
                         placeholder="Type venues new country"
-                        className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                       />
                     </label>
                   </div>
@@ -166,12 +169,12 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                   {/* Postcode */}
                   <div className="w-1/2">
                     <label>
-                      <p>Postcode:</p>
+                      <h3>Postcode:</h3>
                       <input
                         name="postcode"
                         type="text"
                         placeholder="Type venues new postcode"
-                        className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                       />
                     </label>
                   </div>
@@ -196,46 +199,44 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
           </div>
           {updateBookerDetails && (
             <div className="mb-6 mt-[-1rem]">
-              <div className="flex flex-col gap-2 px-3">
+              <div className="flex flex-col gap-5 px-3">
                 {/* Booker Name */}
                 <div>
-                  <label>
-                    <p>New bookers name:</p>
+                  <label className="flex items-center justify-between gap-4">
+                    <h3 className="w-max">New bookers name:</h3>
                     <input
                       name="bookerName"
                       type="text"
                       placeholder="Type name of the new booker"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
-                <div className="flex justify-between gap-3">
-                  {/* Booker Email */}
-                  <div className="w-1/2">
-                    <label>
-                      <p>New bookers email address:</p>
-                      <input
-                        name="bookerEmail"
-                        type="text"
-                        placeholder="Type bookers email address"
-                        className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
-                      />
-                    </label>
-                  </div>
+                {/* Booker Email */}
+                <div>
+                  <label className="flex items-center justify-between gap-4">
+                    <h3 className="w-max">New bookers email address:</h3>
+                    <input
+                      name="bookerEmail"
+                      type="text"
+                      placeholder="Type bookers email address"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
+                    />
+                  </label>
+                </div>
 
-                  {/* Booker Phone Number */}
-                  <div className="w-1/2">
-                    <label>
-                      <p>New bookers phone number:</p>
-                      <input
-                        name="bookerPh"
-                        type="text"
-                        placeholder="Type bookers phone number"
-                        className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
-                      />
-                    </label>
-                  </div>
+                {/* Booker Phone Number */}
+                <div>
+                  <label className="flex items-center justify-between gap-4">
+                    <h3 className="w-max">New bookers phone number:</h3>
+                    <input
+                      name="bookerPh"
+                      type="text"
+                      placeholder="Type bookers phone number"
+                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
+                    />
+                  </label>
                 </div>
               </div>
             </div>
@@ -259,129 +260,84 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
             <div className="mb-6 mt-[-1rem]">
               <div className="flex flex-col gap-2 px-3">
                 {/* Days */}
-                <div>
-                  <label>
-                    <p>Select days that the venue has live music:</p>
-                    <p className="text-xs font-thin text-gray-600">
-                      hold ctrl/cmd to select multiple
-                    </p>
-                    <select
-                      className="rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
-                      name="days"
-                      multiple
-                    >
-                      <option value="monday">Monday</option>
-                      <option value="tuesday">Tuesday</option>
-                      <option value="wednesday">Wednesday</option>
-                      <option value="thursday">Thursday</option>
-                      <option value="friday">Friday</option>
-                      <option value="saturday">Saturday</option>
-                      <option value="sunday">Sunday</option>
-                    </select>
-                  </label>
+                <div className="mb-8">
+                  <h3 className="mb-3">
+                    Select days that the venue has live music:
+                  </h3>
+
+                  <DaysSelection numberCols="3" />
                 </div>
 
                 {/* Supports Originals */}
-                <div>
-                  <label>
-                    <p>Does the venue support original music?</p>
-                    <p className="text-xs font-thin text-gray-600">
-                      Y/y = yes | N/n = no
-                    </p>
+                <div className="mb-8">
+                  <label className="flex items-center gap-4">
+                    <div>
+                      <h3 className="w-max">
+                        Does the venue support original music?
+                      </h3>
+                      <p className="text-xs font-thin text-gray-600">
+                        Y/y = yes | N/n = no
+                      </p>
+                    </div>
                     <input
                       name="originals"
                       type="text"
-                      placeholder="Input Y if the venue supports originals, or N if it does not"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      placeholder="Y/N"
+                      className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Venue Provides PA */}
-                <div>
-                  <label>
-                    <p>Does the venue provide a PA system?</p>
-                    <p className="text-xs font-thin text-gray-600">
-                      Y/y = yes | N/n = no
-                    </p>
+                <div className="mb-8">
+                  <label className="flex items-center gap-4">
+                    <div>
+                      <h3 className="w-max">
+                        Does the venue provide a PA system?
+                      </h3>
+                      <p className="text-xs font-thin text-gray-600">
+                        Y/y = yes | N/n = no
+                      </p>
+                    </div>
                     <input
                       name="soundSystemProvided"
                       type="text"
-                      placeholder="Input Y if the venue provides a PA, or N if it does not"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      placeholder="Y/N"
+                      className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Capacity */}
-                <div>
-                  <label>
-                    <p>What is the venue capacity?</p>
+                <div className="mb-8">
+                  <label className="flex items-center gap-4">
+                    <h3 className="w-max">What is the venue capacity?</h3>
                     <input
                       name="capacity"
                       type="number"
-                      className="w-full rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
+                      className="rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
                     />
                   </label>
                 </div>
 
                 {/* Supported Genres */}
-                <div>
-                  <label>
-                    <p>Select genres that the venue supports:</p>
-                    <p className="text-xs font-thin text-gray-600">
-                      hold ctrl/cmd to select multiple
-                    </p>
-                    <select
-                      className="rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
-                      name="genres"
-                      multiple
-                    >
-                      <option value="acoustic">Acoustic</option>
-                      <option value="blues">Blues</option>
-                      <option value="classical">Classical</option>
-                      <option value="country">Country</option>
-                      <option value="disco">Disco</option>
-                      <option value="electronic">Electronic</option>
-                      <option value="folk">Folk</option>
-                      <option value="funk">Funk</option>
-                      <option value="hip-hop">Hip-hop</option>
-                      <option value="indie">Indie</option>
-                      <option value="jazz">Jazz</option>
-                      <option value="latin">Latin</option>
-                      <option value="metal">Metal</option>
-                      <option value="pop">Pop</option>
-                      <option value="punk">Punk</option>
-                      <option value="r&b">R&B</option>
-                      <option value="reggae">Reggae</option>
-                      <option value="rock">Rock</option>
-                      <option value="singer-songwriter">
-                        Singer-songrwriter
-                      </option>
-                      <option value="soul">Soul</option>
-                    </select>
-                  </label>
+                <div className="mb-8">
+                  <h3 className="mb-3">
+                    Select genres that the venue supports:
+                  </h3>
+                  <GenresSelection numberCols="3" />
                 </div>
 
                 {/* Gig Type */}
-                <div>
-                  <label>
-                    <p>What types of gigs does the venue host?</p>
-                    <select
-                      className="rounded-sm border border-secondary-300 bg-primary-100 shadow-md"
-                      name="gig-type"
-                      defaultValue="both"
-                    >
-                      <option value="both">Both</option>
-                      <option value="ticketed">Ticketed</option>
-                      <option value="free-entry">Free entry</option>
-                    </select>
-                  </label>
-                </div>
+                <GigTypeSelection withToggle={true}>
+                  What types of gigs does the venue host?
+                </GigTypeSelection>
               </div>
             </div>
           )}
-          <Button type="submit">Submit updates</Button>
+          <div className="w-max self-center">
+            <Button type="submit">Submit updates</Button>
+          </div>
         </div>
       </Form>
     </div>
