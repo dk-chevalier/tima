@@ -1,10 +1,15 @@
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, redirect } from 'react-router-dom';
 import Toggle from '../../ui/Toggle';
 import Button from '../../ui/Button';
 import GenresSelection from '../../ui/GenresSelection';
 import GigTypeSelection from '../../ui/GigTypeSelection';
 import DaysSelection from '../../pages/DaysSelection';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import CustomToast from '../../ui/CustomToast';
+
+const URL = import.meta.env.VITE_LOCAL_URL;
 
 function SuggestVenueUpdates({ venueId, onCloseModal }) {
   const [updateVenueContactDetails, setUpdateVenueContactDetails] =
@@ -18,7 +23,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
       <h2 className="fixed w-[40vw] bg-primary-100 p-3 text-2xl font-thin">
         Suggest updates to venue information
       </h2>
-      <Form>
+      <Form method="post">
         <div className="mt-16 flex flex-col gap-6">
           {/* Venue Contact Details */}
           <div className="flex justify-between">
@@ -280,7 +285,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                       </p>
                     </div>
                     <input
-                      name="originals"
+                      name="originalsUpdate"
                       type="text"
                       placeholder="Y/N"
                       className="w-[15vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
@@ -300,7 +305,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
                       </p>
                     </div>
                     <input
-                      name="soundSystemProvided"
+                      name="soundSystemProvidedUpdate"
                       type="text"
                       placeholder="Y/N"
                       className="w-[15vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
@@ -346,3 +351,156 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
 }
 
 export default SuggestVenueUpdates;
+
+export async function action({ request, params }) {
+  const { id } = params;
+
+  const {
+    venueName,
+    website,
+    venuePh,
+    venueEmail,
+    street,
+    city,
+    state,
+    country,
+    postcode,
+    bookerName,
+    bookerEmail,
+    bookerPh,
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+    originalsUpdate,
+    soundSystemProvidedUpdate,
+    capacity,
+    acoustic,
+    blues,
+    classical,
+    countryGenre,
+    disco,
+    electronic,
+    folk,
+    funk,
+    hipHop,
+    indie,
+    jazz,
+    latin,
+    metal,
+    pop,
+    punk,
+    rnb,
+    reggae,
+    rock,
+    singerSongwriter,
+    soul,
+    gigType,
+  } = Object.fromEntries(await request.formData());
+
+  let originals;
+  let soundSystemProvided;
+
+  if (originalsUpdate?.toLowerCase() === 'y') originals = true;
+  if (originalsUpdate?.toLowerCase() === 'n') originals = false;
+
+  if (soundSystemProvidedUpdate?.toLowerCase() === 'y')
+    soundSystemProvided = true;
+  if (soundSystemProvidedUpdate?.toLowerCase() === 'n')
+    soundSystemProvided = false;
+
+  // filter is used to eliminate undefined values
+  const genresArr = [
+    acoustic,
+    blues,
+    classical,
+    countryGenre,
+    disco,
+    electronic,
+    folk,
+    funk,
+    hipHop,
+    indie,
+    jazz,
+    latin,
+    metal,
+    pop,
+    punk,
+    rnb,
+    reggae,
+    rock,
+    singerSongwriter,
+    soul,
+  ].filter((el) => el);
+
+  const genres = genresArr.length > 0 ? genresArr : null;
+
+  const daysArr = [
+    monday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    saturday,
+    sunday,
+  ].filter((el) => el);
+
+  // this prevents backend from registering there was a value in 'days' (because prevents simply sending an empty array)
+  const days = daysArr.length > 0 ? daysArr : null;
+
+  try {
+    const { data } = await axios.patch(
+      `${URL}/api/v1/venues/${id}/suggest-venue-updates`,
+      {
+        venueName,
+        website,
+        venuePh,
+        venueEmail,
+        street,
+        city,
+        state,
+        country,
+        postcode,
+        bookerName,
+        bookerEmail,
+        bookerPh,
+        originals,
+        soundSystemProvided,
+        days,
+        capacity: +capacity,
+        genres,
+        gigType,
+      },
+      { withCredentials: true },
+    );
+
+    console.log('DATA!!!!!!!!!!!!!!!!!!');
+    console.log(data);
+
+    toast.custom((t) => {
+      t.duration = 3000;
+      return (
+        <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+          Updates successfully submitted. We will contact the venue to confirm
+          these details asap.
+        </CustomToast>
+      );
+    });
+  } catch (err) {
+    console.error(err);
+    toast.custom((t) => {
+      t.duration = 5000;
+      return (
+        <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+          Something went wrong. Please try submitting your suggested updates
+          again.
+        </CustomToast>
+      );
+    });
+  }
+
+  return null;
+}

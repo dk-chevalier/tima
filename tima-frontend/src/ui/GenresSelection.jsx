@@ -1,6 +1,6 @@
 function GenresSelection({ type, numberCols }) {
   return (
-    <div className={`grid grid-cols-${numberCols} gap-x-3 gap-y-2`}>
+    <fieldset className={`grid grid-cols-${numberCols} gap-x-3 gap-y-2`}>
       {type === 'search' && (
         <>
           <label className="cursor-pointer">
@@ -63,7 +63,7 @@ function GenresSelection({ type, numberCols }) {
       <label className="cursor-pointer">
         <input
           type="checkbox"
-          name="country"
+          name="countryGenre"
           value="country"
           className="peer appearance-none"
         />
@@ -119,7 +119,7 @@ function GenresSelection({ type, numberCols }) {
       <label className="cursor-pointer">
         <input
           type="checkbox"
-          name="hip-hop"
+          name="hipHop"
           value="hip-hop"
           className="peer appearance-none"
         />
@@ -196,7 +196,7 @@ function GenresSelection({ type, numberCols }) {
       <label className="cursor-pointer">
         <input
           type="checkbox"
-          name="r&b"
+          name="rnb"
           value="r&b"
           className="peer appearance-none"
         />
@@ -229,7 +229,7 @@ function GenresSelection({ type, numberCols }) {
       <label className="cursor-pointer">
         <input
           type="checkbox"
-          name="singer-songwriter"
+          name="singerSongwriter"
           value="singer-songwriter"
           className="peer appearance-none"
         />
@@ -248,7 +248,7 @@ function GenresSelection({ type, numberCols }) {
           Soul
         </span>
       </label>
-    </div>
+    </fieldset>
   );
 }
 

@@ -57,141 +57,132 @@ exports.suggestedVenueUpdates = catchAsync(async (req, res, next) => {
   // ALSO ONLY WANT USER ID TO UPDATE FOR ANY CHANGED VALUES, SO AS TO KEEP TRACK OF WHO UPDATED WHAT INFO.....WILL BE USEFUL TO KNOW, ESPECIALLY IF DECIDE TO INCENTIVISE USERS TO PROVIDE UPDATES BY OFFERING DISCOUNTS ON EVERY UPDATE THEY PROVIDE
 
   // VENUE NAME UPDATE
-  if (req.body.suggestedVenueName) {
-    venue.suggestedUpdates.venueNameUpdate.venueName =
-      req.body.suggestedVenueName;
+  if (req.body.venueName) {
+    venue.suggestedUpdates.venueNameUpdate.venueName = req.body.venueName;
 
     venue.suggestedUpdates.venueNameUpdate.user = req.user.id;
   }
 
   // STREET ADDRESS UPDATE
-  if (req.body.suggestedStreet) {
-    venue.suggestedUpdates.addressUpdates.streetUpdate.street =
-      req.body.suggestedStreet;
+  if (req.body.street) {
+    venue.suggestedUpdates.addressUpdates.streetUpdate.street = req.body.street;
 
     venue.suggestedUpdates.addressUpdates.streetUpdate.user = req.user.id;
   }
 
   // CITY UPDATE
-  if (req.body.suggestedCity) {
-    venue.suggestedUpdates.addressUpdates.cityUpdate.city =
-      req.body.suggestedCity;
+  if (req.body.city) {
+    venue.suggestedUpdates.addressUpdates.cityUpdate.city = req.body.city;
 
     venue.suggestedUpdates.addressUpdates.cityUpdate.user = req.user.id;
   }
 
   // STATE UPDATE
-  if (req.body.suggestedState) {
-    venue.suggestedUpdates.addressUpdates.stateUpdate.state =
-      req.body.suggestedState;
+  if (req.body.state) {
+    venue.suggestedUpdates.addressUpdates.stateUpdate.state = req.body.state;
 
     venue.suggestedUpdates.addressUpdates.stateUpdate.user = req.user.id;
   }
 
   // COUNTRY UPDATE
-  if (req.body.suggestedCountry) {
+  if (req.body.country) {
     venue.suggestedUpdates.addressUpdates.countryUpdate.country =
-      req.body.suggestedCountry;
+      req.body.country;
 
     venue.suggestedUpdates.addressUpdates.countryUpdate.user = req.user.id;
   }
   // POSTCODE UPDATE
-  if (req.body.suggestedPostcode) {
+  if (req.body.postcode) {
     venue.suggestedUpdates.addressUpdates.postcodeUpdate.postcode =
-      req.body.suggestedPostcode;
+      req.body.postcode;
 
     venue.suggestedUpdates.addressUpdates.postcodeUpdate.user = req.user.id;
   }
 
   // VENUE EMAIL UPDATE
-  if (req.body.suggestedVenueEmail) {
-    venue.suggestedUpdates.venueEmailUpdate.venueEmail =
-      req.body.suggestedVenueEmail;
+  if (req.body.venueEmail) {
+    venue.suggestedUpdates.venueEmailUpdate.venueEmail = req.body.venueEmail;
 
     venue.suggestedUpdates.venueEmailUpdate.user = req.user.id;
   }
 
   // WEBSITE UPDATE
-  if (req.body.suggestedWebsite) {
-    venue.suggestedUpdates.websiteUpdate.website = req.body.suggestedWebsite;
+  if (req.body.website) {
+    venue.suggestedUpdates.websiteUpdate.website = req.body.website;
 
     venue.suggestedUpdates.websiteUpdate.user = req.user.id;
   }
 
   // BOOKER NAME UPDATE
-  if (req.body.suggestedBookerName) {
+  if (req.body.bookerName) {
     venue.suggestedUpdates.bookingContactUpdates.bookerNameUpdate.bookerName =
-      req.body.suggestedBookerName;
+      req.body.bookerName;
 
     venue.suggestedUpdates.bookingContactUpdates.bookerNameUpdate.user =
       req.user.id;
   }
 
   // BOOKER EMAIL UPDATE
-  if (req.body.suggestedBookerEmail) {
+  if (req.body.bookerEmail) {
     venue.suggestedUpdates.bookingContactUpdates.bookerEmailUpdate.bookerEmail =
-      req.body.suggestedBookerEmail;
+      req.body.bookerEmail;
 
     venue.suggestedUpdates.bookingContactUpdates.bookerEmailUpdate.user =
       req.user.id;
   }
 
   // BOOKER PHONE UPDATE
-  if (req.body.suggestedBookerPh) {
+  if (req.body.bookerPh) {
     venue.suggestedUpdates.bookingContactUpdates.bookerPhUpdate.bookerPh =
-      req.body.suggestedBookerPh;
+      req.body.bookerPh;
 
     venue.suggestedUpdates.bookingContactUpdates.bookerPhUpdate.user =
       req.user.id;
   }
 
   // DAYS UPDATE
-  if (req.body.suggestedDays) {
-    venue.suggestedUpdates.daysUpdate.days = req.body.suggestedDays;
+  if (req.body.days) {
+    venue.suggestedUpdates.daysUpdate.days = req.body.days;
 
     venue.suggestedUpdates.daysUpdate.user = req.user.id;
   }
 
   // ORIGINALS UPDATE (have to do conditional like below, because if the suggestion is 'false' it wouldn't have run otherwise...this way it can not exist, therefore being a falsy value, without triggering the conditional statement still, but if the suggestion is set to false it will still trigger it)
-  if (
-    req.body.suggestedOriginals === true ||
-    req.body.suggestedOriginals === false
-  ) {
-    venue.suggestedUpdates.originalsUpdate.originals =
-      req.body.suggestedOriginals;
+  if (req.body.originals === true || req.body.originals === false) {
+    venue.suggestedUpdates.originalsUpdate.originals = req.body.originals;
 
     venue.suggestedUpdates.originalsUpdate.user = req.user.id;
   }
 
   // SOUND SYSTEM PROVIDED UPDATE
   if (
-    req.body.suggestedSoundSystemProvided === true ||
-    req.body.suggestedSoundSystemProvided === false
+    req.body.soundSystemProvided === true ||
+    req.body.soundSystemProvided === false
   ) {
     venue.suggestedUpdates.soundSystemProvidedUpdate.soundSystemProvided =
-      req.body.suggestedSoundSystemProvided;
+      req.body.soundSystemProvided;
 
     venue.suggestedUpdates.soundSystemProvidedUpdate.user = req.user.id;
   }
 
   // CAPACITY UPDATE
-  if (req.body.suggestedCapacity) {
-    venue.suggestedUpdates.capacityUpdate.capacity = req.body.suggestedCapacity;
+  if (req.body.capacity) {
+    venue.suggestedUpdates.capacityUpdate.capacity = req.body.capacity;
 
     venue.suggestedUpdates.capacityUpdate.user = req.user.id;
   }
 
   // GENRES SUPPORTED UPDATE
-  if (req.body.suggestedGenresSupported) {
+  if (req.body.genresSupported) {
     venue.suggestedUpdates.genresSupportedUpdate.genresSupported =
-      req.body.suggestedGenresSupported;
+      req.body.genresSupported;
 
     venue.suggestedUpdates.genresSupportedUpdate.user = req.user.id;
   }
 
   // GIG TYPE UPDATE
-  if (req.body.suggestedGigType) {
-    venue.suggestedUpdates.gigTypeUpdate.gigType = req.body.suggestedGigType;
+  if (req.body.gigType) {
+    venue.suggestedUpdates.gigTypeUpdate.gigType = req.body.gigType;
 
     venue.suggestedUpdates.gigTypeUpdate.user = req.user.id;
   }
@@ -200,6 +191,6 @@ exports.suggestedVenueUpdates = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    data: { venue },
+    data: venue.suggestedUpdates,
   });
 });

@@ -43,7 +43,7 @@ function GigTypeSelection({ withToggle = false, children }) {
           <label>
             <select
               className="rounded-md border border-secondary-300 px-2 py-1 shadow-md"
-              name="gig-type"
+              name="gigType"
               defaultValue="both"
             >
               <option value="both">Both</option>
