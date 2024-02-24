@@ -92,6 +92,7 @@ const router = createBrowserRouter([
     path: 'app',
     element: <AppLayout />,
     loader: protectedAppLayoutLoader(queryClient),
+    action: suggestedVenueUpdatesAction,
     children: [
       {
         index: true,
@@ -121,7 +122,7 @@ const router = createBrowserRouter([
                 element: <VenueDetails />,
                 id: 'venue',
                 loader: protectedVenueDetailsLoader(queryClient),
-                action: suggestedVenueUpdatesAction,
+                // action: suggestedVenueUpdatesAction,
               },
             ],
           },

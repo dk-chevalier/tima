@@ -2,6 +2,10 @@ import Sidebar from '../ui/Sidebar';
 import MapContainer from '../features/map/Map';
 import { Outlet, redirect } from 'react-router-dom';
 import { getIsLoggedIn } from '../services/apiUsers';
+import { HiPlus } from 'react-icons/hi2';
+import Dialog from '../features/dialog/Dialog';
+import Button from '../ui/Button';
+import SuggestVenueUpdates from '../features/venues/SuggestVenueUpdates';
 
 function MapPage() {
   return (

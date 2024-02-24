@@ -403,6 +403,8 @@ export async function action({ request, params }) {
     gigType,
     requestType,
   } = Object.fromEntries(await request.formData());
+  console.log('REQUEST TYPE');
+  console.log(requestType);
 
   let originals;
   let soundSystemProvided;
@@ -458,6 +460,59 @@ export async function action({ request, params }) {
     try {
       const { data } = await axios.patch(
         `${URL}/api/v1/venues/${id}/suggest-venue-updates`,
+        {
+          venueName,
+          website,
+          venuePh,
+          venueEmail,
+          street,
+          city,
+          state,
+          country,
+          postcode,
+          bookerName,
+          bookerEmail,
+          bookerPh,
+          originals,
+          soundSystemProvided,
+          days,
+          capacity: +capacity,
+          genres,
+          gigType,
+          requestType,
+        },
+        { withCredentials: true },
+      );
+
+      console.log('DATA!!!!!!!!!!!!!!!!!!');
+      console.log(data);
+
+      toast.custom((t) => {
+        t.duration = 3000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+            Updates successfully submitted. We will contact the venue to confirm
+            these details asap.
+          </CustomToast>
+        );
+      });
+    } catch (err) {
+      console.error(err);
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            Something went wrong. Please try submitting your suggested updates
+            again.
+          </CustomToast>
+        );
+      });
+    }
+  }
+  if (requestType === 'create') {
+    try {
+      const { data } = await axios.post(
+        `${URL}/api/v1/venues/suggest-new-venue`,
         {
           venueName,
           website,

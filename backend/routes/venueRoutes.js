@@ -39,6 +39,12 @@ router
     venueController.deleteVenue,
   );
 
+router.post(
+  '/suggest-new-venue',
+  authController.protect,
+  venueController.suggestedVenueUpdates,
+);
+
 router.patch(
   '/:id/suggest-venue-updates',
   authController.protect,

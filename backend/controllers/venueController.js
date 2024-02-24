@@ -46,25 +46,33 @@ exports.getVenuesWithin = factory.getDocumentsWithin(Venue);
 
 // SUGGESTED UPDATES FROM USERS
 exports.suggestedVenueUpdates = catchAsync(async (req, res, next) => {
-  console.log('1111111');
   let venue;
-  if (req.body.requestType === 'update')
+  console.log(req.body.requestType);
+
+  if (req.body.requestType === 'update') {
     venue = await Venue.findById(req.params.id);
-  if (req.body.requestType === 'create')
+  }
+
+  if (req.body.requestType === 'create') {
+    console.log('aaaa');
     venue = new Venue({
       suggestedUpdates: {
-        venueNameUpdate: { venueName, user: req.user.id },
+        venueNameUpdate: { venueName: req.body.venueName, user: req.user.id },
         addressUpdates: {
           cityUpdate: {
-            city,
+            city: req.body.city,
             user: req.user.id,
           },
-          stateUpdate: { state, user: req.user.id },
-          countryUpdate: { country, user: req.user.id },
-          postcodeUpdate: { postcode, user: req.user.id },
+          stateUpdate: { state: req.body.state, user: req.user.id },
+          countryUpdate: { country: req.body.country, user: req.user.id },
+          postcodeUpdate: { postcode: req.body.postcode, user: req.user.id },
         },
       },
     });
+  }
+  console.log('4444');
+
+  console.log(venue);
 
   // TODO: add if no venue (perhaps make one function that will create new venue if one doesn't already exist)
 
