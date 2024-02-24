@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-function Button({ children, type, to, onClick, href, state }) {
+function Button({ children, type, to, onClick, href, state, name, value }) {
   const navigate = useNavigate();
   const base =
     'px-3 py-1 shadow-md transition-all duration-300 active:shadow-sm inline-block flex justify-center items-center';
@@ -53,7 +53,8 @@ function Button({ children, type, to, onClick, href, state }) {
 
   if (type === 'submit')
     return (
-      <button className={styles[type]} type={type}>
+      // name and value are used to be able to pass necessary data from react routers form to the action
+      <button className={styles[type]} type={type} name={name} value={value}>
         {children}
       </button>
     );

@@ -46,7 +46,25 @@ exports.getVenuesWithin = factory.getDocumentsWithin(Venue);
 
 // SUGGESTED UPDATES FROM USERS
 exports.suggestedVenueUpdates = catchAsync(async (req, res, next) => {
-  const venue = await Venue.findById(req.params.id);
+  console.log('1111111');
+  let venue;
+  if (req.body.requestType === 'update')
+    venue = await Venue.findById(req.params.id);
+  if (req.body.requestType === 'create')
+    venue = new Venue({
+      suggestedUpdates: {
+        venueNameUpdate: { venueName, user: req.user.id },
+        addressUpdates: {
+          cityUpdate: {
+            city,
+            user: req.user.id,
+          },
+          stateUpdate: { state, user: req.user.id },
+          countryUpdate: { country, user: req.user.id },
+          postcodeUpdate: { postcode, user: req.user.id },
+        },
+      },
+    });
 
   // TODO: add if no venue (perhaps make one function that will create new venue if one doesn't already exist)
 
@@ -186,6 +204,8 @@ exports.suggestedVenueUpdates = catchAsync(async (req, res, next) => {
 
     venue.suggestedUpdates.gigTypeUpdate.user = req.user.id;
   }
+
+  console.log(venue);
 
   await venue.save(); // have to use Model.save() (would also work with Model.create()), because otherwise the 'this' keyword in our validator function in the Schema won't point to the current model, and thus won't be able to compare it to already existing values....i.e. can't use the update() functions
 

@@ -11,7 +11,7 @@ import CustomToast from '../../ui/CustomToast';
 
 const URL = import.meta.env.VITE_LOCAL_URL;
 
-function SuggestVenueUpdates({ venueId, onCloseModal }) {
+function SuggestVenueUpdates({ venueId, onCloseModal, requestType }) {
   const [updateVenueContactDetails, setUpdateVenueContactDetails] =
     useState(false);
   const [updateAddressDetails, setUpdateAddressDetails] = useState(false);
@@ -342,7 +342,9 @@ function SuggestVenueUpdates({ venueId, onCloseModal }) {
             </div>
           )}
           <div className="w-max self-center">
-            <Button type="submit">Submit updates</Button>
+            <Button type="submit" name="requestType" value={requestType}>
+              Submit updates
+            </Button>
           </div>
         </div>
       </Form>
@@ -399,6 +401,7 @@ export async function action({ request, params }) {
     singerSongwriter,
     soul,
     gigType,
+    requestType,
   } = Object.fromEntries(await request.formData());
 
   let originals;
@@ -451,55 +454,58 @@ export async function action({ request, params }) {
   // this prevents backend from registering there was a value in 'days' (because prevents simply sending an empty array)
   const days = daysArr.length > 0 ? daysArr : null;
 
-  try {
-    const { data } = await axios.patch(
-      `${URL}/api/v1/venues/${id}/suggest-venue-updates`,
-      {
-        venueName,
-        website,
-        venuePh,
-        venueEmail,
-        street,
-        city,
-        state,
-        country,
-        postcode,
-        bookerName,
-        bookerEmail,
-        bookerPh,
-        originals,
-        soundSystemProvided,
-        days,
-        capacity: +capacity,
-        genres,
-        gigType,
-      },
-      { withCredentials: true },
-    );
-
-    console.log('DATA!!!!!!!!!!!!!!!!!!');
-    console.log(data);
-
-    toast.custom((t) => {
-      t.duration = 3000;
-      return (
-        <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
-          Updates successfully submitted. We will contact the venue to confirm
-          these details asap.
-        </CustomToast>
+  if (requestType === 'update') {
+    try {
+      const { data } = await axios.patch(
+        `${URL}/api/v1/venues/${id}/suggest-venue-updates`,
+        {
+          venueName,
+          website,
+          venuePh,
+          venueEmail,
+          street,
+          city,
+          state,
+          country,
+          postcode,
+          bookerName,
+          bookerEmail,
+          bookerPh,
+          originals,
+          soundSystemProvided,
+          days,
+          capacity: +capacity,
+          genres,
+          gigType,
+          requestType,
+        },
+        { withCredentials: true },
       );
-    });
-  } catch (err) {
-    console.error(err);
-    toast.custom((t) => {
-      t.duration = 5000;
-      return (
-        <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
-          Something went wrong. Please try submitting your suggested updates
-          again.
-        </CustomToast>
-      );
-    });
+
+      console.log('DATA!!!!!!!!!!!!!!!!!!');
+      console.log(data);
+
+      toast.custom((t) => {
+        t.duration = 3000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+            Updates successfully submitted. We will contact the venue to confirm
+            these details asap.
+          </CustomToast>
+        );
+      });
+    } catch (err) {
+      console.error(err);
+      toast.custom((t) => {
+        t.duration = 5000;
+        return (
+          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+            Something went wrong. Please try submitting your suggested updates
+            again.
+          </CustomToast>
+        );
+      });
+    }
   }
 
   return null;

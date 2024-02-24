@@ -282,7 +282,7 @@ function VenueInfo() {
           <Button type="secondary">Suggest updates</Button>
         </Dialog.Open>
         <Dialog.ModalWindow name="suggest-venue-updates">
-          <SuggestVenueUpdates />
+          <SuggestVenueUpdates requestType="update" />
         </Dialog.ModalWindow>
       </Dialog>
     </>
