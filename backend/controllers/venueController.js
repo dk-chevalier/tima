@@ -35,10 +35,7 @@ const AppError = require('../utils/appError');
 // });
 
 exports.getAllVenues = factory.getAll(Venue);
-exports.getVenue = factory.getOne(Venue, {
-  path: 'reviews',
-  select: '-createdAt -__v',
-});
+exports.getVenue = factory.getOne(Venue, ['reviews', 'suggestedUpdates']);
 exports.createVenue = factory.createOne(Venue);
 exports.deleteVenue = factory.deleteOne(Venue);
 exports.updateVenue = factory.updateOne(Venue);

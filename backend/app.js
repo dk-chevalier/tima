@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const venueRouter = require('./routes/venueRoutes');
+const venueUpdatesRouter = require('./routes/venueUpdatesRoutes');
 const userRouter = require('./routes/userRoutes');
 const radioStationRouter = require('./routes/radioStationRoutes');
 const radioShowRouter = require('./routes/radioShowRoutes');
@@ -73,6 +74,7 @@ app.use(
 // ROUTES
 
 app.use('/api/v1/venues', venueRouter);
+app.use('/api/v1/venueUpdates', venueUpdatesRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/radioStations', radioStationRouter);
 app.use('/api/v1/radioShows', radioShowRouter);
