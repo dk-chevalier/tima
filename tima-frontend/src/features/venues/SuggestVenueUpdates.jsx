@@ -20,7 +20,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal, requestType }) {
 
   return (
     <div className="h-[70vh] w-[40vw] overflow-y-scroll">
-      <h2 className="fixed w-[40vw] bg-primary-100 p-3 text-2xl font-thin">
+      <h2 className="w-[40vw] bg-primary-100 p-3 text-2xl font-thin">
         Suggest updates to venue information
       </h2>
       <Form method="post">

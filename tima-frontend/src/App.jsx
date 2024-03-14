@@ -35,6 +35,7 @@ import CreateAccount, {
 import Home, { loader as homeLoader } from './pages/Home';
 import PaymentInfo from './pages/PaymentInfo';
 import { action as suggestedVenueUpdatesAction } from './features/venues/SuggestVenueUpdates';
+import AddContacts from './pages/AddContacts';
 
 // FIXME: FIX PROTECTED ROUTES....SO FAR ALL PROTECTED ROUTES HAVE A SEPARATE API CALL IN LOADER (BEFORE ANY OTHER CALLS) TO SIMPLY CHECK IF USER IS LOGGED IN....CAN PERHAPS REFACTOR SO authController.protect DOES THIS JOB FOR US ON SERVER SIDE (AS ALL THOSE ROUTES ARE PROTECTED ANYWAY?)....EVENTUALLY WILL APPARENTLY BE MIDDLEWARE ON REACT ROUTER TO MAKE THIS EASIER TOO....
 
@@ -92,13 +93,18 @@ const router = createBrowserRouter([
     path: 'app',
     element: <AppLayout />,
     loader: protectedAppLayoutLoader(queryClient),
-    action: suggestedVenueUpdatesAction,
+    // action: suggestedVenueUpdatesAction,
     children: [
       {
         index: true,
         path: 'account',
         element: <Account />,
         loader: protectedAccountLoader(queryClient),
+      },
+      {
+        path: 'add-contacts',
+        element: <AddContacts />,
+        action: suggestedVenueUpdatesAction,
       },
       {
         path: 'map',
@@ -122,7 +128,7 @@ const router = createBrowserRouter([
                 element: <VenueDetails />,
                 id: 'venue',
                 loader: protectedVenueDetailsLoader(queryClient),
-                // action: suggestedVenueUpdatesAction,
+                action: suggestedVenueUpdatesAction,
               },
             ],
           },

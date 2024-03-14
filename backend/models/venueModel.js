@@ -79,6 +79,7 @@ const venueSchema = new mongoose.Schema(
           true,
           'A venue must have coordinates in the form [lng, lat]',
         ],
+        default: [0, 0], // FIXME: this is temporary until having access to peromanent geocoding api from mapbox (can't legally store the data at the moment otherwise...)
       },
     },
     ratingsAverage: {
@@ -335,6 +336,22 @@ const venueSchema = new mongoose.Schema(
             type: mongoose.Schema.ObjectId,
             ref: 'User',
           },
+        },
+      },
+      locationUpdate: {
+        location: {
+          type: {
+            type: String,
+            default: 'Point',
+            enum: ['Point'],
+          },
+          coordinates: {
+            type: [Number],
+          },
+        },
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
         },
       },
       daysUpdate: {

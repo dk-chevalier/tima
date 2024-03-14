@@ -57,15 +57,25 @@ exports.suggestedVenueUpdates = catchAsync(async (req, res, next) => {
     console.log('aaaa');
     venue = new Venue({
       suggestedUpdates: {
-        venueNameUpdate: { venueName: req.body.venueName, user: req.user.id },
+        venueNameUpdate: req.body.venueName
+          ? { venueName: req.body.venueName, user: req.user.id }
+          : null,
         addressUpdates: {
-          cityUpdate: {
-            city: req.body.city,
-            user: req.user.id,
-          },
-          stateUpdate: { state: req.body.state, user: req.user.id },
-          countryUpdate: { country: req.body.country, user: req.user.id },
-          postcodeUpdate: { postcode: req.body.postcode, user: req.user.id },
+          cityUpdate: req.body.city
+            ? {
+                city: req.body.city,
+                user: req.user.id,
+              }
+            : null,
+          stateUpdate: req.body.state
+            ? { state: req.body.state, user: req.user.id }
+            : null,
+          countryUpdate: req.body.country
+            ? { country: req.body.country, user: req.user.id }
+            : null,
+          postcodeUpdate: req.body.postcode
+            ? { postcode: req.body.postcode, user: req.user.id }
+            : null,
         },
       },
     });

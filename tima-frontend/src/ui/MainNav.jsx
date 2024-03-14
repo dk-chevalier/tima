@@ -8,6 +8,11 @@ function MainNav() {
     <nav>
       <NavList type="main">
         <li>
+          <StyledNavLink to="add-contacts" type="main">
+            <span>Add contacts</span>
+          </StyledNavLink>
+        </li>
+        <li>
           <StyledNavLink to="map" type="main">
             <span>Map</span>
           </StyledNavLink>
