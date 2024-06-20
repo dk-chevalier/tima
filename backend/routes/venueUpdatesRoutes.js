@@ -12,26 +12,31 @@ router.use(authController.protect, subscriptionsController.subscriptionIsPaid);
 // // GET /api/v1/venues/{venueCoords}/radioShows/radioShows-within/{distance}/unit/{unit}
 // router.use('/:venueId/:venueLatLng/radioStations', radioStationRouter);
 
-router
-  .route('/venues-within/:distance/centre/:latlng/unit/:unit')
-  .get(authController.protect, venueUpdatesController.getVenueUpdatesWithin);
+// THINK I HAVE TO CHANGE BELOW....because currently same as venues search
+// router
+//   .route('/venues-within/:distance/centre/:latlng/unit/:unit')
+//   .get(authController.protect, venueUpdatesController.getVenueUpdatesWithin);
 
 router
   .route('/')
   .get(venueUpdatesController.getAllVenueUpdates)
-  // .get(venueController.getAllVenues)
-  .post(authController.protect, venueUpdatesController.createVenueUpdates);
+  .post(
+    venueUpdatesController.createVenueUpdates,
+  );
+// .get(venueController.getAllVenues)
 
 router
-  .route('/:id')
+  .route('/:venueId')
   .get(venueUpdatesController.getVenueUpdates)
   .patch(
-    authController.protect,
-    // authController.restrictTo('admin'),
+    venueUpdatesController.setConfirmedDataId,
     venueUpdatesController.updateVenueUpdates,
   )
+  .post(
+    venueUpdatesController.setConfirmedDataId,
+    venueUpdatesController.createVenueUpdates,
+  )
   .delete(
-    authController.protect,
     authController.restrictTo('admin'),
     venueUpdatesController.deleteVenueUpdates,
   );

@@ -12,12 +12,14 @@ function VenueInfo() {
   // const { venueId } = useParams();
   // const { venue, isLoading, error } = useVenue(venueId);
 
+  // grab the venue data that was loaded with react router when this route was loaded
   const { venue } = useRouteLoaderData('venue');
   console.log(venue);
 
+  // state to keep track of whether we are showing the confirmed data or the proposed updates
   const [showProposedUpdates, setShowProposedUpdates] = useState(false);
-  // if (isLoading) return <Spinner />;
 
+  // Destructure and store `venue` object
   const {
     address,
     venueName,
@@ -38,8 +40,12 @@ function VenueInfo() {
 
   const [lng, lat] = location.coordinates;
 
+  // Layout of Details/Info page for an individual Venue
+  // Uses above `showProposedUpdates` state to either show current confirmed info or
+  // updated info that has been suggested by users
   return (
     <>
+      {/* TOGGLE BETWEEN CONFIRMED DATA AND SUGGESTED UPDATED DATA */}
       <div className="col-span-2 col-start-1 row-span-1 row-start-1 mb-5 flex flex-col justify-center">
         <div className="mb-8">
           <Toggle
@@ -61,9 +67,9 @@ function VenueInfo() {
 
         {/* VENUE NAME */}
         {/* had to add conditional on suggestedUpdates.* in case there have never been suggested updates and the fields simply don't exist */}
-        {showProposedUpdates && suggestedUpdates?.venueNameUpdate?.venueName ? (
+        {showProposedUpdates && suggestedUpdates?.venueName?.venueName ? (
           <h2 className="relative left-[-0.5rem] top-[-0.5rem] text-3xl font-light text-secondary-600">
-            {suggestedUpdates.venueNameUpdate.venueName}
+            {suggestedUpdates.venueName.venueName}
           </h2>
         ) : (
           <h2 className="relative left-[-0.5rem] top-[-0.5rem] text-3xl font-light">
@@ -72,12 +78,12 @@ function VenueInfo() {
         )}
 
         {/* WEBSITE */}
-        {showProposedUpdates && suggestedUpdates?.websiteUpdate?.website ? (
+        {showProposedUpdates && suggestedUpdates?.website?.website ? (
           <a
-            href={suggestedUpdates.websiteUpdate.website}
+            href={suggestedUpdates.website.website}
             className="text-sm text-secondary-600"
           >
-            {suggestedUpdates.websiteUpdate.website}
+            {suggestedUpdates.website.website}
           </a>
         ) : (
           <a href={website} className="text-sm">
@@ -96,8 +102,8 @@ function VenueInfo() {
         {/* VENUE SUPPORTS ORIGINALS ??? */}
         {showProposedUpdates &&
         // conditional statement has to be like this in order to worker properly both if the suggested update is false and if it doesn't exist (i.e. is falsy but not actually false)
-        (suggestedUpdates?.originalsUpdate?.originals === true ||
-          suggestedUpdates?.originalsUpdate?.originals === false) ? (
+        (suggestedUpdates?.originals?.originals === true ||
+          suggestedUpdates?.originals?.originals === false) ? (
           <p className="text-secondary-600">
             {suggestedUpdates.originalsUpdate.originals
               ? 'Supports originals'
@@ -109,12 +115,11 @@ function VenueInfo() {
 
         {/* SOUND SYSTEM PROVIDED ?? */}
         {showProposedUpdates &&
-        (suggestedUpdates?.soundSystemProvidedUpdate?.soundSystemProvided ===
-          true ||
-          suggestedUpdates?.soundSystemProvidedUpdate?.soundSystemProvided ===
+        (suggestedUpdates?.soundSystemProvided?.soundSystemProvided === true ||
+          suggestedUpdates?.soundSystemProvided?.soundSystemProvided ===
             false) ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.soundSystemProvidedUpdate.soundSystemProvided
+            {suggestedUpdates.soundSystemProvided.soundSystemProvided
               ? 'PA provided'
               : 'BYO PA'}
           </p>
@@ -123,20 +128,20 @@ function VenueInfo() {
         )}
 
         {/* CAPACITY */}
-        {showProposedUpdates && suggestedUpdates?.capacityUpdate?.capacity ? (
+        {showProposedUpdates && suggestedUpdates?.capacity?.capacity ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.capacityUpdate.capacity} capacity
+            {suggestedUpdates.capacity.capacity} capacity
           </p>
         ) : (
           <p>{capacity} capacity</p>
         )}
 
         {/* GIG TYPE */}
-        {showProposedUpdates && suggestedUpdates?.gigTypeUpdate?.gigType ? (
+        {showProposedUpdates && suggestedUpdates?.gigType?.gigType ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.gigTypeUpdate.gigType === 'both'
+            {suggestedUpdates.gigType.gigType === 'both'
               ? 'Both ticketed & free-entry gigs'
-              : suggestedUpdates.gigTypeUpdate.gigType}
+              : suggestedUpdates.gigType.gigType}
           </p>
         ) : (
           <p>
@@ -148,10 +153,9 @@ function VenueInfo() {
       {/* ADDRESS DETAILS */}
       <div className="col-span-1 col-start-1 row-span-1 row-start-2">
         {/* STREET */}
-        {showProposedUpdates &&
-        suggestedUpdates?.addressUpdates?.streetUpdate?.street ? (
+        {showProposedUpdates && suggestedUpdates?.address?.street?.street ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.addressUpdates.streetUpdate.street}
+            {suggestedUpdates.address.street.street}
           </p>
         ) : (
           <p>{address.street}</p>
@@ -159,21 +163,19 @@ function VenueInfo() {
 
         <p>
           {/* CITY */}
-          {showProposedUpdates &&
-          suggestedUpdates?.addressUpdates?.cityUpdate?.city ? (
+          {showProposedUpdates && suggestedUpdates?.address?.city?.city ? (
             <span className="text-secondary-600">
-              {suggestedUpdates.addressUpdates.cityUpdate.city},
+              {suggestedUpdates.address.city.city},
             </span>
           ) : (
             <span>{address.city},</span>
           )}
 
           {/* STATE */}
-          {showProposedUpdates &&
-          suggestedUpdates?.addressUpdates?.stateUpdate?.state ? (
+          {showProposedUpdates && suggestedUpdates?.address?.state?.state ? (
             <span className="text-secondary-600">
               {' '}
-              {suggestedUpdates.addressUpdates.stateUpdate?.state}
+              {suggestedUpdates.address.state?.state}
             </span>
           ) : (
             <span> {address.state}</span>
@@ -183,9 +185,9 @@ function VenueInfo() {
         <p>
           {/* COUNTRY */}
           {showProposedUpdates &&
-          suggestedUpdates?.addressUpdates?.countryUpdate?.country ? (
+          suggestedUpdates?.address?.country?.country ? (
             <span className="text-secondary-600">
-              {suggestedUpdates.addressUpdates.countryUpdate.country},
+              {suggestedUpdates.address.country.country},
             </span>
           ) : (
             <span>{address.country},</span>
@@ -193,10 +195,10 @@ function VenueInfo() {
 
           {/* POSTCODE */}
           {showProposedUpdates &&
-          suggestedUpdates?.addressUpdates?.postcodeUpdate?.postcode ? (
+          suggestedUpdates?.address?.postcode?.postcode ? (
             <span className="text-secondary-600">
               {' '}
-              {suggestedUpdates.addressUpdates.postcodeUpdate.postcode}
+              {suggestedUpdates.address.postcode.postcode}
             </span>
           ) : (
             <span> {address.postcode}</span>
@@ -214,10 +216,9 @@ function VenueInfo() {
         <p>{venuePh}</p>
 
         {/* VENUE EMAIL */}
-        {showProposedUpdates &&
-        suggestedUpdates?.venueEmailUpdate?.venueEmail ? (
+        {showProposedUpdates && suggestedUpdates?.venueEmail?.venueEmail ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.venueEmailUpdate.venueEmail}
+            {suggestedUpdates.venueEmail.venueEmail}
           </p>
         ) : (
           <p>{venueEmail}</p>
@@ -232,10 +233,9 @@ function VenueInfo() {
 
         {/* BOOKER NAME */}
         {showProposedUpdates &&
-        suggestedUpdates?.bookingContactUpdates?.bookerNameUpdate
-          ?.bookerName ? (
+        suggestedUpdates?.bookingContact?.bookerName?.bookerName ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.bookingContactUpdates.bookerNameUpdate.bookerName}
+            {suggestedUpdates.bookingContact.bookerName.bookerName}
           </p>
         ) : (
           <p>{bookingContact.bookerName}</p>
@@ -243,13 +243,9 @@ function VenueInfo() {
 
         {/* BOOKER EMAIL */}
         {showProposedUpdates &&
-        suggestedUpdates?.bookingContactUpdates?.bookerEmailUpdate
-          ?.bookerEmail ? (
+        suggestedUpdates?.bookingContact?.bookerEmail?.bookerEmail ? (
           <p className="text-secondary-600">
-            {
-              suggestedUpdates.bookingContactUpdates.bookerEmailUpdate
-                .bookerEmail
-            }
+            {suggestedUpdates.bookingContact.bookerEmail.bookerEmail}
           </p>
         ) : (
           <p>{bookingContact.bookerEmail}</p>
@@ -257,9 +253,9 @@ function VenueInfo() {
 
         {/* BOOKER PH */}
         {showProposedUpdates &&
-        suggestedUpdates?.bookingContactUpdates?.bookerPhUpdate?.bookerPh ? (
+        suggestedUpdates?.bookingContact?.bookerPh?.bookerPh ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.bookingContactUpdates.bookerPhUpdate.bookerPh}
+            {suggestedUpdates.bookingContact.bookerPh.bookerPh}
           </p>
         ) : (
           <p>{bookingContact.bookerPh}</p>
@@ -283,7 +279,9 @@ function VenueInfo() {
           <Button type="secondary">Suggest updates</Button>
         </Dialog.Open>
         <Dialog.ModalWindow name="suggest-venue-updates">
-          <SuggestVenueUpdates requestType="update" />
+          <SuggestVenueUpdates
+            requestType={suggestedUpdates ? 'update' : 'create'}
+          />
         </Dialog.ModalWindow>
       </Dialog>
     </>

@@ -116,8 +116,10 @@ exports.updateSubscriptionPaymentDetails = catchAsync(async (req, res) => {
 });
 
 exports.handleSubscriptionWebhooks = catchAsync(async (req, res) => {
+  /*
+  stripe listen --events invoice.paid,invoice.payment_failed,customer.subscription.deleted,checkout.session.completed --forward-to localhost:8000/api/v1/subscriptions/webhooks
+  */
   const event = req.body;
-  console.log(event);
 
   // const user = await User.findOne({
   //   stripeCustomerId: event.data.object.customer,

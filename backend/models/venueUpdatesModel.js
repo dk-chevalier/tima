@@ -6,7 +6,7 @@ const venueUpdatesSchema = new mongoose.Schema(
     venueName: {
       venueName: {
         type: String,
-        required: [true, 'A venue must have a name'],
+        // required: [true, 'A venue must have a name'],
         trim: true,
       },
       user: {
@@ -29,7 +29,7 @@ const venueUpdatesSchema = new mongoose.Schema(
       city: {
         city: {
           type: String,
-          required: [true, 'A venue must have a city'],
+          // required: [true, 'A venue must have a city'],
           trim: true,
         },
         user: {
@@ -50,7 +50,7 @@ const venueUpdatesSchema = new mongoose.Schema(
       country: {
         country: {
           type: String,
-          required: [true, 'A venue must have a country'],
+          // required: [true, 'A venue must have a country'],
           trim: true,
         },
         user: {
@@ -61,7 +61,7 @@ const venueUpdatesSchema = new mongoose.Schema(
       postcode: {
         postcode: {
           type: Number,
-          required: [true, 'A venue must have a postcode'],
+          // required: [true, 'A venue must have a postcode'],
           trim: true,
         },
         user: {
@@ -151,7 +151,7 @@ const venueUpdatesSchema = new mongoose.Schema(
           true,
           'A venue must have coordinates in the form [lng, lat]',
         ],
-        default: [0, 0], // FIXME: this is temporary until having access to peromanent geocoding api from mapbox (can't legally store the data at the moment otherwise...)
+        default: [0, 0], // FIXME: this is temporary until having access to permanent geocoding api from mapbox (can't legally store the data at the moment otherwise...)
       },
     },
     days: {

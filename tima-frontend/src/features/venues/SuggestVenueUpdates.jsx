@@ -459,7 +459,7 @@ export async function action({ request, params }) {
   if (requestType === 'update') {
     try {
       const { data } = await axios.patch(
-        `${URL}/api/v1/venues/${id}/suggest-venue-updates`,
+        `${URL}/api/v1/venueUpdates/${id}`,
         {
           venueName,
           website,
@@ -512,7 +512,7 @@ export async function action({ request, params }) {
   if (requestType === 'create') {
     try {
       const { data } = await axios.post(
-        `${URL}/api/v1/venues/suggest-new-venue`,
+        `${URL}/api/v1/venueUpdates/${id ? id : ''}`,
         {
           venueName,
           website,
