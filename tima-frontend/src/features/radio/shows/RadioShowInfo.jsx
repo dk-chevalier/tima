@@ -1,4 +1,5 @@
 import { useRouteLoaderData } from 'react-router-dom';
+import { useMap } from 'react-map-gl';
 import StyledNavLink from '../../../ui/StyledNavLink';
 
 function RadioShowInfo() {
@@ -8,6 +9,7 @@ function RadioShowInfo() {
   // if (isLoading) return <Spinner />;
 
   const { radioShow } = useRouteLoaderData('radioShow');
+  console.log(radioShow.data);
 
   const {
     showName,
@@ -17,6 +19,13 @@ function RadioShowInfo() {
     showWebpage,
     radioStation,
   } = radioShow.data;
+
+  // store longitude and latitude coordinates of the radio station this radio show is associated with
+  const [lng, lat] = radioStation.location.coordinates;
+
+  // Move map to selected venues coordinates
+  const { timaMap } = useMap();
+  timaMap.flyTo({ center: [lng, lat] });
 
   return (
     <>

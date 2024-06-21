@@ -1,4 +1,5 @@
 import { useParams, useRouteLoaderData } from 'react-router-dom';
+import { Map, useMap } from 'react-map-gl';
 import { useVenue } from './useVenue';
 import Spinner from '../../ui/Spinner';
 import Button from '../../ui/Button';
@@ -7,6 +8,7 @@ import { useState } from 'react';
 import Toggle from '../../ui/Toggle';
 import Dialog from '../dialog/Dialog';
 import SuggestVenueUpdates from './SuggestVenueUpdates';
+import { current } from '@reduxjs/toolkit';
 
 function VenueInfo() {
   // const { venueId } = useParams();
@@ -39,6 +41,10 @@ function VenueInfo() {
   } = venue.data;
 
   const [lng, lat] = location.coordinates;
+
+  // Move map to selected venues coordinates
+  const { timaMap } = useMap();
+  timaMap.flyTo({ center: [lng, lat] });
 
   // Layout of Details/Info page for an individual Venue
   // Uses above `showProposedUpdates` state to either show current confirmed info or

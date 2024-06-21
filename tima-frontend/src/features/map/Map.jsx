@@ -62,6 +62,8 @@ function MapContainer() {
     dispatch(openPopup());
   };
 
+  // mapRef.current.flyTo({ center: [0, 0], zoom: 9 });
+
   const onMouseLeave = () => {
     // setPopupInfo(null);
     mapRef.current.getCanvas().style.cursor = 'grab';
@@ -73,6 +75,7 @@ function MapContainer() {
     <Spinner />
   ) : (
     <Map
+      id="timaMap"
       ref={mapRef}
       mapboxAccessToken={MAP_TOKEN}
       initialViewState={{ longitude: mapLng, latitude: mapLat, zoom: zoom }}

@@ -1,4 +1,5 @@
 import { useRouteLoaderData } from 'react-router-dom';
+import { useMap } from 'react-map-gl';
 import { HiChevronDown } from 'react-icons/hi2';
 import Button from '../../../ui/Button';
 import { useState } from 'react';
@@ -10,6 +11,7 @@ function RadioStationInfo() {
 
   const { radioStation } = useRouteLoaderData('radioStation');
 
+  console.log(radioStation.data);
   const [showsOpen, setShowsOpen] = useState(false);
 
   function toggleRadioShows() {
@@ -26,7 +28,14 @@ function RadioStationInfo() {
     musicSubmissions,
     interviewRequests,
     id: stationId,
+    location,
   } = radioStation.data;
+
+  const [lng, lat] = location.coordinates;
+
+  // Move map to selected venues coordinates
+  const { timaMap } = useMap();
+  timaMap.flyTo({ center: [lng, lat] });
 
   return (
     <>

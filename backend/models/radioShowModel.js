@@ -69,10 +69,11 @@ const radioShowSchema = new mongoose.Schema(
   },
 );
 
+// populate the radioStation field with the name of the station that this radioShow is part of, and the location (i.e. coordinates) of that radioStation
 radioShowSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'radioStation',
-    select: 'stationName',
+    select: 'stationName location',
   });
   next();
 });
