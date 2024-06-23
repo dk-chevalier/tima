@@ -10,13 +10,25 @@ exports.setConfirmedDataId = (req, res, next) => {
   next();
 };
 
+exports.getAllVenueUpdates = factory.getAll(VenueUpdates);
+exports.getVenueUpdates = factory.getOne(VenueUpdates, {
+  path: 'confirmedData',
+  select: '-createdAt -__v',
+});
+exports.deleteVenueUpdates = factory.deleteOne(VenueUpdates);
+exports.getVenueUpdatesWithin = factory.getDocumentsWithin(VenueUpdates);
+exports.createVenueUpdates = factory.createUpdatesDocument(VenueUpdates, Venue);
+exports.updateVenueUpdates = factory.updateUpdatesDocument(VenueUpdates);
+
+
+/*
 exports.createVenueUpdates = catchAsync(async (req, res, next) => {
-  /*
-  Takes request object, response, and next
-  Uses the body of the request object to CREATE the VenueUpdates document, 
-  and also stores the user id of whoever suggested each update
-  Sends a response object with status of 'success' and the data
-  */
+  
+  // Takes request object, response, and next
+  // Uses the body of the request object to CREATE the VenueUpdates document, 
+  // and also stores the user id of whoever suggested each update
+  // Sends a response object with status of 'success' and the data
+  
 
   // create object in which to add the data to be stored, along with the user id where needed
   const body = {};
@@ -27,7 +39,7 @@ exports.createVenueUpdates = catchAsync(async (req, res, next) => {
     data = {};
     if (key === 'confirmedData') {
       body[key] = value;
-    } else if (key === 'address' || key == 'bookingContact') {
+    } else if (typeof value === 'object') {
       for (const [key2, value2] of Object.entries(value)) {
         nestedData = {};
         nestedData[key2] = value2;
@@ -41,7 +53,6 @@ exports.createVenueUpdates = catchAsync(async (req, res, next) => {
       body[key] = data;
     }
   }
-  console.log('BODY', body)
 
   // create a VenueUpdates document with the newly created `body`
   const doc = await VenueUpdates.create(body);
@@ -60,14 +71,16 @@ exports.createVenueUpdates = catchAsync(async (req, res, next) => {
     },
   });
 });
+*/
 
+/*
 exports.updateVenueUpdates = catchAsync(async (req, res, next) => {
-  /*
-  Takes request object, response, and next
-  Uses the body of the request object to UPDATE VenueUpdates document, 
-  and also stores the user id of whoever suggested each update
-  Sends a response object with status of 'success' and the data
-  */
+  
+  // Takes request object, response, and next
+  // Uses the body of the request object to UPDATE VenueUpdates document, 
+  // and also stores the user id of whoever suggested each update
+  // Sends a response object with status of 'success' and the data
+  
 
   // create object in which to add the data to be stored, along with the user id where needed
   const body = {};
@@ -76,7 +89,7 @@ exports.updateVenueUpdates = catchAsync(async (req, res, next) => {
   for (const [key, value] of Object.entries(req.body)) {
     // if `value` is empty or the current iteration is the id of the confirmed venue 
     // these don't need to be added to the VenueUpdates document so skip this iteration
-    if (!value || key == 'confirmedData') continue;
+    if (!value || key === 'confirmedData') continue;
 
     data = {};
     
@@ -107,11 +120,4 @@ exports.updateVenueUpdates = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-exports.getAllVenueUpdates = factory.getAll(VenueUpdates);
-exports.getVenueUpdates = factory.getOne(VenueUpdates, {
-  path: 'confirmedData',
-  select: '-createdAt -__v',
-});
-exports.deleteVenueUpdates = factory.deleteOne(VenueUpdates);
-exports.getVenueUpdatesWithin = factory.getDocumentsWithin(VenueUpdates);
+*/

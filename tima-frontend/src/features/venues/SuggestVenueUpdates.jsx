@@ -456,6 +456,20 @@ export async function action({ request, params }) {
   // this prevents backend from registering there was a value in 'days' (because prevents simply sending an empty array)
   const days = daysArr.length > 0 ? daysArr : null;
 
+  const address = {
+    street,
+    city,
+    state,
+    country,
+    postcode,
+  };
+
+  const bookingContact = {
+    bookerName,
+    bookerEmail,
+    bookerPh,
+  };
+
   if (requestType === 'update') {
     try {
       const { data } = await axios.patch(
@@ -465,14 +479,16 @@ export async function action({ request, params }) {
           website,
           venuePh,
           venueEmail,
-          street,
-          city,
-          state,
-          country,
-          postcode,
-          bookerName,
-          bookerEmail,
-          bookerPh,
+          // street,
+          // city,
+          // state,
+          // country,
+          // postcode,
+          // bookerName,
+          // bookerEmail,
+          // bookerPh,
+          address,
+          bookingContact,
           originals,
           soundSystemProvided,
           days,
@@ -518,14 +534,16 @@ export async function action({ request, params }) {
           website,
           venuePh,
           venueEmail,
-          street,
-          city,
-          state,
-          country,
-          postcode,
-          bookerName,
-          bookerEmail,
-          bookerPh,
+          // street,
+          // city,
+          // state,
+          // country,
+          // postcode,
+          // bookerName,
+          // bookerEmail,
+          // bookerPh,
+          address,
+          bookingContact,
           originals,
           soundSystemProvided,
           days,

@@ -48,7 +48,10 @@ const radioStationSchema = new mongoose.Schema(
         lowercase: true,
         validate: [validator.isEmail, 'Please provide a valid email'],
       },
-      contactName: String,
+      contactName: {
+        type: String,
+        trim: true,
+      },
     },
     interviewRequests: {
       email: {
@@ -57,7 +60,10 @@ const radioStationSchema = new mongoose.Schema(
         lowercase: true,
         validate: [validator.isEmail, 'Please provide a valid email'],
       },
-      contactName: String,
+      contactName: {
+        type: String,
+        trim: true,
+      },
     },
     createdAt: {
       type: Date,
@@ -84,6 +90,10 @@ const radioStationSchema = new mongoose.Schema(
     //     ref: 'RadioShow',
     //   },
     // ],
+    suggestedUpdates: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'RadioStationUpdates',
+    },
   },
   {
     toJSON: { virtuals: true },

@@ -44,15 +44,17 @@ function VenueInfo() {
 
   // Move map to selected venues coordinates
   const { timaMap } = useMap();
-  timaMap.flyTo({ center: [lng, lat] });
+
+  // use if statement, otherwise tries to load VenueInfo page before it recognises the .flyto() function and causes an error
+  if (timaMap && lng && lat) timaMap.flyTo({ center: [lng, lat] });
 
   // Layout of Details/Info page for an individual Venue
   // Uses above `showProposedUpdates` state to either show current confirmed info or
   // updated info that has been suggested by users
   return (
     <>
-      {/* TOGGLE BETWEEN CONFIRMED DATA AND SUGGESTED UPDATED DATA */}
       <div className="col-span-2 col-start-1 row-span-1 row-start-1 mb-5 flex flex-col justify-center">
+        {/* TOGGLE BETWEEN CONFIRMED DATA AND SUGGESTED UPDATED DATA */}
         <div className="mb-8">
           <Toggle
             type="toggleOptionsSmall"
@@ -98,6 +100,7 @@ function VenueInfo() {
         )}
       </div>
 
+      {/* FIXME: the size of this (being 1 column width, is what is covering the 'Suggested Details' button...need to fix this) */}
       <div className="relative right-[-0.5rem] top-4 col-span-1 col-start-2 row-span-1 row-start-1 flex flex-col items-end text-right text-xs opacity-60">
         {/* RATINGS */}
         <div>

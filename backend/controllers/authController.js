@@ -85,7 +85,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     stripeCustomerId: stripeCustomer.id,
   });
 
-  console.log(newUser);
+  // console.log(newUser);
 
   newUser.genres.push('all', 'unknown');
 
@@ -201,7 +201,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     token = req.cookies.jwt; // makes so we can get it from the cookie
   }
 
-  console.log(token);
+  // console.log(token);
 
   if (!token) {
     return next(
@@ -312,7 +312,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
   const user = await User.findById({ _id: req.user.id }).select('+password');
 
-  console.log(user);
+  // console.log(user);
 
   // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {

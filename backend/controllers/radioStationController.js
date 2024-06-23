@@ -68,10 +68,15 @@ exports.getRadioShowsNearVenue = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllRadioStations = factory.getAll(RadioStation);
-exports.getRadioStation = factory.getOne(RadioStation, {
+exports.getRadioStation = factory.getOne(RadioStation, [
+  {
   path: 'radioShows',
-  select: 'showName genresPlayed',
-});
+  select: 'showName genresSupported',
+  },
+  {
+    path: 'suggestedUpdates'
+  }]
+);
 exports.createRadioStation = factory.createOne(RadioStation);
 exports.deleteRadioStation = factory.deleteOne(RadioStation);
 exports.updateRadioStation = factory.updateOne(RadioStation);

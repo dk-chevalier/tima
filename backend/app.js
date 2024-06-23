@@ -14,6 +14,7 @@ const venueRouter = require('./routes/venueRoutes');
 const venueUpdatesRouter = require('./routes/venueUpdatesRoutes');
 const userRouter = require('./routes/userRoutes');
 const radioStationRouter = require('./routes/radioStationRoutes');
+const radioStationUpdatesRouter = require('./routes/radioStationUpdatesRoutes')
 const radioShowRouter = require('./routes/radioShowRoutes');
 const venueReviewRouter = require('./routes/venueReviewRoutes');
 const subscriptionsRouter = require('./routes/subscriptionsRoutes');
@@ -77,6 +78,7 @@ app.use('/api/v1/venues', venueRouter);
 app.use('/api/v1/venueUpdates', venueUpdatesRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/radioStations', radioStationRouter);
+app.use('/api/v1/radioStationUpdates', radioStationUpdatesRouter);
 app.use('/api/v1/radioShows', radioShowRouter);
 app.use('/api/v1/reviews', venueReviewRouter);
 app.use('/api/v1/subscriptions', subscriptionsRouter);

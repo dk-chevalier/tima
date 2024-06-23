@@ -25,7 +25,9 @@ function RadioShowInfo() {
 
   // Move map to selected venues coordinates
   const { timaMap } = useMap();
-  timaMap.flyTo({ center: [lng, lat] });
+
+  // use if statement, otherwise tries to load VenueInfo page before it recognises the .flyto() function and causes an error
+  if (timaMap && lng && lat) timaMap.flyTo({ center: [lng, lat] });
 
   return (
     <>
