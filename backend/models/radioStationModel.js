@@ -37,6 +37,10 @@ const radioStationSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    stationEmail: {
+      type: String,
+      trim: true,
+    },
     website: {
       type: String,
       trim: true,

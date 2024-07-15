@@ -8,6 +8,8 @@ import DaysSelection from '../../pages/DaysSelection';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import CustomToast from '../../ui/CustomToast';
+import UpdateAddressDetails from '../../ui/UpdateAddressDetails';
+import UpdateGeneralContactDetails from '../../ui/UpdateGeneralContactDetails';
 
 const URL = import.meta.env.VITE_LOCAL_URL;
 
@@ -42,61 +44,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal, requestType }) {
             />
           </div>
           {updateVenueContactDetails && (
-            <div className="mb-6 mt-[-1rem]">
-              <div className="flex flex-col gap-5 px-3">
-                {/* Venue Name */}
-                <div>
-                  <label className="flex items-center justify-between gap-4">
-                    <h3 className="w-max">Venue name:</h3>
-                    <input
-                      name="venueName"
-                      type="text"
-                      placeholder="Type venue's new name"
-                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                    />
-                  </label>
-                </div>
-
-                {/* Venue Website */}
-                <div>
-                  <label className="flex items-center justify-between gap-4">
-                    <h3 className="w-max">Venue website:</h3>
-                    <input
-                      name="website"
-                      type="text"
-                      placeholder="Type venue's new website"
-                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                    />
-                  </label>
-                </div>
-
-                {/* Venue Phone */}
-                <div>
-                  <label className="gap4 flex items-center justify-between">
-                    <h3 className="w-max">Venue phone number:</h3>
-                    <input
-                      name="venuePh"
-                      type="text"
-                      placeholder="Type venue's new phone number"
-                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                    />
-                  </label>
-                </div>
-
-                {/* Venue Email */}
-                <div>
-                  <label className="flex items-center justify-between gap-4">
-                    <h3 className="w-max">Venue email address:</h3>
-                    <input
-                      name="venueEmail"
-                      type="text"
-                      placeholder="Type venue's new email address"
-                      className="w-[22vw] rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                    />
-                  </label>
-                </div>
-              </div>
-            </div>
+            <UpdateGeneralContactDetails type="venue" />
           )}
 
           {/* Venue Address */}
@@ -113,80 +61,7 @@ function SuggestVenueUpdates({ venueId, onCloseModal, requestType }) {
               onChange={() => setUpdateAddressDetails(!updateAddressDetails)}
             />
           </div>
-          {updateAddressDetails && (
-            <div className="mb-6 mt-[-1rem]">
-              <div className="flex flex-col gap-2 px-3">
-                {/* Street */}
-                <div>
-                  <label>
-                    <p>Street:</p>
-                    <input
-                      name="street"
-                      type="text"
-                      placeholder="Type venues new street address"
-                      className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                    />
-                  </label>
-                </div>
-
-                <div className="flex justify-between gap-3">
-                  {/* City */}
-                  <div className="w-1/2">
-                    <label>
-                      <p>City:</p>
-                      <input
-                        name="city"
-                        type="text"
-                        placeholder="Type venues new city"
-                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                      />
-                    </label>
-                  </div>
-
-                  {/* State */}
-                  <div className="w-1/2">
-                    <label>
-                      <p>State:</p>
-                      <input
-                        name="state"
-                        type="text"
-                        placeholder="Type venues new state"
-                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                      />
-                    </label>
-                  </div>
-                </div>
-
-                <div className="flex justify-between gap-3">
-                  {/* Country */}
-                  <div className="w-1/2">
-                    <label>
-                      <p>Country:</p>
-                      <input
-                        name="country"
-                        type="text"
-                        placeholder="Type venues new country"
-                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                      />
-                    </label>
-                  </div>
-
-                  {/* Postcode */}
-                  <div className="w-1/2">
-                    <label>
-                      <h3>Postcode:</h3>
-                      <input
-                        name="postcode"
-                        type="text"
-                        placeholder="Type venues new postcode"
-                        className="w-full rounded-md border border-secondary-300 bg-primary-100 px-2 py-1 shadow-md"
-                      />
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          {updateAddressDetails && <UpdateAddressDetails type="venue" />}
 
           {/* Booker Details */}
           <div className="flex justify-between">
@@ -342,7 +217,11 @@ function SuggestVenueUpdates({ venueId, onCloseModal, requestType }) {
             </div>
           )}
           <div className="w-max self-center">
-            <Button type="submit" name="requestType" value={requestType}>
+            <Button
+              type="submit"
+              name="updateOptions"
+              value={`${requestType} venueUpdates`}
+            >
               Submit updates
             </Button>
           </div>
@@ -353,233 +232,3 @@ function SuggestVenueUpdates({ venueId, onCloseModal, requestType }) {
 }
 
 export default SuggestVenueUpdates;
-
-export async function action({ request, params }) {
-  const { id } = params;
-
-  const {
-    venueName,
-    website,
-    venuePh,
-    venueEmail,
-    street,
-    city,
-    state,
-    country,
-    postcode,
-    bookerName,
-    bookerEmail,
-    bookerPh,
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday,
-    sunday,
-    originalsUpdate,
-    soundSystemProvidedUpdate,
-    capacity,
-    acoustic,
-    blues,
-    classical,
-    countryGenre,
-    disco,
-    electronic,
-    folk,
-    funk,
-    hipHop,
-    indie,
-    jazz,
-    latin,
-    metal,
-    pop,
-    punk,
-    rnb,
-    reggae,
-    rock,
-    singerSongwriter,
-    soul,
-    gigType,
-    requestType,
-  } = Object.fromEntries(await request.formData());
-  console.log('REQUEST TYPE');
-  console.log(requestType);
-
-  let originals;
-  let soundSystemProvided;
-
-  if (originalsUpdate?.toLowerCase() === 'y') originals = true;
-  if (originalsUpdate?.toLowerCase() === 'n') originals = false;
-
-  if (soundSystemProvidedUpdate?.toLowerCase() === 'y')
-    soundSystemProvided = true;
-  if (soundSystemProvidedUpdate?.toLowerCase() === 'n')
-    soundSystemProvided = false;
-
-  // filter is used to eliminate undefined values
-  const genresArr = [
-    acoustic,
-    blues,
-    classical,
-    countryGenre,
-    disco,
-    electronic,
-    folk,
-    funk,
-    hipHop,
-    indie,
-    jazz,
-    latin,
-    metal,
-    pop,
-    punk,
-    rnb,
-    reggae,
-    rock,
-    singerSongwriter,
-    soul,
-  ].filter((el) => el);
-
-  const genres = genresArr.length > 0 ? genresArr : null;
-
-  const daysArr = [
-    monday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    saturday,
-    sunday,
-  ].filter((el) => el);
-
-  // this prevents backend from registering there was a value in 'days' (because prevents simply sending an empty array)
-  const days = daysArr.length > 0 ? daysArr : null;
-
-  const address = {
-    street,
-    city,
-    state,
-    country,
-    postcode,
-  };
-
-  const bookingContact = {
-    bookerName,
-    bookerEmail,
-    bookerPh,
-  };
-
-  if (requestType === 'update') {
-    try {
-      const { data } = await axios.patch(
-        `${URL}/api/v1/venueUpdates/${id}`,
-        {
-          venueName,
-          website,
-          venuePh,
-          venueEmail,
-          // street,
-          // city,
-          // state,
-          // country,
-          // postcode,
-          // bookerName,
-          // bookerEmail,
-          // bookerPh,
-          address,
-          bookingContact,
-          originals,
-          soundSystemProvided,
-          days,
-          capacity: +capacity,
-          genres,
-          gigType,
-          requestType,
-        },
-        { withCredentials: true },
-      );
-
-      console.log('DATA!!!!!!!!!!!!!!!!!!');
-      console.log(data);
-
-      toast.custom((t) => {
-        t.duration = 3000;
-        return (
-          <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
-            Updates successfully submitted. We will contact the venue to confirm
-            these details asap.
-          </CustomToast>
-        );
-      });
-    } catch (err) {
-      console.error(err);
-      toast.custom((t) => {
-        t.duration = 5000;
-        return (
-          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
-            Something went wrong. Please try submitting your suggested updates
-            again.
-          </CustomToast>
-        );
-      });
-    }
-  }
-  if (requestType === 'create') {
-    try {
-      const { data } = await axios.post(
-        `${URL}/api/v1/venueUpdates/${id ? id : ''}`,
-        {
-          venueName,
-          website,
-          venuePh,
-          venueEmail,
-          // street,
-          // city,
-          // state,
-          // country,
-          // postcode,
-          // bookerName,
-          // bookerEmail,
-          // bookerPh,
-          address,
-          bookingContact,
-          originals,
-          soundSystemProvided,
-          days,
-          capacity: +capacity,
-          genres,
-          gigType,
-          requestType,
-        },
-        { withCredentials: true },
-      );
-
-      console.log('DATA!!!!!!!!!!!!!!!!!!');
-      console.log(data);
-
-      toast.custom((t) => {
-        t.duration = 3000;
-        return (
-          <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
-            Updates successfully submitted. We will contact the venue to confirm
-            these details asap.
-          </CustomToast>
-        );
-      });
-    } catch (err) {
-      console.error(err);
-      toast.custom((t) => {
-        t.duration = 5000;
-        return (
-          <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
-            Something went wrong. Please try submitting your suggested updates
-            again.
-          </CustomToast>
-        );
-      });
-    }
-  }
-
-  return null;
-}

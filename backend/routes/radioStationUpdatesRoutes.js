@@ -17,15 +17,15 @@ router
   .get(radioStationUpdatesController.getRadioStationUpdates)
   .patch(
     radioStationUpdatesController.setConfirmedDataId,
-    radioStationUpdatesController.updateRadioStationUpdates
+    radioStationUpdatesController.updateRadioStationUpdates,
   )
   .post(
     radioStationUpdatesController.setConfirmedDataId,
-    radioStationUpdatesController.createRadioStationUpdates
+    radioStationUpdatesController.createRadioStationUpdates,
   )
   .delete(
     authController.restrictTo('admin'),
-    radioStationUpdatesController.deleteRadioStationUpdates
-  )
+    radioStationUpdatesController.deleteRadioStationUpdates,
+  );
 
 module.exports = router;

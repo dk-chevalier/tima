@@ -34,6 +34,7 @@ const venueSchema = new mongoose.Schema(
         trim: true,
       },
     },
+    
     venuePh: {
       type: String,
       trim: true,

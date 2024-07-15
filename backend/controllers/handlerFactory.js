@@ -142,110 +142,114 @@ exports.getDocumentsByGenres = (Model) =>
     });
   });
 
-  exports.createUpdatesDocument = (Model, ConfirmedDataModel) => 
-    /*
+exports.createUpdatesDocument = (Model, ConfirmedDataModel) =>
+  /*
     Takes a Model of an Updates document (e.g. VenueUpdates) as an argument, 
     allowing this same funciton to be used across multiple controllers.
     also takes the Model of the confirmed data version of...
     e.g. if `Model` === VenueUpdates, then `ConfirmedDataModel` === Venue
     */
-    catchAsync(async (req, res, next) => {
-      /*
+  catchAsync(async (req, res, next) => {
+    /*
       Takes request object, response, and next
       Uses the body of the request object to CREATE an Updates document, 
       and also stores the user id of whoever suggested each update
       Sends a response object with status of 'success' and the data
       */
-    
-      // create object in which to add the data to be stored, along with the user id where needed
-      const body = {};
-    
-      // iterate through `key` `value` pairs in the `req.body` in order to build my own `body` object which has user id added
-      for (const [key, value] of Object.entries(req.body)) {
-        if (!value) continue;
-        data = {};
-        if (key === 'confirmedData') {
-          body[key] = value;
-        } else if (typeof value === 'object') {
-          for (const [key2, value2] of Object.entries(value)) {
-            nestedData = {};
-            nestedData[key2] = value2;
-            nestedData['user'] = req.user.id;
-            data[key2] = nestedData;
-          }
-          body[key] = data;
-        } else {
-          data[key] = value;
-          data['user'] = req.user.id;
-          body[key] = data;
-        }
-      }
-    
-      // create an Updates document with the newly created `body`
-      const doc = await Model.create(body);
-    
-      // if newly created Updates document is linked to existing document of confirmed data, then add Updates document id to the linked confirmed data
-      if (req.body.confirmedData) {
-        await ConfirmedDataModel.findByIdAndUpdate(req.body.confirmedData, {
-          suggestedUpdates: doc.id,
-        });
-      }
-    
-      res.status(201).json({
-        status: 'success',
-        data: {
-          data: doc,
-        },
-      });
-    });
 
-  exports.updateUpdatesDocument = (Model) => 
-    /*
+    // create object in which to add the data to be stored, along with the user id where needed
+    const body = {};
+    console.log(req.body);
+
+    // iterate through `key` `value` pairs in the `req.body` in order to build my own `body` object which has user id added
+    for (const [key, value] of Object.entries(req.body)) {
+      if (!value && value !== false) continue;
+      data = {};
+      if (key === 'confirmedData') {
+        body[key] = value;
+      } else if (typeof value === 'object') {
+        for (const [key2, value2] of Object.entries(value)) {
+          nestedData = {};
+          nestedData[key2] = value2;
+          nestedData['user'] = req.user.id;
+          data[key2] = nestedData;
+        }
+        body[key] = data;
+      } else {
+        data[key] = value;
+        data['user'] = req.user.id;
+        body[key] = data;
+      }
+    }
+
+    // create an Updates document with the newly created `body`
+    const doc = await Model.create(body);
+
+    // if newly created Updates document is linked to existing document of confirmed data, then add Updates document id to the linked confirmed data
+    if (req.body.confirmedData) {
+      await ConfirmedDataModel.findByIdAndUpdate(req.body.confirmedData, {
+        suggestedUpdates: doc.id,
+      });
+    }
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        data: doc,
+      },
+    });
+  });
+
+exports.updateUpdatesDocument = (Model) =>
+  /*
     Takes a Model as an argument, allowing this same funciton to be used across multiple controllers
     */
-    catchAsync(async (req, res, next) => {
-      /*
+  catchAsync(async (req, res, next) => {
+    /*
       Takes request object, response, and next
       Uses the body of the request object to UPDATE an Updates document, 
       and also stores the user id of whoever suggested each update
       Sends a response object with status of 'success' and the data
       */
-    
-      // create object in which to add the data to be stored, along with the user id where needed
-      const body = {};
-    
-      // iterate through `key` `value` pairs in the `req.body` in order to build my own `body` object which has user id added
-      for (const [key, value] of Object.entries(req.body)) {
-        // if `value` is empty or the current iteration is the id of the confirmed venue 
-        // these don't need to be added to the Updates document so skip this iteration
-        if (!value || key === 'confirmedData') continue;
-    
-        data = {};
-        
-        // if `value` === 'object', must further iterate through the nested object, 
-        if (typeof value === 'object') {
-          for (const [key2, value2] of Object.entries(value)) {
-            nestedData = {};
-            nestedData[key2] = value2;
-            nestedData['user'] = req.user.id;
-            data[key2] = nestedData;
-          }
-          body[key] = data;
-        } else {
-          data[key] = value;
-          data['user'] = req.user.id;
-          body[key] = data;
+
+    // create object in which to add the data to be stored, along with the user id where needed
+    const body = {};
+
+    // iterate through `key` `value` pairs in the `req.body` in order to build my own `body` object which has user id added
+    for (const [key, value] of Object.entries(req.body)) {
+      // if `value` is empty or the current iteration is the id of the confirmed venue
+      // these don't need to be added to the Updates document so skip this iteration
+      if (value !== false && (!value || key === 'confirmedData')) continue;
+
+      data = {};
+
+      // if `value` === 'object', must further iterate through the nested object,
+      if (typeof value === 'object') {
+        for (const [key2, value2] of Object.entries(value)) {
+          nestedData = {};
+          nestedData[key2] = value2;
+          nestedData['user'] = req.user.id;
+          data[key2] = nestedData;
         }
+        body[key] = data;
+      } else {
+        data[key] = value;
+        data['user'] = req.user.id;
+        body[key] = data;
       }
-    
-      // update Updates document with the newly created `body`
-      // FIXME: `doc` ends up being the non-updated document...so I am currently sending the document before it was updated...though it does update the document fine, just the response is the original data, not the updated one....
-      const doc = await Model.findOneAndUpdate({confirmedData: req.body.confirmedData}, body);
-    
-      res.status(201).json({
-        status: 'success',
-        data: {
-          data: doc,
-        },
-      });
+    }
+
+    // update Updates document with the newly created `body`
+    // FIXME: `doc` ends up being the non-updated document...so I am currently sending the document before it was updated...though it does update the document fine, just the response is the original data, not the updated one....
+    const doc = await Model.findOneAndUpdate(
+      { confirmedData: req.body.confirmedData },
+      body,
+    );
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        data: doc,
+      },
     });
+  });

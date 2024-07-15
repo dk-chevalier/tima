@@ -1,6 +1,6 @@
 function GenresSelection({ type, numberCols }) {
   return (
-    <fieldset className={`grid-cols-${numberCols} grid gap-x-3 gap-y-2`}>
+    <fieldset className={`grid grid-cols-${numberCols} gap-x-3 gap-y-2`}>
       {type === 'search' && (
         <>
           <label className="cursor-pointer">

@@ -75,6 +75,16 @@ const radioStationUpdatesSchema = new mongoose.Schema(
         ref: 'User'
       },
     },
+    stationEmail: {
+      stationEmail: {
+        type: String,
+        trim: true,
+      },
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    },
     website: {
       website: {
         type: String,

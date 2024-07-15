@@ -2,6 +2,9 @@ import { useRouteLoaderData } from 'react-router-dom';
 import { useMap } from 'react-map-gl';
 import { HiChevronDown } from 'react-icons/hi2';
 import Button from '../../../ui/Button';
+import Dialog from '../../dialog/Dialog';
+// import SuggestVenueUpdates from '../../venues/SuggestVenueUpdates';
+import SuggestRadioStationUpdates from './SuggestRadioStationUpdates';
 import { useState } from 'react';
 import RadioShowsList from '../shows/RadioShowsList';
 import Toggle from '../../../ui/Toggle';
@@ -219,7 +222,18 @@ function RadioStationInfo() {
         </div>
       </div>
 
-      <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex h-min gap-3">
+      <div className="col-span-2 col-start-1 row-span-1 row-start-4 flex h-min place-content-around gap-3">
+        <Dialog>
+          <Dialog.Open opens="suggest-venue-updates">
+            <Button type="secondary">Suggest updates</Button>
+          </Dialog.Open>
+          <Dialog.ModalWindow name="suggest-venue-updates">
+            <SuggestRadioStationUpdates
+              requestType={suggestedUpdates ? 'update' : 'create'}
+            />
+          </Dialog.ModalWindow>
+        </Dialog>
+
         <Button type="secondary" onClick={toggleRadioShows}>
           Shows
           <span

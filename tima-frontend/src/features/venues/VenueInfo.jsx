@@ -114,7 +114,7 @@ function VenueInfo() {
         (suggestedUpdates?.originals?.originals === true ||
           suggestedUpdates?.originals?.originals === false) ? (
           <p className="text-secondary-600">
-            {suggestedUpdates.originalsUpdate.originals
+            {suggestedUpdates.originals.originals
               ? 'Supports originals'
               : 'Covers gig'}
           </p>
@@ -221,8 +221,13 @@ function VenueInfo() {
           Venue contact details:
         </h3>
         {/* VENUE PHONE */}
-        {/* TODO: HAVE TO IMPLEMENT VENUE PHONE UPDATES!!!!!!!! */}
-        <p>{venuePh}</p>
+        {showProposedUpdates && suggestedUpdates?.venuePh?.venuePh ? (
+          <p className="text-secondary-600">
+            {suggestedUpdates.venuePh.venuePh}
+          </p>
+        ) : (
+          <p>{venuePh}</p>
+        )}
 
         {/* VENUE EMAIL */}
         {showProposedUpdates && suggestedUpdates?.venueEmail?.venueEmail ? (
