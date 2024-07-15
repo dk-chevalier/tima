@@ -169,6 +169,7 @@ exports.createUpdatesDocument = (Model, ConfirmedDataModel) =>
         body[key] = value;
       } else if (typeof value === 'object') {
         for (const [key2, value2] of Object.entries(value)) {
+          // if (!value2 && value2 !== false) continue;
           nestedData = {};
           nestedData[key2] = value2;
           nestedData['user'] = req.user.id;
@@ -225,7 +226,10 @@ exports.updateUpdatesDocument = (Model) =>
 
       // if `value` === 'object', must further iterate through the nested object,
       if (typeof value === 'object') {
+        // if the `value` object is empty, then continue (so it doesn't overwrite)
+        if (!Object.values(value).length) continue;
         for (const [key2, value2] of Object.entries(value)) {
+          if (!value2 && value2 !== false) continue;
           nestedData = {};
           nestedData[key2] = value2;
           nestedData['user'] = req.user.id;

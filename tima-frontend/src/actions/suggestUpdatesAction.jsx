@@ -44,9 +44,6 @@ async function radioStationUpdatesAction(data, id, requestType) {
     interviewRequestsEmail,
   } = data;
 
-  console.log('REQUEST TYPE');
-  console.log(requestType);
-
   const address = {
     street,
     city,
