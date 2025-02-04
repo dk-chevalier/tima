@@ -100,6 +100,7 @@ const router = createBrowserRouter([
         path: 'account',
         element: <Account />,
         loader: protectedAccountLoader(queryClient),
+        action: suggestUpdatesAction,
       },
       {
         path: 'add-contacts',

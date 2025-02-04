@@ -8,7 +8,10 @@ const venueSchema = new mongoose.Schema(
       // required: [true, 'A venue must have a name'],
       trim: true,
     },
-
+    addressStr: {
+      type: String,
+      trim: true,
+    },
     address: {
       street: {
         type: String,
@@ -34,7 +37,7 @@ const venueSchema = new mongoose.Schema(
         trim: true,
       },
     },
-    
+
     venuePh: {
       type: String,
       trim: true,
@@ -157,7 +160,16 @@ const venueSchema = new mongoose.Schema(
   },
 );
 
-venueSchema.index({ location: '2dsphere' });
+venueSchema.index({
+  location: '2dsphere',
+});
+
+venueSchema.index({
+  venueName: 'text',
+  // FIXME: addressStr not working...???
+  // i.e. it's not searching through addresses...
+  addressStr: 'text',
+});
 
 venueSchema.virtual('reviews', {
   ref: 'VenueReview',

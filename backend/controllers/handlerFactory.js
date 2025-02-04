@@ -69,6 +69,8 @@ exports.updateOne = (Model) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
+    console.log('REQ QUERY');
+    console.log(req.query);
     const features = new APIFeatures(Model.find(), req.query)
       .filter()
       .sort()
@@ -76,9 +78,11 @@ exports.getAll = (Model) =>
       .paginate();
 
     // console.log(features.query);
-    const doc = await features.query;
+    // .limit(0) means no limit to how many documents it returns
+    // FIXME: WILL CHANGE LIMIT, JUST FOR TESTING......
+    const doc = await features.query.limit(0);
 
-    // console.log(doc);
+    console.log(doc.length);
 
     res.status(200).json({
       status: 'success',

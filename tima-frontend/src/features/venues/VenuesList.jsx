@@ -6,17 +6,25 @@ import { useVenues } from './useVenues';
 function VenuesList() {
   // const { venues, isLoading } = useVenues();
   const { venues, url } = useRouteLoaderData('venues');
-  console.log(venues.data);
 
+  if (!venues) return;
   return (
     <>
       {venues.data.map((venue) => (
         <ListItem
           type="venue"
           name={venue.venueName}
-          contactName={venue.bookingContact.bookerName}
-          contactEmail={venue.bookingContact.bookerEmail}
-          city={venue.address.city}
+          contactName={
+            venue.bookingContact?.bookerName
+              ? venue.bookingContact.bookerName
+              : ''
+          }
+          contactEmail={
+            venue.bookingContact?.bookerEmail
+              ? venue.bookingContact.bookerEmail
+              : venue.venueEmail
+          }
+          city={venue.address?.city ? venue.address.city : ''}
           key={venue.id}
           id={venue.id}
           website={venue.website}

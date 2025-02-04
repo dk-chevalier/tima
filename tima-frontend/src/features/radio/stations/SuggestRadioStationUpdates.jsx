@@ -164,6 +164,8 @@ function SuggestRadioStationUpdates({ stationId, onCloseModal, requestType }) {
             <Button
               type="submit"
               name="updateOptions"
+              // value can later be .split() so we have 2 values to inform our
+              // suggestUpdatesAction on how to handle the data
               value={`${requestType} radioStationUpdates`}
             >
               Submit updates

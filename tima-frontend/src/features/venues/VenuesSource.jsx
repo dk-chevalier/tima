@@ -6,6 +6,8 @@ function VenuesSource({ children }) {
   // const { isLoading: isLoadingVenues, venues } = useVenues();
   const { venues, url } = useRouteLoaderData('venues');
 
+  if (!venues) return;
+
   // if (isLoadingVenues) return;
 
   const geojsonMarkers = {
@@ -18,7 +20,9 @@ function VenuesSource({ children }) {
           title: venue.venueName,
           id: venue.id,
           address: venue.address,
-          email: venue.bookingContact.bookerEmail,
+          email: venue.bookingContact?.bookerEmail
+            ? venue.bookingContact.bookerEmail
+            : venue.venueEmail,
           type: 'venue',
         },
       };

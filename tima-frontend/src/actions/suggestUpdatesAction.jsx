@@ -8,11 +8,8 @@ async function suggestUpdatesAction({ request, params }) {
   const { id } = params;
 
   const formData = Object.fromEntries(await request.formData());
-  console.log('DATA', formData);
 
   const [requestType, dataType] = formData.updateOptions.split(' ');
-  console.log(requestType);
-  console.log(dataType);
 
   if (dataType === 'venueUpdates') {
     venueUpdatesAction(formData, id, requestType);
@@ -22,10 +19,103 @@ async function suggestUpdatesAction({ request, params }) {
     radioStationUpdatesAction(formData, id, requestType);
   }
 
+  if (dataType === 'updateMe') {
+    updateMeAction(formData);
+  }
+
   return null;
 }
 
 export default suggestUpdatesAction;
+
+async function updateMeAction(data) {
+  const {
+    name,
+    artistName,
+    email,
+    acoustic,
+    blues,
+    classical,
+    countryGenre,
+    disco,
+    electronic,
+    folk,
+    funk,
+    hipHop,
+    indie,
+    jazz,
+    latin,
+    metal,
+    pop,
+    punk,
+    rnb,
+    reggae,
+    rock,
+    singerSongwriter,
+    soul,
+  } = data;
+
+  // filter is used to eliminate undefined values
+  const genresArr = [
+    acoustic,
+    blues,
+    classical,
+    countryGenre,
+    disco,
+    electronic,
+    folk,
+    funk,
+    hipHop,
+    indie,
+    jazz,
+    latin,
+    metal,
+    pop,
+    punk,
+    rnb,
+    reggae,
+    rock,
+    singerSongwriter,
+    soul,
+  ].filter((el) => el);
+
+  const genres = genresArr.length > 0 ? genresArr : null;
+
+  let updateData = {};
+
+  if (name) updateData.name = name;
+  if (email) updateData.email = email;
+  if (artistName) updateData.artistName = artistName;
+  if (genres) updateData.genres = genres;
+
+  try {
+    const { data } = await axios.patch(
+      `${URL}/api/v1/users/updateMe`,
+      updateData,
+      { withCredentials: true },
+    );
+
+    toast.custom((t) => {
+      t.duration = 3000;
+      return (
+        <CustomToast onClick={() => toast.remove(t.id)} type="success" t={t}>
+          Updates successfully submitted.
+        </CustomToast>
+      );
+    });
+  } catch (err) {
+    console.error(err);
+    toast.custom((t) => {
+      t.duration = 5000;
+      return (
+        <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
+          Something went wrong. Please try submitting your updates again.
+        </CustomToast>
+      );
+    });
+  }
+  return null;
+}
 
 async function radioStationUpdatesAction(data, id, requestType) {
   const {
@@ -79,9 +169,6 @@ async function radioStationUpdatesAction(data, id, requestType) {
         { withCredentials: true },
       );
 
-      console.log('DATA!!!!!!!!!!!!!!!!!!');
-      console.log(data);
-
       toast.custom((t) => {
         t.duration = 3000;
         return (
@@ -120,9 +207,6 @@ async function radioStationUpdatesAction(data, id, requestType) {
         },
         { withCredentials: true },
       );
-
-      console.log('DATA!!!!!!!!!!!!!!!!!!');
-      console.log(data);
 
       toast.custom((t) => {
         t.duration = 3000;
@@ -199,9 +283,6 @@ async function venueUpdatesAction(data, id, requestType) {
 
   let originals;
   let soundSystemProvided;
-
-  console.log('REQUEST TYPE');
-  console.log(requestType);
 
   if (originalsUpdate?.toLowerCase() === 'y') originals = true;
   if (originalsUpdate?.toLowerCase() === 'n') originals = false;
@@ -286,9 +367,6 @@ async function venueUpdatesAction(data, id, requestType) {
         { withCredentials: true },
       );
 
-      console.log('DATA!!!!!!!!!!!!!!!!!!');
-      console.log(data);
-
       toast.custom((t) => {
         t.duration = 3000;
         return (
@@ -332,9 +410,6 @@ async function venueUpdatesAction(data, id, requestType) {
         },
         { withCredentials: true },
       );
-
-      console.log('DATA!!!!!!!!!!!!!!!!!!');
-      console.log(data);
 
       toast.custom((t) => {
         t.duration = 3000;

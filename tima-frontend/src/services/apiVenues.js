@@ -9,11 +9,13 @@ export async function getVenues({ queryKey }) {
     // const genresQry = `&`;
     const gigTypeQry = `&gigType[eq]=${options.gigType}`;
     const genresQry = `&genresSupported[in]=${options.genres}`;
-    const byNameQry = `&venueName[eq]=${options.searchName}`;
+    // const byNameQry = `&venueName[eq]=${options.searchName}`;
+    // FIXME: THIS WORKS, BUT MAKE IT SO SAME QUERY SEARCHES ADDRESS ETC. TOO
+    const byNameQry = `&text[search]=${options.searchName}`;
     const byLocationQry = `&near=${options.lng},${options.lat}`;
 
     const { data } = await axios.get(
-      `${URL}/api/v1/venues?fields=venueName,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail,website${
+      `${URL}/api/v1/venues?fields=venueName,venueEmail,location,address.city,bookingContact.bookerName,bookingContact.bookerEmail,website,genresSupported${
         options.gigType ? gigTypeQry : ''
       }${options.genres ? genresQry : ''}${
         options.searchName ? byNameQry : ''

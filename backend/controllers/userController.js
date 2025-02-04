@@ -37,6 +37,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'artistName',
   );
 
+  console.log('HERE');
+  console.log(filteredBody);
+
   // 3) Update user document (use .findByIdAndUpdate, because can't use .save as that will require confirmation of password due to validators)
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,

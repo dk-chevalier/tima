@@ -12,8 +12,8 @@ function Home() {
 
   const dispatch = useDispatch();
 
-  // console.log(products);
-  // console.log(prices);
+  console.log(products);
+  console.log(prices);
 
   const [yearlyPriceSelected, setYearlyPriceSelected] = useState(false);
 

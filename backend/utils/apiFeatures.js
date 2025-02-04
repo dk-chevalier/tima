@@ -8,11 +8,21 @@ class APIFeatures {
     const queryObj = { ...this.queryString };
     const excludedFields = ['page', 'sort', 'fields', 'limit', 'near']; // this means they don't get caught up in this filter, and thus can be used for the below methods, like sort() etc.
     excludedFields.forEach((el) => delete queryObj[el]);
+
+    if (
+      queryObj.hasOwnProperty('genresSupported') &&
+      queryObj.genresSupported.hasOwnProperty('in')
+    ) {
+      queryObj.genresSupported.in = queryObj.genresSupported.in.split(',');
+    }
+
     let queryStr = JSON.stringify(queryObj);
+    console.log(queryStr);
     queryStr = queryStr.replace(
-      /\b(gte|gt|lte|lt|in|eq)\b/g,
+      /\b(gte|gt|lte|lt|in|eq|text|search)\b/g,
       (match) => `$${match}`,
     );
+    console.log(queryStr);
     // DON'T NEED gte/lte etc. QUERIES YET....PERHAPS WILL WHEN I HAVE RATINGS ETC..........
     this.query = this.query.find(JSON.parse(queryStr));
     // console.log(this.query);

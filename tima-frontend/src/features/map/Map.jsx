@@ -3,10 +3,11 @@ import Map from 'react-map-gl';
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useDispatch } from 'react-redux';
 import { closePopup, openPopup, updatePopup } from './mapSlice';
+// import { useNavigate } from 'react-router-dom';
 
 import MapLayers from './MapLayers';
 import Spinner from '../../ui/Spinner';
-import { useRouteLoaderData } from 'react-router-dom';
+// import { useRouteLoaderData } from 'react-router-dom';
 // import { useMapLayerClick } from '../../hooks/useMapLayerClick';
 
 const MAP_TOKEN = import.meta.env.VITE_MAP_TOKEN;
@@ -23,6 +24,7 @@ function MapContainer() {
   const zoom = 12;
 
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   const {
     isLoading: isLoadingPosition,
@@ -30,6 +32,8 @@ function MapContainer() {
     getPosition,
   } = useGeolocation();
 
+  // on each render check if we already have users geolocation, otherwise get it
+  // TODO: could probably store this info in a Slice so don't have to search multiple times??
   useEffect(
     function () {
       if (!geolocationPosition) return getPosition();
@@ -70,6 +74,8 @@ function MapContainer() {
 
     dispatch(closePopup());
   };
+
+  // const onClick = useMapLayerClick();
 
   return isLoadingPosition || !mapLng || !mapLat ? (
     <Spinner />

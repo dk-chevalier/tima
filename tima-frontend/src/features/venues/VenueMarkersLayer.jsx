@@ -5,8 +5,11 @@ function VenueMarkersLayer() {
     id: 'point',
     type: 'symbol',
     layout: {
+      'icon-allow-overlap': true,
       'icon-image': 'mapPin',
       'icon-anchor': 'bottom',
+      // icon-ignore-placement true means other symbols can be visible even if they collide with the icon
+      'icon-ignore-placement': true,
       // get and display the title property from the source as a label to the marker
       'text-field': ['get', 'title'],
       'text-justify': 'auto',

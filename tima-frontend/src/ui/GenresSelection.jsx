@@ -1,4 +1,5 @@
 function GenresSelection({ type, numberCols }) {
+  console.log(numberCols);
   return (
     <fieldset className={`grid grid-cols-${numberCols} gap-x-3 gap-y-2`}>
       {type === 'search' && (
