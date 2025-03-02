@@ -14,12 +14,15 @@ function ListItem({
   website,
   id,
   query,
+  station,
 }) {
   const [showsOpen, setShowsOpen] = useState(false);
 
   const { latlng, distance, unit } = useParams();
 
   const { pathname } = useLocation();
+
+  // isOpen will give ability to highlight open tab
 
   // allows filtered list to stay filtered when opening details
   let newPath;
@@ -35,13 +38,14 @@ function ListItem({
   if (pathname.includes('radio') && !latlng)
     newPath = `/app/map/radio/${type}s/${id}${query ? query : ''}`;
 
-  const baseStyle =
-    'flex h-min flex-col rounded-md px-3 py-2 text-primary-900 shadow-lg transition-all duration-300 hover:shadow-md border-secondary-300 border';
+  const baseStyle = `flex h-min flex-col rounded-md px-3 py-2 text-primary-900 shadow-lg transition-all duration-300 hover:shadow-md gap-2 min-w-min hover:bg-primary-300 ${
+    pathname.includes(id) ? 'bg-primary-300' : 'bg-secondary-200'
+  }`;
 
   const liStyle = {
-    venue: baseStyle + ' bg-secondary-200',
-    station: baseStyle + ' bg-secondary-200',
-    show: baseStyle + ' bg-secondary-200',
+    venue: baseStyle + ' border-secondary-300 border',
+    station: baseStyle + ' border-secondary-300 border',
+    show: baseStyle + ' mb-3 border-primary-500 border-2',
   };
 
   function toggleRadioShows() {
@@ -51,10 +55,20 @@ function ListItem({
   return (
     <>
       <li className={liStyle[type]}>
-        <div className="text-end">
-          <h2 className="text-base font-semibold">{name}</h2>
-          <p className="text-sm">{city}</p>
-        </div>
+        {station && (
+          <div className="flex justify-between gap-2">
+            <span className="text-sm font-thin">{station}</span>
+            <div className="text-end">
+              <h2 className="text-end text-base font-semibold">{name}</h2>
+            </div>
+          </div>
+        )}
+        {!station && (
+          <div className="text-end">
+            <h2 className="text-base font-semibold">{name}</h2>
+            <p className="text-sm">{city}</p>
+          </div>
+        )}
 
         <div className="flex items-end justify-between">
           <div>

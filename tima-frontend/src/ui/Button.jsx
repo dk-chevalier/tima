@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 function Button({ children, type, to, onClick, href, state, name, value }) {
   const navigate = useNavigate();
   const base =
-    'px-3 py-1 shadow-md transition-all duration-300 active:shadow-sm inline-block flex justify-center items-center';
+    'px-3 py-1 shadow-md transition-all duration-300 active:shadow-sm inline-block flex justify-center items-center min-w-min';
 
   const styles = {
     primary: base + ' bg-primary-300 rounded-sm text-primary-900',

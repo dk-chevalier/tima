@@ -33,6 +33,10 @@ const radioStationSchema = new mongoose.Schema(
         trim: true,
       },
     },
+    addressStr: {
+      type: String,
+      trim: true,
+    },
     stationPh: {
       type: String,
       trim: true,

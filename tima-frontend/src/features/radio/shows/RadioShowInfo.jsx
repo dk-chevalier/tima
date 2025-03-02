@@ -35,7 +35,12 @@ function RadioShowInfo() {
         <h2 className="relative left-[-0.5rem] top-[-0.5rem] text-3xl font-light">
           {showName}
         </h2>
-        <a href={showWebpage} className="text-sm">
+        <a
+          href={showWebpage}
+          className="text-sm"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           {showWebpage}
         </a>
       </div>

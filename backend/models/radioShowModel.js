@@ -29,6 +29,7 @@ const radioShowSchema = new mongoose.Schema(
           'rock',
           'indie',
           'electronic',
+          'psychedelic',
           'r&b',
           'folk',
           'soul',

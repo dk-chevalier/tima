@@ -19,6 +19,7 @@ function RadioShowsList({ stationId }) {
             key={show.id}
             id={show.id}
             website={show.showWebpage}
+            station={show.radioStation.stationName}
           />
         ))
       )}

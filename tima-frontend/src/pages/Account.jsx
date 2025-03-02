@@ -39,7 +39,7 @@ function Account() {
         t.duration = 5000;
         return (
           <CustomToast onClick={() => toast.remove(t.id)} type="error" t={t}>
-            Something went wrong canceling your subscription. Please try again,
+            Something went wrong cancelling your subscription. Please try again,
             or contact us directly.
           </CustomToast>
         );

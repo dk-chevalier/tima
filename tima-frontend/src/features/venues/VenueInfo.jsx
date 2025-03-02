@@ -90,11 +90,18 @@ function VenueInfo() {
           <a
             href={suggestedUpdates.website.website}
             className="text-sm text-secondary-600"
+            target="_blank"
+            rel="noreferrer noopener"
           >
             {suggestedUpdates.website.website}
           </a>
         ) : (
-          <a href={website} className="text-sm">
+          <a
+            href={website}
+            className="text-sm"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             {website}
           </a>
         )}
@@ -251,8 +258,11 @@ function VenueInfo() {
           <p className="text-secondary-600">
             {suggestedUpdates.bookingContact.bookerName.bookerName}
           </p>
-        ) : (
+        ) : // below place another nested ternary incase there is no bookingContact/bookerName yet
+        bookingContact && bookingContact.bookerName ? (
           <p>{bookingContact.bookerName}</p>
+        ) : (
+          ''
         )}
 
         {/* BOOKER EMAIL */}
@@ -261,8 +271,11 @@ function VenueInfo() {
           <p className="text-secondary-600">
             {suggestedUpdates.bookingContact.bookerEmail.bookerEmail}
           </p>
-        ) : (
+        ) : // below place another nested ternary incase there is no bookingContact/bookerEmail yet
+        bookingContact && bookingContact.bookerEmail ? (
           <p>{bookingContact.bookerEmail}</p>
+        ) : (
+          ''
         )}
 
         {/* BOOKER PH */}
@@ -271,8 +284,11 @@ function VenueInfo() {
           <p className="text-secondary-600">
             {suggestedUpdates.bookingContact.bookerPh.bookerPh}
           </p>
-        ) : (
+        ) : // below place another nested ternary incase there is no bookingContact/bookerPh yet
+        bookingContact && bookingContact.bookerPh ? (
           <p>{bookingContact.bookerPh}</p>
+        ) : (
+          ''
         )}
       </div>
 

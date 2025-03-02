@@ -45,6 +45,7 @@ export const loader =
     let lng;
     let lat;
 
+    // get coordinates for the address someone is searching by
     if (searchBy === 'location') {
       const res = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchLocation}/.json?access_token=${MAP_TOKEN}`,

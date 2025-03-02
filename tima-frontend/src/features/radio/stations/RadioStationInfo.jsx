@@ -84,11 +84,18 @@ function RadioStationInfo() {
           <a
             href={suggestedUpdates.website.website}
             className="text-sm text-secondary-600"
+            target="_blank"
+            rel="noreferrer noopener"
           >
             {suggestedUpdates.website.website}
           </a>
         ) : (
-          <a href={website} className="text-sm">
+          <a
+            href={website}
+            className="text-sm"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             {website}
           </a>
         )}

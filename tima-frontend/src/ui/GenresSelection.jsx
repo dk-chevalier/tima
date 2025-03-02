@@ -183,6 +183,19 @@ function GenresSelection({ type, numberCols }) {
           Pop
         </span>
       </label>
+
+      <label className="cursor-pointer">
+        <input
+          type="checkbox"
+          name="psychedelic"
+          value="psychedelic"
+          className="peer appearance-none"
+        />
+        <span className="rounded-full px-2 py-1 shadow-md transition-all duration-200 peer-checked:bg-secondary-300">
+          Psychedelic
+        </span>
+      </label>
+
       <label className="cursor-pointer">
         <input
           type="checkbox"
