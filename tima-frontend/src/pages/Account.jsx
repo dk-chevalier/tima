@@ -10,6 +10,7 @@ import CustomToast from '../ui/CustomToast';
 import { loadStripe } from '@stripe/stripe-js';
 import Dialog from '../features/dialog/Dialog';
 import UpdateMe from '../features/account/UpdateMe';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -70,9 +71,22 @@ function Account() {
     }
   };
 
+  // FIXME:
+  const { user } = useAuth0();
+  console.log(user);
+
   return (
     <div className="h-screen w-screen bg-primary-900 p-12">
       <div className="grid h-full w-full grid-cols-2 grid-rows-4 gap-4 rounded-lg bg-primary-100 px-8 py-12">
+        {/* FIXME: just showing auth0 user data...once signup flow fixed will add this to my own db */}
+        {user && (
+          <div className="text-primary-900">
+            <p>AUTH0 User Details:</p>
+            <p>{user.name}</p>
+            <p>{user.email}</p>
+          </div>
+        )}
+
         <div className="col-span-2 col-start-1 ml-auto mr-0 w-fit text-end">
           <h2 className="py-1 text-end text-3xl font-thin">
             Welcome back {currentUser.name.split(' ')[0]}

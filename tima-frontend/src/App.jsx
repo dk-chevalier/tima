@@ -37,6 +37,11 @@ import PaymentInfo from './pages/PaymentInfo';
 import suggestUpdatesAction from './actions/suggestUpdatesAction';
 import AddContacts from './pages/AddContacts';
 
+// FIXME:
+import CallbackPage from './pages/CallbackPage';
+import AuthenticationGuard from './auth/AuthenticationGuard';
+// import Auth0ProviderWithNavigate from './auth/Auth0ProviderWithNavigate';
+
 // FIXME: FIX PROTECTED ROUTES....SO FAR ALL PROTECTED ROUTES HAVE A SEPARATE API CALL IN LOADER (BEFORE ANY OTHER CALLS) TO SIMPLY CHECK IF USER IS LOGGED IN....CAN PERHAPS REFACTOR SO authController.protect DOES THIS JOB FOR US ON SERVER SIDE (AS ALL THOSE ROUTES ARE PROTECTED ANYWAY?)....EVENTUALLY WILL APPARENTLY BE MIDDLEWARE ON REACT ROUTER TO MAKE THIS EASIER TOO....
 
 const queryClient = new QueryClient({
@@ -90,8 +95,13 @@ const router = createBrowserRouter([
     loader: logoutLoader(queryClient),
   },
   {
+    element: <CallbackPage />,
+    path: 'callback',
+  },
+  {
     path: 'app',
-    element: <AppLayout />,
+    // FIXME: protects the app routes....
+    element: <AuthenticationGuard component={AppLayout} />,
     loader: protectedAppLayoutLoader(queryClient),
     // action: suggestedVenueUpdatesAction,
     children: [

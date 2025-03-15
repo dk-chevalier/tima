@@ -4,9 +4,22 @@ import axios from 'axios';
 import CustomToast from '../ui/CustomToast';
 import toast from 'react-hot-toast';
 
+// FIXME:
+import { useAuth0 } from '@auth0/auth0-react';
+
 const URL = import.meta.env.VITE_LOCAL_URL;
 
 function Login() {
+  // const { loginWithRedirect } = useAuth0();
+
+  // const handleLogin = async () => {
+  //   await loginWithRedirect({
+  //     appState: {
+  //       returnTo: '/app/account',
+  //     },
+  //   });
+  // };
+
   return (
     <div className="flex h-dvh w-dvw items-center justify-center bg-primary-900">
       <main className="relative h-96 w-96 rounded-md border border-secondary-300 bg-primary-100 p-8">
@@ -64,7 +77,6 @@ export const action = async ({ request, params }) => {
           { email, password },
           { withCredentials: true },
         );
-
 
         if (res.data.status === 'success') {
           toast.custom((t) => {

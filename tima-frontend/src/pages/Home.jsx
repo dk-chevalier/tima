@@ -6,6 +6,7 @@ import { HiCheck } from 'react-icons/hi2';
 import Button from '../ui/Button';
 import { useDispatch } from 'react-redux';
 import { updateStripePriceId } from '../features/signup/newUserSlice';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Home() {
   const { products, prices } = useRouteLoaderData('home');
@@ -16,6 +17,28 @@ function Home() {
   console.log(prices);
 
   const [yearlyPriceSelected, setYearlyPriceSelected] = useState(false);
+
+  // FIXME: only need isAuthenticated if wanting to conditionally render something....
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: '/app/account',
+      },
+    });
+  };
+
+  const handleSignUp = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: '/app/account',
+      },
+      authorizationParams: {
+        screen_hint: 'signup',
+      },
+    });
+  };
 
   return (
     <div className="flex h-dvh w-dvw items-center justify-center bg-primary-900">
@@ -43,6 +66,9 @@ function Home() {
             <h1 className="text-center text-3xl font-thin">
               {product.name} Plan
             </h1>
+
+            {/* FIXME: SHOWING ONLY IF SOMEONE IS LOGGED IN */}
+            {isAuthenticated && <div>YOU ARE ALREADY LOGGED IN</div>}
 
             <Toggle
               type="toggleOptions"
@@ -100,11 +126,25 @@ function Home() {
               </Button>
             </div>
 
+            <div className="mx-auto my-6 h-min w-min">
+              <Button type="secondary" onClick={handleSignUp}>
+                SIGNUP WITH AUTH0
+              </Button>
+            </div>
+
             <div className="w-full border-t border-gray-200 py-6">
               <p className="inline-block px-4">Already have an account?</p>
               <div className="inline-block h-min w-max">
                 <Button to="/login" type="secondary">
                   Login here
+                </Button>
+              </div>
+            </div>
+
+            <div className="w-full border-t border-gray-200 py-6">
+              <div className="inline-block h-min w-max">
+                <Button onClick={handleLogin} type="secondary">
+                  AUTH0 LOGIN HERE
                 </Button>
               </div>
             </div>
